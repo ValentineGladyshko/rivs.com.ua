@@ -20,7 +20,7 @@ $_SESSION['verification_token'] = $verification_token;
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
@@ -30,7 +30,6 @@ $_SESSION['verification_token'] = $verification_token;
   <link href="style.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
 
 </head>
@@ -55,7 +54,7 @@ $_SESSION['verification_token'] = $verification_token;
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/contacts.php">Контакти</a>
+              <a class="nav-link" href="/contacts">Контакти</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/store">Продукція</a>
@@ -80,32 +79,42 @@ $_SESSION['verification_token'] = $verification_token;
 
 
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/rus">RU
+              <a class="nav-link" href="/">RU
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item active disabled">
-              <a class="nav-link" href="https://www.rivs.com.ua/">UA
+              <a class="nav-link" href="/">UA
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <?
+
+            // getting security tokens from session and cookies
             $security_token = $_SESSION["security_token"];
             $security_token1 = $_COOKIE["security_token"];
+
+            // if security tokens are unset show registration and login
             if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) { ?>
-              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
-            <? } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
-              <li class="nav-item"><a class="nav-link"><?= $_SESSION["email"] ?></a></li>
-              <li class="nav-item">
-                <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
-                  <input name="verification_token" id="verification_token2" type="hidden" value=<?= $verification_token ?>>
-                  <a id="LogoutButton" class="nav-link">Вийти</a>
-                </form>
-              </li>
-            <? } else { ?>
-              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+            <? 
+
+            // if tokens are equal show logout
+            } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
+            <li class="nav-item"><a class="nav-link"><?= $_SESSION["email"] ?></a></li>
+            <li class="nav-item">
+              <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
+                <input name="verification_token" id="verification_token2" type="hidden" value=<?= $verification_token ?>>
+                <a id="LogoutButton" class="nav-link">Вийти</a>
+              </form>
+            </li>
+            <? 
+
+            // if security tokens are not equal show registration and login
+              } else { ?>
+            <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
             <? } ?>
           </ul>
         </div>
@@ -345,10 +354,14 @@ $_SESSION['verification_token'] = $verification_token;
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
 <script type="text/javascript" src="js/jquery.redirect.js"></script>
+
+<!-- Script for login form -->
 <script type="text/javascript">
   var form = $('#login-form');
 
   form.submit(function(e) {
+
+    // give data from form
     formData = {
       'verification_token': $('input[name=verification_token]').val(),
       'email': $('input[name=email]').val(),
@@ -356,15 +369,22 @@ $_SESSION['verification_token'] = $verification_token;
     };
     e.preventDefault();
 
+    // ajax request
     $.ajax({
       type: "POST",
       url: "login.php",
       data: formData,
       success: function(response) {
         if (response != null) {
+
+          // parse response from server
           var jsonData = JSON.parse(response);
+
+          // if success code is true login and reload
           if (jsonData.success == true) {
             location.reload();
+
+          // else give html fields and show error messages
           } else {
             var email = document.getElementById("email");
             var password = document.getElementById("password");
@@ -395,10 +415,9 @@ $_SESSION['verification_token'] = $verification_token;
     });
   });
 </script>
+
+<!-- Script for delete valid and invalid classes from fields -->
 <script type="text/javascript">
-  //deleteValidation(e) {
-  //  e.target.classList.remove('is-invalid');
- // };
   var email1 = document.getElementById("email1");
   email1.oninput = function() {
     email.classList.remove('is-invalid');
@@ -428,12 +447,15 @@ $_SESSION['verification_token'] = $verification_token;
     password.classList.remove('is-invalid');
     password.classList.remove('is-valid');
   };
+</script>
 
+<!-- Script for register form -->
+<script type="text/javascript">
   var form = $('#register-form');
 
   form.submit(function(e) {
 
-
+    // give data from form
     formData = {
       'verification_token': $('input[name=verification_token]').val(),
       'email': $('input[name=email1]').val(),
@@ -442,15 +464,22 @@ $_SESSION['verification_token'] = $verification_token;
     };
     e.preventDefault();
 
+    // ajax request
     $.ajax({
       type: "POST",
       url: "registerStart.php",
       data: formData,
       success: function(response) {
         if (response != null) {
+
+          // parse response from server
           var jsonData = JSON.parse(response);
+
+          // if success code is true login and reload
           if (jsonData.success == true) {
             $.redirect('register.php', formData);
+
+          // else give html fields and show error messages
           } else {
             var email = document.getElementById("email1");
             var password = document.getElementById("password1");
@@ -505,15 +534,20 @@ $_SESSION['verification_token'] = $verification_token;
     });
   });
 </script>
+
+<!-- Script for logout form -->
 <script type="text/javascript">
   $(document).ready(function() {
     $("#LogoutButton").click(
       function(e) {
+        
+        // give data from form
         formData = {
           'verification_token': $('input[name=verification_token]').val(),
         };
         e.preventDefault();
 
+        // ajax request
         $.ajax({
           type: "POST",
           url: "logout.php",

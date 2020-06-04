@@ -30,7 +30,7 @@
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand" href="index">
+        <a class="navbar-brand" href="/">
           <img src="Images/logo.png" width="30" height="40" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="index">Головна
+              <a class="nav-link" href="/">Головна
               </a>
             </li>
             <li class="nav-item active">
@@ -67,7 +67,7 @@
               <i class="russia flag"></i>
             </li>
             <li class="nav-item active disabled">
-              <a class="nav-link" href="index">UA
+              <a class="nav-link" href="/">UA
                 <span class="sr-only">(current)</span>
               </a>
             </li>
