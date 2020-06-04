@@ -1,0 +1,12 @@
+.img {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .btn {
+    display: inline-block;
+    box-shadow: 0 0 25px #51dff8;
+    max-width: 100%;
+  }
+  

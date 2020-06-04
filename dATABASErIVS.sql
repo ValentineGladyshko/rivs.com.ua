@@ -1,0 +1,57 @@
+USE [master]
+GO
+
+DROP DATABASE [RIVS.COM.UA]
+GO
+
+CREATE DATABASE [RIVS.COM.UA]
+GO
+
+USE [RIVS.COM.UA]
+GO
+
+CREATE TABLE [PriceList] (
+	[PriceListID] INT IDENTITY(1,1) NOT NULL,
+	[ProductName] NVARCHAR(255) NOT NULL,
+	[Price] MONEY,
+	[Image]  NVARCHAR(255),
+	[Description] TEXT,
+	CONSTRAINT [PKPriceListID] PRIMARY KEY CLUSTERED([PriceListID]))
+
+CREATE TABLE [Cities] (
+	[CityID] INT IDENTITY(1,1) NOT NULL,
+	[CityName] NVARCHAR(255) NOT NULL,
+	CONSTRAINT [PKCityID] PRIMARY KEY CLUSTERED([CityID]))
+
+CREATE TABLE [NewPost] (
+	[NewPostID] INT IDENTITY(1,1) NOT NULL,
+	[NewPostAdress] NVARCHAR(255) NOT NULL,
+	[DepartmentNumber] INT NOT NULL,
+	CONSTRAINT [PKNewPostID] PRIMARY KEY CLUSTERED([NewPostID]))
+
+CREATE TABLE [Customers] (
+	[CustomerID] INT IDENTITY(1,1) NOT NULL,
+	[FirstName] NVARCHAR(255) NOT NULL,
+	[MiddleName] NVARCHAR(255) NOT NULL,
+	[LastName] NVARCHAR(255) NOT NULL,
+	[Phone] NVARCHAR(255),
+	[Address] NVARCHAR(255),
+	[CityID] INT NOT NULL FOREIGN KEY REFERENCES [Cities]([CityID]),
+	CONSTRAINT [PKCustomerID] PRIMARY KEY CLUSTERED([CustomerID]))
+
+CREATE TABLE [Orders] (
+	[OrderID] INT IDENTITY(1,1) NOT NULL,
+	[CustomerID] INT NOT NULL FOREIGN KEY REFERENCES [Customers]([CustomerID]),
+	[OrderDate] DATE NOT NULL,
+	[OrderPayDate] DATE NOT NULL,
+	[NewPostID] INT NOT NULL FOREIGN KEY REFERENCES [NewPost]([NewPostID]),
+	[PriceListID] INT NOT NULL FOREIGN KEY REFERENCES [PriceList]([PriceListID]),
+	[Amount] INT NOT NULL,
+	CONSTRAINT [PKOrderID] PRIMARY KEY CLUSTERED([OrderID]))
+
+
+INSERT INTO [Cities] ([CityName])
+VALUES ('Kyiv')
+
+INSERT INTO [Customers] ([FirstName], [MiddleName], [LastName], [Phone], [Address],[CityID])
+VALUES ('Leonid','Drapei','Leonidovich','+380957340508','zakrevskogo',1)
