@@ -3,7 +3,7 @@
 
 <head>
 
-  <link rel="shortcut icon" href="https://www.rivs.com.ua/Images/webicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="Images/webicon.png" type="image/x-icon">
   <title>
     ТОВ ТВД "РІВС" | Контакти
   </title>
@@ -11,17 +11,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta https-equiv="x-ua-compatible" content="ie=edge">
 
-  <link rel="shortcut icon" href="https://www.rivs.com.ua/images/favicon.ico" type="image/x-icon">
+  
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="css/all.css">
   <!-- Bootstrap core CSS -->
-  <link href="https://www.rivs.com.ua/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
-  <link href="https://www.rivs.com.ua/css/mdb.min.css" rel="stylesheet">
+  <link href="css/mdb.min.css" rel="stylesheet">
   <!-- Your custom styles (optional) -->
-  <link href="https://www.rivs.com.ua/css/style.css" rel="stylesheet">
-  <link href="https://www.rivs.com.ua/style.css" rel="stylesheet">
-  <link href="https://www.rivs.com.ua/googlemap.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link href="googlemap.css" rel="stylesheet">
 
 </head>
 
@@ -30,8 +30,8 @@
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand" href="rivs.com.ua/">
-          <img src="https://www.rivs.com.ua/Images/logo.png" width="30" height="40" alt="logo">
+        <a class="navbar-brand" href="index">
+          <img src="Images/logo.png" width="30" height="40" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -40,16 +40,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="rivs.com.ua/">Головна
+              <a class="nav-link" href="index">Головна
               </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="rivs.com.ua/contacts">Контакти
+              <a class="nav-link" href="contacts">Контакти
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="rivs.com.ua/store">Продукція</a>
+              <a class="nav-link" href="store">Продукція</a>
             </li>
             </li>
           </ul>
@@ -61,13 +61,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/ru/contacts">RU
+              <a class="nav-link" href="ru/contacts">RU
                 <span class="sr-only">(current)</span>
               </a>
               <i class="russia flag"></i>
             </li>
             <li class="nav-item active disabled">
-              <a class="nav-link" href="https://www.rivs.com.ua/">UA
+              <a class="nav-link" href="index">UA
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -231,19 +231,21 @@
 
   <!-- SCRIPTS -->
   <!-- JQuery -->
-  <script type="text/javascript" src="https://www.rivs.com.ua/js/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="https://www.rivs.com.ua/js/popper.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="https://www.rivs.com.ua/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="https://www.rivs.com.ua/js/mdb.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  <!-- Script for submitting form -->
   <script type="text/javascript">
     var form = $('#contact-form');
 
     form.submit(function(e) {
 
+      // data for request
       formData = {
         'name': $('input[name=name]').val(),
         'email': $('input[name=email]').val(),
@@ -252,47 +254,72 @@
 
       e.preventDefault();
 
+      // ajax post request
       $.ajax({
         url: "ContactFormSubmit.php",
         data: formData,
         type: "POST",
         success: function(response) {
           if (response != null) {
+            // parsing response from back-end
             var jsonData = JSON.parse(response);
+
+            // checking status of operation 
             if (jsonData.success == true) {
+
+              // clearing values of fields in form and show success status
               document.getElementById("status").innerHTML = jsonData.send;
               $('#contact-form').closest('form').find("input[type=email], input[type=text], textarea").val("");
             } else {
+
+              // giving elements of html to change
               var email = document.getElementById("email");
               var name = document.getElementById("name");
               var message = document.getElementById("message");
               var email_feedback = document.getElementById("email_feedback");
               var name_feedback = document.getElementById("name_feedback");
               var message_feedback = document.getElementById("message_feedback");
+
+              // set invalid status to email field and show email error if email is invalid
               if (jsonData.hasOwnProperty("email")) {
                 email.classList.add('is-invalid');
                 email.classList.remove('is-valid');
                 email_feedback.innerHTML = jsonData.email;
-              } else {
+              } 
+              
+              // change status if email is valid
+              else {
                 email.classList.remove('is-invalid');
                 email.classList.add('is-valid');
               }
+
+              // set invalid status to name field and show name error if name is invalid
               if (jsonData.hasOwnProperty("name")) {
                 name.classList.add('is-invalid');
                 name.classList.remove('is-valid');
                 name_feedback.innerHTML = jsonData.name;
-              } else {
+              } 
+              
+              // change status if name is valid
+              else {
                 name.classList.remove('is-invalid');
                 name.classList.add('is-valid');
               }
+
+              // set invalid status to message field and show message error if message is invalid
               if (jsonData.hasOwnProperty("message")) {
                 message.classList.add('is-invalid');
                 message.classList.remove('is-valid');
                 message_feedback.innerHTML = jsonData.message;
-              } else {
+              } 
+              
+              // change status if message is valid
+              else {
                 message.classList.remove('is-invalid');
                 message.classList.add('is-valid');
               }
+
+              // change status field
               if (jsonData.hasOwnProperty("send")) {
                 document.getElementById("status").innerHTML = jsonData.send;
               }

@@ -9,19 +9,23 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// create object for response
 $response = new stdClass();
 $response->success = true;
 
+// give values from post request
 $name = $_POST['name'];
 $email = $_POST['email'];
 $message = $_POST['message'];
 $from_email = '55coursework99@gmail.com';
 
+// check validity of name
 if ($name == null) {
     $response->success = false;
     $response->name = 'Поле "Ваше ім`я" не може бути пустим!';
 }
 
+// check validity of email
 if ($email == null) {
     $response->success = false;
     $response->email = 'Поле "Ваш email" не може бути пустим!';
@@ -32,34 +36,43 @@ if ($email == null) {
     }
 }
 
+// check validity of message
 if ($message == null) {
     $response->success = false;
     $response->message = 'Поле "Введіть повідомлення" не може бути пустим!';
 }
 
+
+// if something wrong go out with error response
 if ($response->success == false) {
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();
 }
+
+// read key to decrypt password
 $cipher = "aes-256-gcm";
 $myfile = fopen("key.txt", "r");
 $key = base64_decode(fread($myfile, filesize("key.txt")));
 fclose($myfile);
 
+//variables to decrypt
 $hashedpassword = "i6/Qv5L9B7Hd";
 $iv= "RucZWE5OFpqG0UlE";
 $tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
+// decode variables
 $iv = base64_decode($iv);
 $tag = base64_decode($tag);
 
+// decrypting password
 $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $tag);
 
+// create object for email
 $mail = new PHPMailer;
 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 $mail->CharSet = 'UTF-8';
  
-// Настройки SMTP
+// SMTP settings
 $mail->isSMTP();
 $mail->SMTPDebug = 0;
  
@@ -70,34 +83,21 @@ $mail->SMTPAuth = true;
 $mail->Username = $from_email;
 $mail->Password = $password;
  
-// От кого
+// from who
 $mail->setFrom($from_email, $name);		
  
-// Кому
+// to who
 $mail->addAddress($from_email, 'Site');
  
-// Тема письма
+// mail subject
 $mail->Subject = 'From: rivs.com.ua';
  
-// Тело письма
+// mail body
 $mail->Body = "From: $name \nEmail: $email \nMessage: $message";
- 
+
+// send email
 $mail->send();
 $response->success = true;
 $response->send = 'Повідомлення успішно відправлено!';
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 exit();
-
-//$content = "From: $name \nEmail: $email \nMessage: $message";
-//$recipient = "sales@rivs.com.ua";
-//$mailheader = "From: $email \r\n";
-//if (!mail($recipient, $content, $mailheader)) {
-//    $response->success = false;
-    //$response->send = 'Повідомлення успішно не відправлено!';
- //   echo json_encode($response, JSON_UNESCAPED_UNICODE);
- //   exit();
-//}
-//$response->success = true;
-//$response->send = 'Повідомлення успішно відправлено!';
-//echo json_encode($response, JSON_UNESCAPED_UNICODE);
-//exit();
