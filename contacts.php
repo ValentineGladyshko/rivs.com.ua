@@ -30,7 +30,7 @@
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand" href="https://www.rivs.com.ua/">
+        <a class="navbar-brand" href="rivs.com.ua/">
           <img src="https://www.rivs.com.ua/Images/logo.png" width="30" height="40" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,16 +40,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/">Головна
+              <a class="nav-link" href="rivs.com.ua/">Головна
               </a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="https://www.rivs.com.ua/contacts">Контакти
+              <a class="nav-link" href="rivs.com.ua/contacts">Контакти
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/store">Продукція</a>
+              <a class="nav-link" href="rivs.com.ua/store">Продукція</a>
             </li>
             </li>
           </ul>
@@ -132,9 +132,11 @@
 
           <!--Grid column-->
           <div class="col-md-8 col-xl-9">
-            <form id="contact-form" name="contact-form" method="post">
+            <form id="contact-form" name="contact-form" method="post"> 
+
               <!--Grid row-->
               <div class="row">
+
                 <!--Grid column-->
                 <div class="col-md-6">
                   <div class="md-form">
@@ -154,9 +156,11 @@
                   </div>
                 </div>
                 <!--Grid column-->
+
               </div>
               <!--Grid row-->
               <div class="row">
+
                 <!--Grid column-->
                 <div class="col-md-12">
                   <div class="md-form">
@@ -167,11 +171,15 @@
                 </div>
               </div>
               <!--Grid row-->
+
               <div class="center-on-small-only">
                 <button type="submit" class="btn btn-primary">Надіслати</a>
               </div>
               <div class="status" id="status"></div>
+
             </form>
+
+
           </div>
           <!--Grid column-->
 

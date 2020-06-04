@@ -9,23 +9,19 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// Response data for AJAX
 $response = new stdClass();
 $response->success = true;
 
-// Getting data from post
 $name = $_POST['name'];
 $email = $_POST['email'];
 $message = $_POST['message'];
-$from_email = 'rivsremailemail@gmail.com';
+$from_email = '55coursework99@gmail.com';
 
-// Name checking
 if ($name == null) {
     $response->success = false;
     $response->name = 'Поле "Ваше ім`я" не може бути пустим!';
 }
 
-// Email Checking
 if ($email == null) {
     $response->success = false;
     $response->email = 'Поле "Ваш email" не може бути пустим!';
@@ -36,41 +32,34 @@ if ($email == null) {
     }
 }
 
-// Message checking
 if ($message == null) {
     $response->success = false;
     $response->message = 'Поле "Введіть повідомлення" не може бути пустим!';
 }
 
-// If something wrong go out
 if ($response->success == false) {
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();
 }
-
-// data for decrypting
 $cipher = "aes-256-gcm";
-$myfile = fopen("../../logs/key.php", "r");
-$key = base64_decode(fread($myfile, filesize("../../logs/key.php")));
+$myfile = fopen("key.txt", "r");
+$key = base64_decode(fread($myfile, filesize("key.txt")));
 fclose($myfile);
 
-// another data for decrypting
-$hashedpassword = "sWNFIwGtS5G0jA==";
-$iv= "BSZrfXmE1sBkoswl";
-$tag = "28UmEDo+KdYlBF7PQtKNtw==";
+$hashedpassword = "i6/Qv5L9B7Hd";
+$iv= "RucZWE5OFpqG0UlE";
+$tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
 $iv = base64_decode($iv);
 $tag = base64_decode($tag);
 
-// decrypting
 $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $tag);
 
-// mail options
 $mail = new PHPMailer;
 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 $mail->CharSet = 'UTF-8';
  
-// SMTP options
+// Настройки SMTP
 $mail->isSMTP();
 $mail->SMTPDebug = 0;
  
@@ -81,21 +70,34 @@ $mail->SMTPAuth = true;
 $mail->Username = $from_email;
 $mail->Password = $password;
  
-// From who
+// От кого
 $mail->setFrom($from_email, $name);		
  
-// To who
+// Кому
 $mail->addAddress($from_email, 'Site');
  
-// Mail subject
+// Тема письма
 $mail->Subject = 'From: rivs.com.ua';
  
-// Mail message
+// Тело письма
 $mail->Body = "From: $name \nEmail: $email \nMessage: $message";
  
-// Mail sending
 $mail->send();
 $response->success = true;
 $response->send = 'Повідомлення успішно відправлено!';
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 exit();
+
+//$content = "From: $name \nEmail: $email \nMessage: $message";
+//$recipient = "sales@rivs.com.ua";
+//$mailheader = "From: $email \r\n";
+//if (!mail($recipient, $content, $mailheader)) {
+//    $response->success = false;
+    //$response->send = 'Повідомлення успішно не відправлено!';
+ //   echo json_encode($response, JSON_UNESCAPED_UNICODE);
+ //   exit();
+//}
+//$response->success = true;
+//$response->send = 'Повідомлення успішно відправлено!';
+//echo json_encode($response, JSON_UNESCAPED_UNICODE);
+//exit();

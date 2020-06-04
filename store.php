@@ -111,11 +111,11 @@ require_once("LDLRIVS.php");
         <h1 class="text-center">ГУАНПОЛІСЕПТ ВИПРАВЛЯЄ ТЕ, ЩО СПИРТОВІ АНТИСЕПТИКИ НАКОЇЛИ З ВАШИМИ РУКАМИ</h1>
         <? $CARDS = query_db('SELECT * FROM pricelist ORDER BY ProductAvailability DESC'); ?>
         <? foreach ($CARDS as $CARD) { ?>
-          <? if ($CARD['Image'] != NULL) { ?>
-            <!--Grid column-->
-            <div class="col-lg-4 col-md-6 mb-md-3 mb-3">
+          <!--Grid column-->
+          <div class="col-lg-4 col-md-6 mb-md-3 mb-3">
 
-              <!--Card-->
+            <!--Card-->
+            <? if ($CARD['Image'] != NULL) { ?>
               <div class="card" style="height:100%;">
 
                 <!--Card image-->
@@ -137,16 +137,15 @@ require_once("LDLRIVS.php");
                 <? if ($CARD['ProductAvailability'] == 0) { ?>
                   <a href="product?id=<?= $CARD['PriceListID']; ?>" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>
                 <? } ?>
+              <? } ?>
               </div>
               <!--/.Card-->
 
-            </div>
-          <? } ?>
+          </div>
           <!--Grid column-->
         <? } ?>
 
       </div>
-
       <!--Main container-->
 
   </main>

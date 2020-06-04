@@ -1,3 +1,12 @@
+<?php
+require_once("LDLRIVS.php");
+
+my_session_start();
+
+$verification_token = base64_encode(openssl_random_pseudo_bytes(32));
+$_SESSION['verification_token'] = $verification_token;
+
+?>
 <!--DOCTYPE html-->
 <html lang="en">
 
@@ -19,15 +28,19 @@
   <!-- Your custom styles (optional) -->
   <link href="css/style.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
 
 </head>
 
 <body>
-  <header>
+  <header style="font-family: Helios,sans-serif;">
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand" href="https://www.rivs.com.ua/">
+        <a class="navbar-brand" href="/">
           <img src="/Images/logo.png" width="30" height="40" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,28 +50,35 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="https://www.rivs.com.ua/">Головна
+              <a class="nav-link" href="/">Головна
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/contacts">Контакти</a>
+              <a class="nav-link" href="/contacts.php">Контакти</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/store">Продукція</a>
+              <a class="nav-link" href="/store">Продукція</a>
             </li>
             </li>
           </ul>
+
+
+
           <ul class="navbar-nav navbar-right">
             <li class="nav-item">
               <i class="russia flag"></i>
             </li>
+
             <li class="nav-item">
               <!-- Button trigger modal -->
               <a class="nav-link" data-toggle="modal" data-target="#MobileModal">
                 <i class="fas fa-phone"></i>Телефони
               </a>
             </li>
+
+
+
             <li class="nav-item">
               <a class="nav-link" href="https://www.rivs.com.ua/rus">RU
                 <span class="sr-only">(current)</span>
@@ -69,10 +89,95 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+            <?
+            $security_token = $_SESSION["security_token"];
+            $security_token1 = $_COOKIE["security_token"];
+            if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) { ?>
+              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+            <? } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
+              <li class="nav-item"><a class="nav-link"><?= $_SESSION["email"] ?></a></li>
+              <li class="nav-item">
+                <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
+                  <input name="verification_token" id="verification_token2" type="hidden" value=<?= $verification_token ?>>
+                  <a id="LogoutButton" class="nav-link">Вийти</a>
+                </form>
+              </li>
+            <? } else { ?>
+              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+            <? } ?>
           </ul>
         </div>
       </div>
     </nav>
+    <!-- Modal login -->
+    <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="MobileModalLabel">Вхід</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!--Grid row-->
+            <form id="login-form" name="login-form" action="login.php" method="post">
+              <input name="verification_token" id="verification_token" type="hidden" value=<?= $verification_token ?>>
+              <div class="form-group">
+                <label class="control-label" for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                <div id="email_feedback" class="invalid-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <div id="password_feedback" class="invalid-feedback"></div>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal register-->
+    <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="MobileModalLabel">Реєстрація</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="register-form" name="register-form" action="register.php" method="post">
+              <input name="verification_token" id="verification_token1" type="hidden" value=<?= $verification_token ?>>
+              <div class="form-group">
+                <label class="control-label" for="email1">Email address</label>
+                <input type="email" class="form-control" id="email1" name="email1" placeholder="Enter email" required>
+                <div id="email1_feedback" class="invalid-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="password1">Password</label>
+                <input type="password" class="form-control" id="password1" name="password1" required>
+                <div id="password1_feedback" class="invalid-feedback"></div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="repeat_password">Repeat Password</label>
+                <input type="password" class="form-control" id="repeat_password" name="repeat_password" required>
+                <div id="repeat_password_feedback" class="invalid-feedback"></div>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="MobileModal" tabindex="-1" role="dialog" aria-labelledby="MobileModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -239,5 +344,193 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/jquery.redirect.js"></script>
+<script type="text/javascript">
+  var form = $('#login-form');
+
+  form.submit(function(e) {
+    formData = {
+      'verification_token': $('input[name=verification_token]').val(),
+      'email': $('input[name=email]').val(),
+      'password': $('input[name=password]').val()
+    };
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "login.php",
+      data: formData,
+      success: function(response) {
+        if (response != null) {
+          var jsonData = JSON.parse(response);
+          if (jsonData.success == true) {
+            location.reload();
+          } else {
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+            var email_feedback = document.getElementById("email_feedback");
+            var password_feedback = document.getElementById("password_feedback");
+            if (jsonData.hasOwnProperty("email")) {
+              email.classList.add('is-invalid');
+              email.classList.remove('is-valid');
+              email_feedback.innerHTML = jsonData.email;
+            } else {
+              email.classList.remove('is-invalid');
+              email.classList.add('is-valid');
+            }
+            if (jsonData.hasOwnProperty("password")) {
+              password.classList.add('is-invalid');
+              password.classList.remove('is-valid');
+              password_feedback.innerHTML = jsonData.password;
+            } else {
+              password.classList.remove('is-invalid');
+            }
+          }
+        }
+      },
+      error: function(data) {
+        console.log('An error occurred.');
+        console.log(data);
+      },
+    });
+  });
+</script>
+<script type="text/javascript">
+  //deleteValidation(e) {
+  //  e.target.classList.remove('is-invalid');
+ // };
+  var email1 = document.getElementById("email1");
+  email1.oninput = function() {
+    email.classList.remove('is-invalid');
+    email.classList.remove('is-valid');
+  };
+
+  var password1 = document.getElementById("password1");
+  password1.oninput = function() {
+    password1.classList.remove('is-invalid');
+    password1.classList.remove('is-valid');
+  };
+
+  var repeat_password = document.getElementById("repeat_password");
+  repeat_password.oninput = function() {
+    repeat_password.classList.remove('is-invalid');
+    repeat_password.classList.remove('is-valid');
+  };
+
+  var email = document.getElementById("email");
+  email.oninput = function() {
+    email.classList.remove('is-invalid');
+    email.classList.remove('is-valid');
+  };
+
+  var password = document.getElementById("password");
+  password.oninput = function() {
+    password.classList.remove('is-invalid');
+    password.classList.remove('is-valid');
+  };
+
+  var form = $('#register-form');
+
+  form.submit(function(e) {
+
+
+    formData = {
+      'verification_token': $('input[name=verification_token]').val(),
+      'email': $('input[name=email1]').val(),
+      'password': $('input[name=password1]').val(),
+      'repeat_password': $('input[name=repeat_password]').val()
+    };
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "registerStart.php",
+      data: formData,
+      success: function(response) {
+        if (response != null) {
+          var jsonData = JSON.parse(response);
+          if (jsonData.success == true) {
+            $.redirect('register.php', formData);
+          } else {
+            var email = document.getElementById("email1");
+            var password = document.getElementById("password1");
+            var repeat_password = document.getElementById("repeat_password");
+            var email_feedback = document.getElementById("email1_feedback");
+            var password_feedback = document.getElementById("password1_feedback");
+            var repeat_password_feedback = document.getElementById("repeat_password_feedback");
+
+            if (jsonData.hasOwnProperty("email") && jsonData.email != '') {
+              email.classList.add('is-invalid');
+              email.classList.remove('is-valid');
+              email_feedback.innerHTML = "";
+              var data;
+              for (data of jsonData.email) {
+                email_feedback.innerHTML += ("<p>" + data + "</p>");
+              }
+            } else {
+              email.classList.remove('is-invalid');
+              email.classList.add('is-valid');
+            }
+            if (jsonData.hasOwnProperty("password") && jsonData.password != '') {
+              password.classList.add('is-invalid');
+              password.classList.remove('is-valid');
+              password_feedback.innerHTML = "";
+              var data;
+              for (data of jsonData.password) {
+                password_feedback.innerHTML += ("<p>" + data + "</p>");
+              }
+            } else {
+              password.classList.remove('is-invalid');
+              password.classList.add('is-valid');
+            }
+            if (jsonData.hasOwnProperty("repeat_password") && jsonData.repeat_password != '') {
+              repeat_password.classList.add('is-invalid');
+              repeat_password.classList.remove('is-valid');
+              repeat_password_feedback.innerHTML = "";
+              var data;
+              for (data of jsonData.repeat_password) {
+                repeat_password_feedback.innerHTML += ("<p>" + data + "</p>");
+              }
+            } else {
+              repeat_password.classList.remove('is-invalid');
+              repeat_password.classList.add('is-valid');
+            }
+          }
+        }
+      },
+      error: function(data) {
+        console.log('An error occurred.');
+        console.log(data);
+      },
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#LogoutButton").click(
+      function(e) {
+        formData = {
+          'verification_token': $('input[name=verification_token]').val(),
+        };
+        e.preventDefault();
+
+        $.ajax({
+          type: "POST",
+          url: "logout.php",
+          data: formData,
+          success: function(data) {
+            location.reload();
+            console.log('Logout was successful.');
+            console.log(data);
+          },
+          error: function(data) {
+            console.log('An error occurred.');
+            console.log(data);
+          },
+        });
+      }
+    );
+  });
+</script>
 
 </html>
