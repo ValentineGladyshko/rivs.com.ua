@@ -16,7 +16,7 @@ my_session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
@@ -26,7 +26,6 @@ my_session_start();
   <link href="style.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
 
 </head>
@@ -51,7 +50,7 @@ my_session_start();
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/contacts.php">Контакти</a>
+              <a class="nav-link" href="/contacts">Контакти</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/store">Продукція</a>
@@ -76,12 +75,12 @@ my_session_start();
 
 
             <li class="nav-item">
-              <a class="nav-link" href="https://www.rivs.com.ua/rus">RU
+              <a class="nav-link" href="rus">RU
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item active disabled">
-              <a class="nav-link" href="https://www.rivs.com.ua/">UA
+              <a class="nav-link" href="/">UA
                 <span class="sr-only">(current)</span>
               </a>
             </li>
