@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta https-equiv="x-ua-compatible" content="ie=edge">
 
-  
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="css/all.css">
   <!-- Bootstrap core CSS -->
@@ -26,78 +26,7 @@
 </head>
 
 <body>
-  <header>
-    <!--Navbar -->
-    <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
-      <div class="container">
-        <a class="navbar-brand" href="/">
-          <img src="Images/logo.png" width="30" height="40" alt="logo">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Головна
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="contacts">Контакти
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="store">Продукція</a>
-            </li>
-            </li>
-          </ul>
-          <ul class="navbar-nav navbar-right">
-            <li class="nav-item">
-              <!-- Button trigger modal -->
-              <a class="nav-link" data-toggle="modal" data-target="#MobileModal">
-                <i class="fas fa-phone"></i>Телефони
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="ru/contacts">RU
-                <span class="sr-only">(current)</span>
-              </a>
-              <i class="russia flag"></i>
-            </li>
-            <li class="nav-item active disabled">
-              <a class="nav-link" href="/">UA
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      </div>
-    </nav>
-    <!-- Modal -->
-    <div class="modal fade" id="MobileModal" tabindex="-1" role="dialog" aria-labelledby="MobileModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="MobileModalLabel">Наші телефони</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p class="text-justify">Консультації та замовлення за телефонами:</p>
-            <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
-            <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
-            <p class="text-justify">Графік прийому замовлень:</p>
-            <p class="text-justify">Будні: з 10:00 до 20:00</p>
-            <p class="text-justify">Вихідні: з 11:00 до 19:00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  <? include("header.php"); ?>
 
   <!--Main Navigation-->
   <!--Main layout-->
@@ -132,7 +61,7 @@
 
           <!--Grid column-->
           <div class="col-md-8 col-xl-9">
-            <form id="contact-form" name="contact-form" method="post"> 
+            <form id="contact-form" name="contact-form" method="post">
 
               <!--Grid row-->
               <div class="row">
@@ -229,15 +158,12 @@
   </footer>
   <!-- Footer -->
 
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
-  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-  <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <? include("scripts.php"); ?>
+
+  <script type="text/javascript">
+    var elem = document.getElementById("contacts");
+    elem.classList.add('active');
+  </script>
 
   <!-- Script for submitting form -->
   <script type="text/javascript">
@@ -285,8 +211,8 @@
                 email.classList.add('is-invalid');
                 email.classList.remove('is-valid');
                 email_feedback.innerHTML = jsonData.email;
-              } 
-              
+              }
+
               // change status if email is valid
               else {
                 email.classList.remove('is-invalid');
@@ -298,8 +224,8 @@
                 name.classList.add('is-invalid');
                 name.classList.remove('is-valid');
                 name_feedback.innerHTML = jsonData.name;
-              } 
-              
+              }
+
               // change status if name is valid
               else {
                 name.classList.remove('is-invalid');
@@ -311,8 +237,8 @@
                 message.classList.add('is-invalid');
                 message.classList.remove('is-valid');
                 message_feedback.innerHTML = jsonData.message;
-              } 
-              
+              }
+
               // change status if message is valid
               else {
                 message.classList.remove('is-invalid');
