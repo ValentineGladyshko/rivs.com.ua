@@ -14,14 +14,7 @@ require_once("LDLRIVS.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="/all.css">
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="storebuttons.css" rel="stylesheet">
+  <? include("scripts.php"); ?>
   <link href="main.css" rel="stylesheet">
 
 </head>
@@ -95,7 +88,7 @@ require_once("LDLRIVS.php");
 
 </body>
 
-<? include("scripts.php"); ?>
+<? include("myScripts.php"); ?>
 
   <script type="text/javascript">
     var elem = document.getElementById("store");

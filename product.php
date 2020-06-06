@@ -16,14 +16,7 @@ $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/all.css">
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <? include("scripts.php"); ?>
   <link href="main.css" rel="stylesheet">
 
 </head>
@@ -96,7 +89,7 @@ $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON
 
 </body>
 
-<? include("scripts.php"); ?>
+<? include("myScripts.php"); ?>
 
   <script type="text/javascript">
     var elem = document.getElementById("store");

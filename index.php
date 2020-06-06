@@ -20,18 +20,7 @@ $_SESSION['verification_token'] = $verification_token;
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/all.css">
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-
+  <? include("scripts.php"); ?>
 </head>
 
 <body>
@@ -45,7 +34,7 @@ $_SESSION['verification_token'] = $verification_token;
     <!--Main container-->
     <blockquote class="blockquote">
       <div class="container" style="background-color: #eee;">
-        <img src="https://www.rivs.com.ua/Images/main.jpg" class="img-fluid rounded mx-auto d-block">
+        <img src="/Images/main.jpg" class="img-fluid rounded mx-auto d-block">
         <p>
           Шановні відвідувачі! Торгово-виробничий Дім «РІВС» пропонує вашій увазі <b>дезінфікуючий засіб «ГУАНПОЛІСЕПТ», який здатен виправити наслідки використання спиртових антисептиків, а також повністю їх замінити. Адже він має дезінфікуючу дію доки знаходиться на поверхні, а спирт лише до першого вашого контакту з вірусами або бактеріями.</b> Свідоцтво № 000860 від 11.02.2010 р МОЗ України. Повна відсутність хлору, свинцю, міді та інших шкідливих для людини хімічних сполук. Дезінфікуючий засіб, який <b>зберігає свої антимікробні властивості протягом усього часу присутності</b>, в той час як інші існуючі дезинфікуючі засоби втрачають свої властивості через короткий період часу після їх нанесення і зростання бактерій відновлюється.
         </p>
@@ -169,7 +158,7 @@ $_SESSION['verification_token'] = $verification_token;
 
 </body>
 
-<? include("scripts.php"); ?>
+<? include("myScripts.php"); ?>
 
 <script type="text/javascript">
   var elem = document.getElementById("main");

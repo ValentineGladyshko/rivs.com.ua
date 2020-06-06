@@ -15,12 +15,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="css/all.css">
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <? include("scripts.php"); ?>
   <link href="googlemap.css" rel="stylesheet">
 
 </head>
@@ -158,7 +153,7 @@
   </footer>
   <!-- Footer -->
 
-  <? include("scripts.php"); ?>
+  <? include("myScripts.php"); ?>
 
   <script type="text/javascript">
     var elem = document.getElementById("contacts");
