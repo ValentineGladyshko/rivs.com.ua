@@ -29,19 +29,22 @@ if (hash_equals($verification_token, $verification_token1)) {
   }
 
   // checking email secure code
-  $session_id = session_id();
-
-  if ($stmt = $mysqli->prepare("SELECT EmailCode FROM email_codes WHERE SessionID=?")) {
-    $stmt->bind_param("s", $session_id);
+  if ($stmt = $mysqli->prepare("SELECT EmailCode, ExpiredDate FROM email_codes WHERE Email=?")) {
+    $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($email_code2);
+    $stmt->bind_result($email_code2, $expired_date);
     $stmt->fetch();
     $stmt->close();
   }
-  if ($email_code != $email_code2 || $email_code == null) {
+  if (time() > strtotime($expired_date)) {
     $response->success = false;
-    $response->email_code = "Цей код не співпадає з ти що висланий на вашу пошту";
+    $response->expired = "Цей код пітвердження став недійсним, будь ласка натисніть кнопку для повторного надсилання";
   }
+  else if ($email_code != $email_code2 || $email_code == null) {
+    $response->success = false;
+    $response->email_code = "Цей код не співпадає з тим що висланий на вашу пошту";
+  }
+
 
   //go out if we haveany errors
   if ($response->success == false) {

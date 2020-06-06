@@ -10,18 +10,18 @@ my_session_start();
 
   <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
   <title>
-    ТОВ ТВД "РІВС" | Головна сторінка | Гуанполісепт
+    ТОВ ТВД "РІВС" | Регістрація
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
+
   <? include("scripts.php"); ?>
 
 </head>
 
 <body>
-<? include("header.php"); ?>
+  <? include("header.php"); ?>
 
   <main class="mt-5 mb-3">
     <!--Main container-->
@@ -42,13 +42,19 @@ my_session_start();
             <input type="text" class="form-control" id="email_code" name="email_code" placeholder="Enter code" required>
             <div id="email_code_feedback" class="invalid-feedback"></div>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button id="email_submit" type="submit" class="btn btn-primary">Submit</button> <button id="email_send_code" hidden="true" class="btn btn-primary">Відправити код повторно</button>
         </form>
       </div>
     </div>
   </main>
 </body>
 
+<script type="text/javascript">
+  var email_code = document.getElementById("email_code");
+  email_code.oninput = function() {
+    email_code.classList.remove('is-invalid');
+  };
+</script>
 <script type="text/javascript">
   var form = $('#email-form');
 
@@ -73,16 +79,22 @@ my_session_start();
           if (jsonData.success == true) {
             window.location.replace("/");
           } else {
+            var email_send_code = document.getElementById("email_send_code");
             var email_code = document.getElementById("email_code");
             var email_code_feedback = document.getElementById("email_code_feedback");
-           
+
             if (jsonData.hasOwnProperty("email_code") && jsonData.email_code != '') {
               email_code.classList.add('is-invalid');
-              email_code.classList.remove('is-valid');
-              email_code_feedback.innerHTML = jsonData.email_code;       
+              email_code_feedback.innerHTML = jsonData.email_code;
             } else {
               email_code.classList.remove('is-invalid');
-              email_code.classList.add('is-valid');
+            }
+            if (jsonData.hasOwnProperty("expired") && jsonData.expired != '') {
+              email_code.classList.add('is-invalid');
+              email_send_code.hidden = false;
+              email_code_feedback.innerHTML = jsonData.expired;
+            } else {
+              email_code.classList.remove('is-invalid');
             }
           }
         }
@@ -94,4 +106,41 @@ my_session_start();
     });
   });
 </script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#email_send_code").click(
+      function(e) {
+
+        // give data from form
+        formData = {
+          'verification_token': <?php echo json_encode($_POST["verification_token"], JSON_UNESCAPED_UNICODE); ?>,
+          'email': <?php echo json_encode($_POST["email"], JSON_UNESCAPED_UNICODE); ?>,
+          'password': <?php echo json_encode($_POST["password"], JSON_UNESCAPED_UNICODE); ?>,
+          'repeat_password': <?php echo json_encode($_POST["password"], JSON_UNESCAPED_UNICODE); ?>,
+        };
+        e.preventDefault();
+
+        // ajax request
+        $.ajax({
+          type: "POST",
+          url: "registerStart.php",
+          data: formData,
+          success: function(data) {
+            var email_send_code = document.getElementById("email_send_code");
+            var email_code = document.getElementById("email_code");
+            var email_code_feedback = document.getElementById("email_code_feedback");
+            email_send_code.hidden = true;
+            email_code.classList.remove('is-invalid');
+            email_code.value = "";
+          },
+          error: function(data) {
+            console.log('An error occurred.');
+            console.log(data);
+          },
+        });
+      }
+    );
+  });
+</script>
+
 </html>

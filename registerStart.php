@@ -99,14 +99,21 @@ if (hash_equals($verification_token, $verification_token1)) {
   $_SESSION['email'] = $email;
   $_SESSION["verification_token"] = $verification_token;
 
-  $session_id = session_id();
-
   //generating security code
-  $email_code = base64_encode(openssl_random_pseudo_bytes(6));
+  $email_code = 0;
+  while (true) {
+    $ert = openssl_random_pseudo_bytes(4);
+    $array = unpack("I", $ert);
+    if ($array[1] < 4000000000) {
+      $email_code = $array[1] % 1000000;
+      break;
+    }
+  }
+  $email_code = sprintf("%06d", $email_code);
 
   // write to db security code
-  if ($stmt = $mysqli->prepare("INSERT INTO email_codes (SessionID, EmailCode) VALUES (?, ?) ON DUPLICATE KEY UPDATE EmailCode = ?")) {
-    $stmt->bind_param("sss", $session_id, $email_code, $email_code);
+  if ($stmt = $mysqli->prepare("INSERT INTO email_codes (Email, EmailCode, ExpiredDate) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE EmailCode = ?, ExpiredDate = ?")) {
+    $stmt->bind_param("sssss", $email, $email_code, date('Y-m-d H:i:s', (time() + 60 * 2)), $email_code, date('Y-m-d H:i:s', (time() + 60 * 2)));
     if ($stmt->execute() == false) {
       $rt = false;
     };
@@ -156,9 +163,9 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   // Mail subject
   $mail->Subject = 'From: rivs.com.ua';
-
+  $mail->isHTML(true);
   // Mail message
-  $mail->Body = "Ваш код для завершення реєстрації: $email_code, будь-ласка, нікому не передавайте цей код";
+  $mail->Body = file_get_contents("emailConfirmation1.html") . $email_code . file_get_contents("emailConfirmation2.html") . $email_code . file_get_contents("emailConfirmation3.html");
 
   // Mail sending
   if ($mail->send()) {
