@@ -38,7 +38,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   }
   if (time() > strtotime($expired_date)) {
     $response->success = false;
-    $response->expired = "Цей код підтвердження став недійсним, будь ласка натисніть кнопку для повторного надсилання";
+    $response->expired = "Цей код пітвердження став недійсним, будь ласка натисніть кнопку для повторного надсилання";
   }
   else if ($email_code != $email_code2 || $email_code == null) {
     $response->success = false;

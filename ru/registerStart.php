@@ -46,13 +46,13 @@ if (hash_equals($verification_token, $verification_token1)) {
   //validating email adress
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $response->success = false;
-    array_push($response->email, "Недійсна електронна адреса");
+    array_push($response->email, "Недействительный электронный адрес");
   }
 
   //checking the length of password
   if (strlen($password) < $password_length) {
     $response->success = false;
-    array_push($response->password, "Пароль повинен бути довжиною мінімум " . $password_length . " символів");
+    array_push($response->password, "Пароль должен быть длиной минимум " . $password_length . " символов");
   }
 
   //checking the existence of account
@@ -65,7 +65,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   }
   if ($email == $email2) {
     $response->success = false;
-    array_push($response->email, "Ця електронна адреса вже зареєстрована");
+    array_push($response->email, "Этот электронный адрес уже зарегистрирован");
   }
 
   //checking for common passwords
@@ -78,13 +78,13 @@ if (hash_equals($verification_token, $verification_token1)) {
   }
   if (strtolower($password) == $password2) {
     $response->success = false;
-    array_push($response->password, "Цей пароль належить до ненадійних");
+    array_push($response->password, "Этот пароль не надёжный");
   }
 
   //checking password and repeat password
   if ($password != $repeat_password) {
     $response->success = false;
-    array_push($response->repeat_password, "Паролі не однакові");
+    array_push($response->repeat_password, "Пароли не совпадают");
   }
 
   //go out if we have any errors

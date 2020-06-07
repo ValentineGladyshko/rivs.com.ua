@@ -10,7 +10,7 @@ my_session_start();
 
   <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
   <title>
-    ТОВ ТВД "РІВС" | Реєстрація
+    ТОВ ТВД "РІВС" | Регистрация
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,13 +36,13 @@ my_session_start();
         </div>
       </div>
       <div class="mb-3">
-        <h4 class="text-center mb-4">Ми вислали вам лист на електронну адресу, будь-ласка вкажіть код зазначений в листі щоб підтвердити реєстрацію</h4>
+        <h4 class="text-center mb-4">Мы выслали вам письмо, укажите код указанный в нём, чтобы подтвердить регистрацию</h4>
         <form id="email-form" name="email-form" action="registerConfirmation.php" method="post">
           <div class="form-group">
-            <input type="text" class="form-control" id="email_code" name="email_code" placeholder="Введіть код" required>
+            <input type="text" class="form-control" id="email_code" name="email_code" placeholder="Введите код" required>
             <div id="email_code_feedback" class="invalid-feedback"></div>
           </div>
-          <button id="email_submit" type="submit" class="btn btn-primary">Підтвердити</button> <button id="email_send_code" hidden="true" class="btn btn-primary">Відправити код повторно</button>
+          <button id="email_submit" type="submit" class="btn btn-primary">Подтвердить</button> <button id="email_send_code" hidden="true" class="btn btn-primary">Отрпавить код повторно</button>
         </form>
       </div>
     </div>

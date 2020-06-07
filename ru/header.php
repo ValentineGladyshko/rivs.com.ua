@@ -12,13 +12,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
                 <ul class="navbar-nav mr-auto">
                     <li id="main" class="nav-item">
-                        <a class="nav-link" href="index.php">Головна</a>
+                        <a class="nav-link" href="index.php">Главная</a>
                     </li>
                     <li id="contacts" class="nav-item">
-                        <a class="nav-link" href="contacts.php">Контакти</a>
+                        <a class="nav-link" href="contacts.php">Контакты</a>
                     </li>
                     <li id="store" class="nav-item">
-                        <a class="nav-link" href="store.php">Продукція</a>
+                        <a class="nav-link" href="store.php">Продукция</a>
                     </li>
                     </li>
                 </ul>
@@ -31,17 +31,17 @@
                     <li class="nav-item">
                         <!-- Button trigger modal -->
                         <a class="nav-link" data-toggle="modal" data-target="#MobileModal">
-                            <i class="fas fa-phone"></i>Телефони
+                            <i class="fas fa-phone"></i>Телефоны
                         </a>
                     </li>
 
 
 
-                    <li class="nav-item">
+                    <li class="nav-item active disabled">
                         <a id="ru_link" class="nav-link" href="/">RU
                         </a>
                     </li>
-                    <li class="nav-item active disabled">
+                    <li class="nav-item">
                         <a id="ua_link" class="nav-link" href="/">UA
                         </a>
                     </li>
@@ -53,8 +53,8 @@
 
             // if security tokens are unset show registration and login
             if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) { ?>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Регистрация</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Войти</a></li>
                     <? 
 
             // if tokens are equal show logout
@@ -63,15 +63,15 @@
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
                             <input name="verification_token" id="verification_token2" type="hidden" value=<?= $verification_token ?>>
-                            <a id="LogoutButton" class="nav-link">Вийти</a>
+                            <a id="LogoutButton" class="nav-link">Выйти</a>
                         </form>
                     </li>
                     <? 
 
             // if security tokens are not equal show registration and login
               } else { ?>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Регистрация</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Войти</a></li>
                     <? } ?>
                 </ul>
             </div>
@@ -82,7 +82,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Вхід</h5>
+                    <h5 class="modal-title" id="MobileModalLabel">Вход</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -92,16 +92,16 @@
                     <form id="login-form" name="login-form" action="login.php" method="post">
                         <input name="verification_token" id="verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
-                            <label class="control-label" for="email">Електронна адреса</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Введіть електронну адресу" required>
+                            <label class="control-label" for="email">Електронный адрес</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Введите електронный адрес" required>
                             <div id="email_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password">Пароль</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Введіть пароль" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль" required>
                             <div id="password_feedback" class="invalid-feedback"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Підтвердити</button>
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
                     </form>
 
                 </div>
@@ -113,7 +113,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Реєстрація</h5>
+                    <h5 class="modal-title" id="MobileModalLabel">Регистрация</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -123,21 +123,21 @@
                     <form id="register-form" name="register-form" action="register.php" method="post">
                         <input name="verification_token" id="verification_token1" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
-                            <label class="control-label" for="email1">Електронна адреса</label>
-                            <input type="email" class="form-control" id="email1" name="email1" placeholder="Введіть електронну адресу" required>
+                            <label class="control-label" for="email1">Електронный адрес</label>
+                            <input type="email" class="form-control" id="email1" name="email1" placeholder="Введите електронный адрес" required>
                             <div id="email1_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password1">Пароль</label>
-                            <input type="password" class="form-control" id="password1" name="password1" placeholder="Введіть пароль" required>
+                            <input type="password" class="form-control" id="password1" name="password1" placeholder="Введите пароль" required>
                             <div id="password1_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="repeat_password">Повторний пароль</label>
-                            <input type="password" class="form-control" id="repeat_password" name="repeat_password" placeholder="Введіть пароль повторно" required>
+                            <label class="control-label" for="repeat_password">Повторный пароль</label>
+                            <input type="password" class="form-control" id="repeat_password" name="repeat_password"placeholder="Введите пароль повторно" required>
                             <div id="repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Підтвердити</button>
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
                     </form>
 
                 </div>
@@ -149,18 +149,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Наші телефони</h5>
+                    <h5 class="modal-title" id="MobileModalLabel">Наши телефоны</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-justify">Консультації та замовлення за телефонами:</p>
+                    <p class="text-justify">Консультации и заказы по телефонам:</p>
                     <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                     <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
-                    <p class="text-justify">Графік прийому замовлень:</p>
-                    <p class="text-justify">Будні: з 10:00 до 20:00</p>
-                    <p class="text-justify">Вихідні: з 11:00 до 19:00</p>
+                    <p class="text-justify">График приёма заказов:</p>
+                    <p class="text-justify">Будние: с 10:00 до 20:00</p>
+                    <p class="text-justify">Выходные: с 11:00 до 19:00</p>
                 </div>
             </div>
         </div>
