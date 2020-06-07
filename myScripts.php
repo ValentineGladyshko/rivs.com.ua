@@ -209,3 +209,25 @@
     );
   });
 </script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ua_link").click(
+      function(e) {
+        e.stopPropagation();    
+        document.cookie = "language=ua;path=/";
+      }
+    );
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#ru_link").click(
+      function(e) {
+        e.stopPropagation();
+        document.cookie = "language=ru;path=/";
+      }
+    );
+  });
+</script>
