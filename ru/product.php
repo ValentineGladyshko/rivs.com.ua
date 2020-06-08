@@ -26,7 +26,7 @@
   <link href="main.css" rel="stylesheet">
   
 </head>
-  <body>
+  <body style="overflow-y: overlay;">
       <header>
   <!--Navbar -->
   <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">

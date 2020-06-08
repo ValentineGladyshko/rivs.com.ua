@@ -23,7 +23,7 @@ $_SESSION['verification_token'] = $verification_token;
   <? include("../scripts.php"); ?>
 </head>
 
-<body>
+<body style="overflow-y: overlay;">
   <? include("header.php"); ?>
 
   <!--Main Navigation-->

@@ -20,7 +20,7 @@ $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON
 
 </head>
 
-<body>
+<body style="overflow-y: overlay;">
   <? include("header.php"); ?>
 
   <!--Main Navigation-->

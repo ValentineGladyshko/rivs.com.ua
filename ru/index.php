@@ -23,7 +23,7 @@ $_SESSION['verification_token'] = $verification_token;
   <? include("../scripts.php"); ?>
 </head>
 
-<body>
+<body style="overflow-y: overlay;">
   <? include("header.php"); ?>
 
   <!--Main Navigation-->
@@ -77,20 +77,20 @@ $_SESSION['verification_token'] = $verification_token;
             <div class="row">
 
               <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal1">
-                <img src="/WithPaintExample/10.jpg" alt="1 example" class="img-fluid">
+                <img src="/Images/WithPaintExample/1.jpg" alt="1 example" class="img-fluid">
               </figure>
 
               <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal2">
-                <img src="/WithPaintExample/2.png" alt="2 example" class="img-fluid" />
+                <img src="/Images/WithPaintExample/2.jpg" alt="2 example" class="img-fluid" />
               </figure>
 
               <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal3">
-                <img src="/WithPaintExample/30.jpg" alt="3 example" class="img-fluid" />
+                <img src="/Images/WithPaintExample/3.jpg" alt="3 example" class="img-fluid" />
 
               </figure>
 
               <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal4">
-                <img src="/WithPaintExample/40.jpg" alt="4 example" class="img-fluid" />
+                <img src="/Images/WithPaintExample/4.jpg" alt="4 example" class="img-fluid" />
               </figure>
             </div>
       </div>
@@ -103,7 +103,7 @@ $_SESSION['verification_token'] = $verification_token;
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <img src="/WithPaintExample/10.jpg" class="img-fluid rounded mx-auto d-block">
+            <img src="/Images/WithPaintExample/1.jpg" class="img-fluid rounded mx-auto d-block">
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ $_SESSION['verification_token'] = $verification_token;
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <img src="/WithPaintExample/2.png" class="img-fluid rounded mx-auto d-block">
+            <img src="/Images/WithPaintExample/2.jpg" class="img-fluid rounded mx-auto d-block">
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ $_SESSION['verification_token'] = $verification_token;
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <img src="/WithPaintExample/30.jpg" class="img-fluid rounded mx-auto d-block">
+            <img src="/Images/WithPaintExample/3.jpg" class="img-fluid rounded mx-auto d-block">
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@ $_SESSION['verification_token'] = $verification_token;
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <img src="/WithPaintExample/40.jpg" class="img-fluid rounded mx-auto d-block">
+            <img src="/Images/WithPaintExample/4.jpg" class="img-fluid rounded mx-auto d-block">
           </div>
         </div>
       </div>

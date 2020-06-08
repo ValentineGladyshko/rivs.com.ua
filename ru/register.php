@@ -20,7 +20,7 @@ my_session_start();
 
 </head>
 
-<body>
+<body style="overflow-y: overlay;">
   <? include("header.php"); ?>
 
   <main class="mt-5 mb-3">

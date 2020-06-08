@@ -37,7 +37,7 @@ if ($email != $email2 || $email == null) {
 
   //exiting with error
   $response->success = false;
-  $response->email = "Ця електронна адреса не зареєстрована";
+  $response->email = "Этот электронный адрес не зарегистрирован";
   echo json_encode($response, JSON_UNESCAPED_UNICODE);
   exit();
 }
@@ -91,7 +91,7 @@ if (hash_equals($verification_token, $verification_token1)) {
 
     //exiting with error
     $response->success = false;
-    $response->password = "Невірний пароль";
+    $response->password = "Неверный пароль";
 
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();

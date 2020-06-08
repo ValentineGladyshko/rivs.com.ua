@@ -59,10 +59,15 @@
 
             // if tokens are equal show logout
             } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
-                    <li class="nav-item"><a class="nav-link"><?= $_SESSION["email"] ?></a></li>
+                    <li style="margin-left:15px" id="user" class="nav-item">
+                        <form style="margin:0px" class="nav-item" id="user-form" name="user-form" action="userAccount.php" method="post">
+                            <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        </form>
+                        <a id="UserButton" class="nav-link"><?= $_SESSION["email"] ?></a>
+                    </li>
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
-                            <input name="verification_token" id="verification_token2" type="hidden" value=<?= $verification_token ?>>
+                            <input name="logout_verification_token" id="logout_verification_token" type="hidden" value=<?= $verification_token ?>>
                             <a id="LogoutButton" class="nav-link">Вийти</a>
                         </form>
                     </li>
@@ -90,16 +95,16 @@
                 <div class="modal-body">
                     <!--Grid row-->
                     <form id="login-form" name="login-form" action="login.php" method="post">
-                        <input name="verification_token" id="verification_token" type="hidden" value=<?= $verification_token ?>>
+                        <input name="login_verification_token" id="login_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email">Електронна адреса</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Введіть електронну адресу" required>
-                            <div id="email_feedback" class="invalid-feedback"></div>
+                            <input type="email" class="form-control" id="login_email" name="login_email" placeholder="Введіть електронну адресу" required>
+                            <div id="login_email_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password">Пароль</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Введіть пароль" required>
-                            <div id="password_feedback" class="invalid-feedback"></div>
+                            <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введіть пароль" required>
+                            <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Підтвердити</button>
                     </form>
@@ -121,21 +126,21 @@
                 <div class="modal-body">
 
                     <form id="register-form" name="register-form" action="register.php" method="post">
-                        <input name="verification_token" id="verification_token1" type="hidden" value=<?= $verification_token ?>>
+                        <input name="register_verification_token" id="register_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email1">Електронна адреса</label>
-                            <input type="email" class="form-control" id="email1" name="email1" placeholder="Введіть електронну адресу" required>
-                            <div id="email1_feedback" class="invalid-feedback"></div>
+                            <input type="email" class="form-control" id="register_email" name="register_email" placeholder="Введіть електронну адресу" required>
+                            <div id="register_email_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password1">Пароль</label>
-                            <input type="password" class="form-control" id="password1" name="password1" placeholder="Введіть пароль" required>
-                            <div id="password1_feedback" class="invalid-feedback"></div>
+                            <input type="password" class="form-control" id="register_password" name="register_password" placeholder="Введіть пароль" required>
+                            <div id="register_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="repeat_password">Повторний пароль</label>
-                            <input type="password" class="form-control" id="repeat_password" name="repeat_password" placeholder="Введіть пароль повторно" required>
-                            <div id="repeat_password_feedback" class="invalid-feedback"></div>
+                            <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введіть пароль повторно" required>
+                            <div id="register_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Підтвердити</button>
                     </form>
