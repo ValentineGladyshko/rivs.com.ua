@@ -19,6 +19,7 @@ $_SESSION['verification_token'] = $verification_token;
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link href="/css/storebuttons.css" rel="stylesheet">
   <!-- Font Awesome -->
   <? include("../scripts.php"); ?>
 
@@ -48,12 +49,13 @@ $_SESSION['verification_token'] = $verification_token;
           <div class="card" style="height:100%;">
 
             <!--Card image-->
+
             <div class="view overlay zoom">
-              <img class="img-fluid mx-auto" src="<?= $CARD['Image'] ? $CARD['Image'] : 'Store_photos/default.jpg'; ?>" style="max-height: 400px; padding:20px" alt="">
-              <a href="product?id=<?= $CARD['PriceListID']; ?>">
-                <div class="mask rgba-white-slight"></div>
+              <a href="product.php?id=<?= $CARD['PriceListID']; ?>">
+                <img class="img-fluid mx-auto" src="/<?= $CARD['Image'] ? $CARD['Image'] : 'Store_photos/default.jpg'; ?>" style="max-height: 400px; padding:20px" alt="">
               </a>
             </div>
+
             <!--Card content-->
             <div class="card-body text-center">
               <!--Title-->
@@ -62,9 +64,9 @@ $_SESSION['verification_token'] = $verification_token;
               <b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – <?= $CARD['Price']; ?> грн.</b>
               <? } ?>
             </div>
-            <a href="product?id=<?= $CARD['PriceListID']; ?>" class="btn btn-bottom-outline-info-dark-green rounded" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>
+            <a href="product.php?id=<?= $CARD['PriceListID']; ?>" class="btn btn-bottom-outline-info-dark-green rounded" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>
             <? if ($CARD['ProductAvailability'] == 0) { ?>
-            <a href="product?id=<?= $CARD['PriceListID']; ?>" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>
+            <a href="product.php?id=<?= $CARD['PriceListID']; ?>" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>
             <? } ?>
             <? } ?>
           </div>

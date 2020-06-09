@@ -1,4 +1,4 @@
-<header style="font-family: Helios,sans-serif;">
+<header>
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
         <div class="container">
@@ -24,18 +24,13 @@
                 </ul>
 
                 <ul class="navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <i class="russia flag"></i>
-                    </li>
 
                     <li class="nav-item">
                         <!-- Button trigger modal -->
                         <a class="nav-link" data-toggle="modal" data-target="#MobileModal">
-                            <i class="fas fa-phone"></i>Телефони
+                            <img height="20" src="/icons/telephone-fill.svg">Телефони
                         </a>
                     </li>
-
-
 
                     <li class="nav-item">
                         <a id="ru_link" class="nav-link" href="/">RU
@@ -85,16 +80,16 @@
     <!-- Modal login -->
     <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Вхід</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--Grid row-->
-                    <form id="login-form" name="login-form" action="login.php" method="post">
+            <form id="login-form" name="login-form" action="login.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="MobileModalLabel">Вхід</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--Grid row-->
                         <input name="login_verification_token" id="login_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email">Електронна адреса</label>
@@ -106,26 +101,28 @@
                             <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введіть пароль" required>
                             <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
                         <button type="submit" class="btn btn-primary">Підтвердити</button>
-                    </form>
-
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Modal register-->
     <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Реєстрація</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+            <form id="register-form" name="register-form" action="register.php" method="post">
+                <div class="modal-content">
 
-                    <form id="register-form" name="register-form" action="register.php" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="MobileModalLabel">Реєстрація</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <input name="register_verification_token" id="register_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email1">Електронна адреса</label>
@@ -142,11 +139,13 @@
                             <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введіть пароль повторно" required>
                             <div id="register_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
                         <button type="submit" class="btn btn-primary">Підтвердити</button>
-                    </form>
-
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Modal -->
@@ -166,6 +165,9 @@
                     <p class="text-justify">Графік прийому замовлень:</p>
                     <p class="text-justify">Будні: з 10:00 до 20:00</p>
                     <p class="text-justify">Вихідні: з 11:00 до 19:00</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
                 </div>
             </div>
         </div>

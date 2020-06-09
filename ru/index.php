@@ -33,7 +33,7 @@ $_SESSION['verification_token'] = $verification_token;
 
     <!--Main container-->
     <blockquote class="blockquote">
-      <div class="container" style="background-color: #eee;">
+      <div class="container" style="background-color: #eee; font-weight: 300;">
         <img src="/Images/main.jpg" class="img-fluid rounded mx-auto d-block">
         <p>
           Уважаемые посетители! Торгово-производственное предприятие «РИВС» предлагает вашему вниманию дезинфицирующее средство «ГУАНПОЛИСЕПТ», свидетельство № 000860 от 11.02.2010 г. МОЗ Украины. Полное отсутствие хлора, свинца, меди и других вредных для человека химических соединений. Дезинфицирующее средство, которое сохраняет свои антимикробные свойства в течение всего времени присутствия, в то время как другие существующие дезинфицирующие средства почти сразу теряют свои свойства и через некоторый промежуток времени рост бактерий восстанавливается.
@@ -139,23 +139,17 @@ $_SESSION['verification_token'] = $verification_token;
       </div>
     </div>
   </main>
-  <!--Main layout-->
 
-  <!-- Footer -->
   <footer class="page-footer font-small bottom cyan accent-4 mt-4">
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
     </div>
-    <!-- Copyright -->
 
   </footer>
-  <!-- Footer -->
 
 </body>
 
-<!-- SCRIPTS -->
-<!-- JQuery -->
 <? include("../myScripts.php"); ?>
 
 <script type="text/javascript">

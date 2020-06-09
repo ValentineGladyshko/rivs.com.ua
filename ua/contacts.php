@@ -20,6 +20,7 @@ $_SESSION['verification_token'] = $verification_token;
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta https-equiv="x-ua-compatible" content="ie=edge">
 
+  <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
   <!-- Bootstrap core CSS -->
   <? include("../scripts.php"); ?>
   <link href="/css/googlemap.css" rel="stylesheet">
@@ -70,8 +71,8 @@ $_SESSION['verification_token'] = $verification_token;
                 <!--Grid column-->
                 <div class="col-md-6">
                   <div class="md-form">
-                    <input type="text" id="name" name="name" class="form-control" required>
                     <label for="name">Ваше ім'я</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
                     <div id="name_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -80,8 +81,8 @@ $_SESSION['verification_token'] = $verification_token;
                 <!--Grid column-->
                 <div class="col-md-6">
                   <div class="md-form">
-                    <input type="email" id="email" name="email" class="form-control" required>
                     <label for="email">Ваш email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
                     <div id="email_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -94,8 +95,8 @@ $_SESSION['verification_token'] = $verification_token;
                 <!--Grid column-->
                 <div class="col-md-12">
                   <div class="md-form">
-                    <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
                     <label for="message">Введіть повідомлення</label>
+                    <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
                     <div id="message_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -103,34 +104,28 @@ $_SESSION['verification_token'] = $verification_token;
               <!--Grid row-->
 
               <div class="center-on-small-only">
-                <button type="submit" class="btn btn-primary">Надіслати</a>
+                <button style="margin-top:10px" type="submit" class="btn btn-primary">Надіслати</a>
               </div>
-              <div class="status" id="status"></div>
-
+              <div style="margin-top:10px" id="status"></div>
             </form>
-
-
           </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
           <div class="col-md-3 text-center">
             <ul class="list-unstyled mb-0">
-              <li><i class="fas fa-map-marker-alt fa-2x"></i>
+              <li><img height="32" src="/icons/geo-alt.svg">
                 <p>Місто Київ, вулиця Північна 3</p>
               </li>
 
-              <li><i class="fas fa-phone mt-4 fa-2x"></i>
+              <li><img height="32" src="/icons/telephone-fill.svg">
                 <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                 <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
                 <a class="link waves-effect waves-light">
-                  <p><a href="viber://chat?number=+380504400767"><i class="fab fa-viber fa-2x">Viber</i> </a></p>
-                  <p><a href="https://t.me/rivs_com_ua_sales"><i class="fab fa-telegram fa-2x">Telegram</i> </a></p>
-                  <p><a href="https://wa.me/380504400767"><i class="fab fa-whatsapp fa-2x">WhatsApp</i></a></p>
+                  <p><a href="viber://chat?number=+380504400767" style="font-size:28px;"><img height="40" src="/icons/viber-logo.png" style="margin-right:5px;">Viber</a></p>
+                  <p><a href="https://t.me/rivs_com_ua_sales" style="font-size:28px;"><img height="40" src="/icons/telegram.svg" style="margin-right:5px;">Telegram</a></p>
+                  <p><a href="https://wa.me/380504400767" style="font-size:28px;"><img height="40" src="/icons/whatsapp-logo.svg" style="margin-right:5px;">WhatsApp</a></p>
                 </a>
               </li>
 
-              <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+              <li><img width="32" src="/icons/envelope-open-fill.svg">
                 <p>avtomagnetik@gmail.com</p>
               </li>
             </ul>
@@ -199,7 +194,8 @@ $_SESSION['verification_token'] = $verification_token;
             if (jsonData.success == true) {
 
               // clearing values of fields in form and show success status
-              document.getElementById("status").innerHTML = jsonData.send;
+              document.getElementById("status").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
+                '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
               $('#contact-form').closest('form').find("input[type=email], input[type=text], textarea").val("");
             } else {
 
@@ -252,7 +248,8 @@ $_SESSION['verification_token'] = $verification_token;
 
               // change status field
               if (jsonData.hasOwnProperty("send")) {
-                document.getElementById("status").innerHTML = jsonData.send;
+                document.getElementById("status").innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
+                  '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
               }
             }
           }
@@ -265,5 +262,4 @@ $_SESSION['verification_token'] = $verification_token;
     });
   </script>
 </body>
-
 </html>

@@ -1,4 +1,4 @@
-<header style="font-family: Helios,sans-serif;">
+<header>
     <!--Navbar -->
     <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
         <div class="container">
@@ -31,7 +31,7 @@
                     <li class="nav-item">
                         <!-- Button trigger modal -->
                         <a class="nav-link" data-toggle="modal" data-target="#MobileModal">
-                            <i class="fas fa-phone"></i>Телефоны
+                            <img height="20" src="/icons/telephone-fill.svg">Телефоны
                         </a>
                     </li>
 
@@ -59,7 +59,12 @@
 
             // if tokens are equal show logout
             } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
-                    <li class="nav-item"><a class="nav-link"><?= $_SESSION["email"] ?></a></li>
+                    <li style="margin-left:15px" id="user" class="nav-item">
+                        <form style="margin:0px" class="nav-item" id="user-form" name="user-form" action="userAccount.php" method="post">
+                            <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        </form>
+                        <a id="UserButton" class="nav-link"><?= $_SESSION["email"] ?></a>
+                    </li>
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
                             <input name="logout_verification_token" id="logout_verification_token" type="hidden" value=<?= $verification_token ?>>
@@ -80,16 +85,17 @@
     <!-- Modal login -->
     <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Вход</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--Grid row-->
-                    <form id="login-form" name="login-form" action="login.php" method="post">
+            <form id="login-form" name="login-form" action="login.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="MobileModalLabel">Вход</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--Grid row-->
+
                         <input name="login_verification_token" id="login_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email">Електронный адрес</label>
@@ -101,26 +107,27 @@
                             <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введите пароль" required>
                             <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрить</button>
                         <button type="submit" class="btn btn-primary">Подтвердить</button>
-                    </form>
-
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Modal register-->
     <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="MobileModalLabel">Регистрация</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form id="register-form" name="register-form" action="register.php" method="post">
+            <form id="register-form" name="register-form" action="register.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="MobileModalLabel">Регистрация</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <input name="register_verification_token" id="register_verification_token1" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
                             <label class="control-label" for="email1">Електронный адрес</label>
@@ -134,14 +141,16 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="repeat_password">Повторный пароль</label>
-                            <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password"placeholder="Введите пароль повторно" required>
+                            <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введите пароль повторно" required>
                             <div id="register_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрить</button>
                         <button type="submit" class="btn btn-primary">Подтвердить</button>
-                    </form>
-
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Modal -->
@@ -161,6 +170,9 @@
                     <p class="text-justify">График приёма заказов:</p>
                     <p class="text-justify">Будние: с 10:00 до 20:00</p>
                     <p class="text-justify">Выходные: с 11:00 до 19:00</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрить</button>
                 </div>
             </div>
         </div>

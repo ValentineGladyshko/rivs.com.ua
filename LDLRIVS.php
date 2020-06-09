@@ -3,7 +3,7 @@
 // function for making db query
 function query_db($query)
 {
-  $mysqli = mysqli_connect("localhost", "ForHack", "kEHf5NAi", "LDLRIVS");
+  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
   $mysqli->set_charset("utf8");
   $res = mysqli_query($mysqli, $query);
   $rows = [];

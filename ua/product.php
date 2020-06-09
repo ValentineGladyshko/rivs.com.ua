@@ -1,5 +1,13 @@
-<?
-require_once('../LDLRIVS.php');
+<?php
+require_once("../LDLRIVS.php");
+
+my_session_start();
+
+$verification_token = base64_encode(openssl_random_pseudo_bytes(32));
+$_SESSION['verification_token'] = $verification_token;
+
+$verification_token = base64_encode(openssl_random_pseudo_bytes(32));
+$_SESSION['verification_token'] = $verification_token;
 $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON `pricelist`.`ProductDescriptionID` = `productdescription`.`ProductDescriptionID` WHERE PriceListID = ' . $_GET['id'])[0];
 
 ?>
@@ -33,7 +41,7 @@ $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON
       <div class="row">
         <div class="col-md-4">
           <div class="text-center">
-            <img src="<?= $PRODUCT['Image'] ? $PRODUCT['Image'] : 'Store_photos/default.jpg'; ?>" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
+            <img src="/<?= $PRODUCT['Image'] ? $PRODUCT['Image'] : 'Store_photos/default.jpg'; ?>" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
           </div>
           <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
             <p>Замовити можна по телефону</p>

@@ -20,7 +20,7 @@ if ($verification_token == null || $verification_token1 == null) {
 }
 
 //checking the existence of account
-$mysqli = mysqli_connect("localhost", "Noob", "noob", "webapp");
+$mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
 if ($mysqli->connect_errno) {
   $response->success = false;
   echo json_encode($response, JSON_UNESCAPED_UNICODE);

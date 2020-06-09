@@ -57,7 +57,7 @@ fclose($myfile);
 
 //variables to decrypt
 $hashedpassword = "i6/Qv5L9B7Hd";
-$iv= "RucZWE5OFpqG0UlE";
+$iv = "RucZWE5OFpqG0UlE";
 $tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
 // decode variables
@@ -71,27 +71,27 @@ $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $
 $mail = new PHPMailer;
 $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 $mail->CharSet = 'UTF-8';
- 
+
 // SMTP settings
 $mail->isSMTP();
 $mail->SMTPDebug = 0;
- 
+
 $mail->Host = 'smtp.gmail.com';
 $mail->Port = 587;
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->SMTPAuth = true;
 $mail->Username = $from_email;
 $mail->Password = $password;
- 
+
 // from who
-$mail->setFrom($from_email, $name);		
- 
+$mail->setFrom($from_email, $name);
+
 // to who
 $mail->addAddress($from_email, 'Site');
- 
+
 // mail subject
 $mail->Subject = 'From: rivs.com.ua';
- 
+
 // mail body
 $mail->Body = "From: $name \nEmail: $email \nMessage: $message";
 

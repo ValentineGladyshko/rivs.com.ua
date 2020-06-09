@@ -50,6 +50,15 @@ if (hash_equals($verification_token, $verification_token1)) {
                             </div>
                         </div>
                     </div>
+
+                    <form>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<?= $_SESSION["email"] ?>>
+                            </div>
+                        </div>
+                    </form>
             </main>
             <!--Main layout-->
 
@@ -57,9 +66,8 @@ if (hash_equals($verification_token, $verification_token1)) {
             <footer class="page-footer font-small bottom cyan accent-4 mt-4">
 
                 <!-- Copyright -->
-                <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
+                <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
                 </div>
-                <!-- Copyright -->
 
             </footer>
             <!-- Footer -->
