@@ -2067,7 +2067,7 @@ a.waves-light {
 .blockquote .bq-title {
     margin-bottom: 0;
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .blockquote p {
@@ -2111,7 +2111,7 @@ a.waves-light {
     transform: scale(1.1)
 }
 
-.btn:hover {
+.mybtn:hover {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
     -o-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;

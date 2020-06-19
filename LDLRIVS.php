@@ -1,18 +1,117 @@
 <?php
 
 // function for making db query
-function query_db($query)
+function store($query)
 {
   $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
-  $mysqli->set_charset("utf8");
-  $res = mysqli_query($mysqli, $query);
-  $rows = [];
-  while ($row = $res->fetch_assoc()) {
-    $rows[] = $row;
+  if ($mysqli->connect_errno) {
+    exit();
   }
-  $res->close();
+  $mysqli->set_charset("utf8");
+  if ($result = mysqli_query($mysqli, $query)) {
+    $html = '';
+    while ($row = $result->fetch_assoc()) {
+      if ($row['Image'] != null) {
+        $html .= sprintf(
+          '<div class="col-lg-4 col-md-6 mb-md-3 mb-3">
+            <div class="card" style="height:100%%;">
+              <div class="view overlay zoom">
+                <a href="product.php?id=%s">
+                  <img class="img-fluid mx-auto" src="/%s" style="max-height: 400px; padding:20px" alt="">
+                </a>
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">%s</h5>%s
+              </div>
+              <a href="product.php?id=%s" class="btn mybtn btn-bottom-outline-info-dark-green rounded" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%s
+            </div>
+          </div>',
+          $row['PriceListID'],
+          $row['Image'],
+          $row['ProductName'],
+          (($row['Price'] != 0) ?
+            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . $row['Price'] . ' грн.</b>') : ''),
+          $row['PriceListID'],
+          (($row['ProductAvailability'] == 0) ?
+            ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>') : '')
+        );
+      }
+    }
+    $result->close();
+  }
   $mysqli->close();
-  return $rows;
+  return $html;
+}
+
+function empty_or_html($var)
+{
+  if ($var == null) {
+    return '';
+  } else return ('<div class="text-justify w-responsive mx-auto mb-5">' . $var . '</div>');
+}
+
+function product($query, $id)
+{
+  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  if ($mysqli->connect_errno) {
+    exit();
+  }
+  $mysqli->set_charset("utf8");
+  if ($stmt = $mysqli->prepare($query)) {
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $stmt->bind_result(
+      $image,
+      $price,
+      $product_name,
+      $appointment,
+      $properties,
+      $structure,
+      $application_method,
+      $contraindications,
+      $warnings,
+      $storage_conditions,
+      $expiration_date,
+      $manufacturer,
+      $info
+    );
+    if ($stmt->fetch()) {
+      $html = '';
+      if ($image != null) {
+        $html .= sprintf(
+          '<div class="col-md-4">
+            <div class="text-center">
+              <img src="/%s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
+            </div>
+            <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
+              <p>Замовити можна по телефону</p>
+              <p>%s</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h2 class="h1-responsive font-weight-bold text-center my-4">%s</h2>
+            %s%s%s%s%s%s%s%s%s
+            <div class="text-justify w-responsive mx-auto mb-5">%s</div>',
+          $image,
+          (($price != 0) ? ('<b>Ціна – ' . $price . ' грн.</b>') : ''),
+          $product_name,
+          empty_or_html($appointment),
+          empty_or_html($properties),
+          empty_or_html($structure),
+          empty_or_html($application_method),
+          empty_or_html($contraindications),
+          empty_or_html($warnings),
+          empty_or_html($storage_conditions),
+          empty_or_html($expiration_date),
+          empty_or_html($manufacturer),
+          $info
+        );
+      }
+    }
+    $stmt->close();
+  }
+  $mysqli->close();
+  return $html;
 }
 
 function my_session_start()

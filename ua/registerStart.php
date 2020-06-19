@@ -112,7 +112,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   $email_code = sprintf("%06d", $email_code);
 
   // write to db security code
-  if ($stmt = $mysqli->prepare("INSERT INTO email_codes (Email, EmailCode, ExpiredDate) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE EmailCode = ?, ExpiredDate = ?")) {
+  if ($stmt = $mysqli->prepare("INSERT INTO register_email_codes (Email, EmailCode, ExpiredDate) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE EmailCode = ?, ExpiredDate = ?")) {
     $stmt->bind_param("sssss", $email, $email_code, date('Y-m-d H:i:s', (time() + 60 * 30)), $email_code, date('Y-m-d H:i:s', (time() + 60 * 30)));
     if ($stmt->execute() == false) {
       $rt = false;
@@ -165,7 +165,9 @@ if (hash_equals($verification_token, $verification_token1)) {
   $mail->Subject = 'From: rivs.com.ua';
   $mail->isHTML(true);
   // Mail message
-  $mail->Body = file_get_contents("emailConfirmation1.html") . $email_code . file_get_contents("emailConfirmation2.html") . $email_code . file_get_contents("emailConfirmation3.html");
+  $mail->Body = file_get_contents("emailConfirmation/page1.html") .
+    $email_code . file_get_contents("emailConfirmation/page2.html") .
+    $email_code . file_get_contents("emailConfirmation/page3.html");
 
   // Mail sending
   if ($mail->send()) {

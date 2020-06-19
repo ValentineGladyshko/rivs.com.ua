@@ -5,11 +5,6 @@ my_session_start();
 
 $verification_token = base64_encode(openssl_random_pseudo_bytes(32));
 $_SESSION['verification_token'] = $verification_token;
-
-$verification_token = base64_encode(openssl_random_pseudo_bytes(32));
-$_SESSION['verification_token'] = $verification_token;
-$PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON `pricelist`.`ProductDescriptionID` = `productdescription`.`ProductDescriptionID` WHERE PriceListID = ' . $_GET['id'])[0];
-
 ?>
 <!--DOCTYPE html-->
 <html lang="en">
@@ -39,51 +34,9 @@ $PRODUCT = query_db('SELECT * FROM `pricelist` LEFT JOIN `productdescription` ON
     <!--Main container-->
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
-          <div class="text-center">
-            <img src="/<?= $PRODUCT['Image'] ? $PRODUCT['Image'] : 'Store_photos/default.jpg'; ?>" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
-          </div>
-          <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
-            <p>Замовити можна по телефону</p>
-            <p>
-              <? if ($PRODUCT['Price'] != 0) { ?>
-              <b>Ціна – <?= $PRODUCT['Price']; ?> грн.</b>
-              <? } ?>
-
-            </p>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <h2 class="h1-responsive font-weight-bold text-center my-4"><?= $PRODUCT['ProductName']; ?></h2>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Appointment'] != NULL) { ?>
-            <? } ?><?= $PRODUCT['Appointment']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Properties'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['Properties']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Structure'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['Structure']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['ApplicationMethod'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['ApplicationMethod']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Contraindications'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['Contraindications']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Warnings'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['Warnings']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['StorageConditions'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['StorageConditions']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['ExpirationDate'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['ExpirationDate']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5">
-            <? if ($PRODUCT['Manufacturer'] != NULL) { ?>
-            <? } ?> <?= $PRODUCT['Manufacturer']; ?></div>
-          <div class="text-justify w-responsive mx-auto mb-5"><?= $PRODUCT['Info']; ?></div>
-        </div>
+        <? echo product('SELECT `Image`, `Price`, `ProductName`, `Appointment`, `Properties`, `Structure`, `ApplicationMethod`
+        , `Contraindications`, `Warnings`, `StorageConditions`, `ExpirationDate`, `Manufacturer`, `Info` FROM `pricelist` 
+        LEFT JOIN `productdescription` ON `pricelist`.`ProductDescriptionID` = `productdescription`.`ProductDescriptionID` WHERE PriceListID = ?', $_GET['id']); ?>
       </div>
 
     </div>

@@ -12,13 +12,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
                 <ul class="navbar-nav mr-auto">
                     <li id="main" class="nav-item">
-                        <a class="nav-link" href="index.php">Головна</a>
+                        <a class="rounded-lg nav-link" href="index.php">Головна</a>
                     </li>
                     <li id="contacts" class="nav-item">
-                        <a class="nav-link" href="contacts.php">Контакти</a>
+                        <a class="rounded-lg nav-link" href="contacts.php">Контакти</a>
                     </li>
                     <li id="store" class="nav-item">
-                        <a class="nav-link" href="store.php">Продукція</a>
+                        <a class="rounded-lg nav-link" href="store.php">Продукція</a>
                     </li>
                     </li>
                 </ul>
@@ -33,11 +33,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a id="ru_link" class="nav-link" href="/">RU
+                        <a id="ru_link" class="rounded-lg nav-link" href="/">RU
                         </a>
                     </li>
                     <li class="nav-item active disabled">
-                        <a id="ua_link" class="nav-link" href="/">UA
+                        <a id="ua_link" class="rounded-lg nav-link" href="/">UA
                         </a>
                     </li>
                     <?
@@ -48,8 +48,8 @@
 
             // if security tokens are unset show registration and login
             if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) { ?>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
                     <? 
 
             // if tokens are equal show logout
@@ -58,20 +58,20 @@
                         <form style="margin:0px" class="nav-item" id="user-form" name="user-form" action="userAccount.php" method="post">
                             <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
                         </form>
-                        <a id="UserButton" class="nav-link"><?= $_SESSION["email"] ?></a>
+                        <a id="UserButton" class="rounded-lg nav-link"><?= $_SESSION["email"] ?></a>
                     </li>
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logout-form" name="logout-form" action="logout.php" method="post">
                             <input name="logout_verification_token" id="logout_verification_token" type="hidden" value=<?= $verification_token ?>>
-                            <a id="LogoutButton" class="nav-link">Вийти</a>
+                            <a id="LogoutButton" class="rounded nav-link">Вийти</a>
                         </form>
                     </li>
                     <? 
 
             // if security tokens are not equal show registration and login
               } else { ?>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#RegisterModal">Реєстрація</a></li>
+                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#LoginModal">Увійти</a></li>
                     <? } ?>
                 </ul>
             </div>
@@ -83,7 +83,7 @@
             <form id="login-form" name="login-form" action="login.php" method="post">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="MobileModalLabel">Вхід</h5>
+                        <h5 class="modal-title" id="LoginModalLabel">Вхід</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -101,6 +101,7 @@
                             <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введіть пароль" required>
                             <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
+                        <button style="margin:0; padding:0;" class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#RememberModal">Забули пароль?</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
@@ -117,7 +118,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="MobileModalLabel">Реєстрація</h5>
+                        <h5 class="modal-title" id="RegisterModalLabel">Реєстрація</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -138,6 +139,73 @@
                             <label class="control-label" for="repeat_password">Повторний пароль</label>
                             <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введіть пароль повторно" required>
                             <div id="register_repeat_password_feedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                        <button type="submit" class="btn btn-primary">Підтвердити</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="RememberModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="RememberModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="remember-form" name="remember-form" action="remember.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="RememberModalLabel">Відновлення паролю</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--Grid row-->
+                        <input name="remember_verification_token" id="remember_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        <div class="form-group">
+                            <label class="control-label" for="email">Електронна адреса</label>
+                            <input type="email" class="form-control" id="remember_email" name="remember_email" placeholder="Введіть електронну адресу" required>
+                            <div id="remember_email_feedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                        <button type="submit" class="btn btn-primary">Надіслати код</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="ResetPasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ResetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="reset-password-form" name="reset-password-form" action="resetPassword.php" method="post">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ResetPasswordModalLabel">Скидання паролю</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="reset_password_verification_token" id="reset_password_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        <input name="reset_password_email" id="reset_password_email" type="hidden">
+                        <div class="form-group">
+                            <label class="control-label" for="email1">Код для скидання паролю</label>
+                            <input type="text" class="form-control" id="reset_password_email_code" name="reset_password_email_code" placeholder="Введіть код" required>
+                            <div id="reset_password_email_code_feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="password1">Новий Пароль</label>
+                            <input type="password" class="form-control" id="reset_password_password" name="reset_password_password" placeholder="Введіть новий пароль" required>
+                            <div id="reset_password_password_feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="repeat_password">Повторний пароль</label>
+                            <input type="password" class="form-control" id="reset_password_repeat_password" name="reset_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                            <div id="reset_password_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
