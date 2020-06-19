@@ -1,5 +1,16 @@
 <!-- Script for login form -->
 <script type="text/javascript">
+  function passwordToggle(img, input) {
+    if (input.type === "password") {
+      input.type = "text";
+      img.src = "/icons/eye-slash-fill.svg"
+    } else {
+      input.type = "password";
+      img.src = "/icons/eye-fill.svg"
+    }
+  };
+
+
   var form = $('#login-form');
 
   form.submit(function(e) {
@@ -186,7 +197,7 @@
               repeat_password.classList.add('is-valid');
             }
           }
-          
+
         }
       },
       error: function(data) {
@@ -253,7 +264,7 @@
   });
 </script>
 
-<!-- Script fpr reset password form -->
+<!-- Script for reset password form -->
 <script type="text/javascript">
   var form = $('#reset-password-form');
 
@@ -276,7 +287,7 @@
       data: formData,
       success: function(response) {
         if (response != null) {
-          
+
           // parse response from server
           var jsonData = JSON.parse(response);
 

@@ -98,7 +98,14 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password">Пароль</label>
-                            <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введіть пароль" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Введіть пароль" aria-describedby="login_password_addon" required>
+                                <div class="input-group-append">
+                                    <div onclick="passwordToggle(document.getElementById('login_password_img'), document.getElementById('login_password'))" class="input-group-text" style="cursor: pointer;">
+                                        <img id="login_password_img" height="20" src="/icons/eye-fill.svg">
+                                    </div>
+                                </div>
+                            </div>
                             <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <button style="margin:0; padding:0;" class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#RememberModal">Забули пароль?</button>
@@ -132,12 +139,26 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password1">Пароль</label>
-                            <input type="password" class="form-control" id="register_password" name="register_password" placeholder="Введіть пароль" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="register_password" name="register_password" placeholder="Введіть пароль" required>
+                                <div class="input-group-append">
+                                    <div onclick="passwordToggle(document.getElementById('register_password_img'), document.getElementById('register_password'))" class="input-group-text" style="cursor: pointer;">
+                                        <img id="register_password_img" height="20" src="/icons/eye-fill.svg">
+                                    </div>
+                                </div>
+                            </div>
                             <div id="register_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="repeat_password">Повторний пароль</label>
-                            <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введіть пароль повторно" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="register_repeat_password" name="register_repeat_password" placeholder="Введіть пароль повторно" required>
+                                <div class="input-group-append">
+                                    <div onclick="passwordToggle(document.getElementById('register_repeat_password_img'), document.getElementById('register_repeat_password'))" class="input-group-text" style="cursor: pointer;">
+                                        <img id="register_repeat_password_img" height="20" src="/icons/eye-fill.svg">
+                                    </div>
+                                </div>
+                            </div>
                             <div id="register_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -177,7 +198,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="modal fade" id="ResetPasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ResetPasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="reset-password-form" name="reset-password-form" action="resetPassword.php" method="post">
@@ -199,12 +220,26 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password1">Новий Пароль</label>
-                            <input type="password" class="form-control" id="reset_password_password" name="reset_password_password" placeholder="Введіть новий пароль" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="reset_password_password" name="reset_password_password" placeholder="Введіть новий пароль" required>
+                                <div class="input-group-append">
+                                    <div onclick="passwordToggle(document.getElementById('reset_password_password_img'), document.getElementById('reset_password_password'))" class="input-group-text" style="cursor: pointer;">
+                                        <img id="reset_password_password_img" height="20" src="/icons/eye-fill.svg">
+                                    </div>
+                                </div>
+                            </div>
                             <div id="reset_password_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="repeat_password">Повторний пароль</label>
-                            <input type="password" class="form-control" id="reset_password_repeat_password" name="reset_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="reset_password_repeat_password" name="reset_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                <div class="input-group-append">
+                                    <div onclick="passwordToggle(document.getElementById('reset_password_repeat_password_img'), document.getElementById('reset_password_repeat_password'))" class="input-group-text" style="cursor: pointer;">
+                                        <img id="reset_password_repeat_password_img" height="20" src="/icons/eye-fill.svg">
+                                    </div>
+                                </div>
+                            </div>
                             <div id="reset_password_repeat_password_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
