@@ -36,11 +36,71 @@ if (hash_equals($verification_token, $verification_token1)) {
 
         <body style="overflow-y: overlay;">
             <? include("header.php"); ?>
+            <div class="modal fade" id="changePasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form id="changePasswordForm" name="changePasswordForm" action="changePassword.php" method="post">
+                        <div class="modal-content">
 
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="changePasswordModalLabel">Скидання паролю</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input name="change_password_verification_token" id="change_password_verification_token" type="hidden" value=<?= $verification_token ?>>
+                                <input name="change_password_email" id="change_password_email" type="hidden">
+                                <div class="form-group">
+                                    <label class="control-label" for="change_password_password">Поточний пароль</label>
+                                    <div class="input-group" id="change_password_password_group">
+                                        <input type="password" class="form-control" id="change_password_password" name="change_password_password" placeholder="Введіть поточний пароль" required>
+                                        <div class="input-group-append">
+                                            <div onclick="passwordToggle(document.getElementById('change_password_password_img'), document.getElementById('change_password_password'))" class="input-group-text" style="cursor: pointer;">
+                                                <img id="change_password_password_img" height="20" src="/icons/eye-fill.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="change_password_password_feedback" class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="change_password_new_password">Новий пароль</label>
+                                    <div class="input-group" id="change_password_new_password_group">
+                                        <input type="password" class="form-control" id="change_password_new_password" name="change_password_new_password" placeholder="Введіть новий пароль" required>
+                                        <div class="input-group-append">
+                                            <div onclick="passwordToggle(document.getElementById('change_password_new_password_img'), document.getElementById('change_password_new_password'))" class="input-group-text" style="cursor: pointer;">
+                                                <img id="change_password_new_password_img" height="20" src="/icons/eye-fill.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="change_password_new_password_feedback" class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="change_password_repeat_password">Повторний пароль</label>
+                                    <div class="input-group" id="change_password_repeat_password_group">
+                                        <input type="password" class="form-control" id="change_password_repeat_password" name="change_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                        <div class="input-group-append">
+                                            <div onclick="passwordToggle(document.getElementById('change_password_repeat_password_img'), document.getElementById('change_password_repeat_password'))" class="input-group-text" style="cursor: pointer;">
+                                                <img id="change_password_repeat_password_img" height="20" src="/icons/eye-fill.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="change_password_repeat_password_feedback" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                <button type="submit" class="btn btn-primary">Підтвердити</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <!--Main Navigation-->
             <!--Main layout-->
             <main class="mt-5 mb-3">
-                <div class="container" style="background-color: #eee;">
+
+                <!-- style="background-color: #eee;" -->
+                <div class="container">
                     <!--Grid row-->
                     <div class="row">
                         <div class="col-md-7 mb-4">
@@ -59,6 +119,9 @@ if (hash_equals($verification_token, $verification_token1)) {
                             </div>
                         </div>
                     </form>
+                    <hr>
+                    <button style="margin:0; padding:0;" class="btn btn-link" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
+
             </main>
             <!--Main layout-->
 

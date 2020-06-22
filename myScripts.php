@@ -1,413 +1,337 @@
 <!-- Script for login form -->
 <script type="text/javascript">
-  function passwordToggle(img, input) {
-    if (input.type === "password") {
-      input.type = "text";
-      img.src = "/icons/eye-slash-fill.svg"
-    } else {
-      input.type = "password";
-      img.src = "/icons/eye-fill.svg"
+  // functions section
+  {
+    function passwordToggle(img, input) {
+      if (input.type === "password") {
+        input.type = "text";
+        img.src = "/icons/eye-slash-fill.svg"
+      } else {
+        input.type = "password";
+        img.src = "/icons/eye-fill.svg"
+      }
+    };
+
+    function changeInputStatus(input, inputFeedback, jsonData, propertyName) {
+      if (jsonData.hasOwnProperty(propertyName)) {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        inputFeedback.innerHTML = jsonData[propertyName];
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+      }
+    };
+
+    function changeInputGroupStatus(inputGroup, input, inputFeedback, jsonData, propertyName) {
+      if (jsonData.hasOwnProperty(propertyName)) {
+        inputGroup.classList.add('is-invalid');
+        inputGroup.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        inputFeedback.innerHTML = jsonData[propertyName];
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        inputGroup.classList.remove('is-invalid');
+        inputGroup.classList.add('is-valid');
+      }
+    };
+
+    function changeInputStatusArray(input, inputFeedback, jsonData, propertyName) {
+      if (jsonData.hasOwnProperty(propertyName) && jsonData[propertyName] != '') {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+
+        inputFeedback.innerHTML = "";
+        var data;
+        for (data of jsonData[propertyName]) {
+          inputFeedback.innerHTML += ("<p>" + data + "</p>");
+        }
+
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+      }
+    };
+
+    function changeInputGroupStatusArray(inputGroup, input, inputFeedback, jsonData, propertyName) {
+      if (jsonData.hasOwnProperty(propertyName) && jsonData[propertyName] != '') {
+        inputGroup.classList.add('is-invalid');
+        inputGroup.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        inputFeedback.innerHTML = "";
+        var data;
+        for (data of jsonData[propertyName]) {
+          inputFeedback.innerHTML += ("<p>" + data + "</p>");
+        }
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        inputGroup.classList.remove('is-invalid');
+        inputGroup.classList.add('is-valid');
+      }
+    };
+
+    // function for delete valid and invalid classes from fields 
+    function inputRemoveValidationStatus(input) {
+      input.oninput = function() {
+        input.classList.remove('is-invalid');
+        input.classList.remove('is-valid');
+      }
+    }; {
+      inputRemoveValidationStatus(document.getElementById("register_email"));
+      inputRemoveValidationStatus(document.getElementById("register_password"));
+      inputRemoveValidationStatus(document.getElementById("register_repeat_password"));
+      inputRemoveValidationStatus(document.getElementById("reset_password_email"));
+      inputRemoveValidationStatus(document.getElementById("reset_password_password"));
+      inputRemoveValidationStatus(document.getElementById("reset_password_repeat_password"));
+      inputRemoveValidationStatus(document.getElementById("login_email"));
+      inputRemoveValidationStatus(document.getElementById("login_password"));
     }
-  };
+  }
 
+  // forms section
+  {
+    var loginForm = $('#loginForm');
+    loginForm.submit(function(e) {
 
-  var form = $('#login-form');
+      // give data from form
+      formData = {
+        'verification_token': $('input[name=login_verification_token]').val(),
+        'email': $('input[name=login_email]').val(),
+        'password': $('input[name=login_password]').val()
+      };
+      e.preventDefault();
 
-  form.submit(function(e) {
+      // ajax request
+      $.ajax({
+        type: "POST",
+        url: "login.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
 
-    // give data from form
-    formData = {
-      'verification_token': $('input[name=login_verification_token]').val(),
-      'email': $('input[name=login_email]').val(),
-      'password': $('input[name=login_password]').val()
-    };
-    e.preventDefault();
+            // parse response from server
+            var jsonData = JSON.parse(response);
 
-    // ajax request
-    $.ajax({
-      type: "POST",
-      url: "login.php",
-      data: formData,
-      success: function(response) {
-        if (response != null) {
+            // if success code is true login and reload
+            if (jsonData.success == true) {
+              location.reload();
 
-          // parse response from server
-          var jsonData = JSON.parse(response);
-
-          // if success code is true login and reload
-          if (jsonData.success == true) {
-            location.reload();
-
-            // else give html fields and show error messages
-          } else {
-            var email = document.getElementById("login_email");
-            var password = document.getElementById("login_password");
-            var email_feedback = document.getElementById("login_email_feedback");
-            var password_feedback = document.getElementById("login_password_feedback");
-            if (jsonData.hasOwnProperty("email")) {
-              email.classList.add('is-invalid');
-              email.classList.remove('is-valid');
-              email_feedback.innerHTML = jsonData.email;
+              // else give html fields and show error messages
             } else {
-              email.classList.remove('is-invalid');
-              email.classList.add('is-valid');
-            }
-            if (jsonData.hasOwnProperty("password")) {
-              password.classList.add('is-invalid');
-              password.classList.remove('is-valid');
-              password_feedback.innerHTML = jsonData.password;
-            } else {
-              password.classList.remove('is-invalid');
+              changeInputStatus(document.getElementById("login_email"),
+                document.getElementById("login_email_feedback"), jsonData, "email");
+              changeInputGroupStatus(document.getElementById("login_password_group"),
+                document.getElementById("login_password"),
+                document.getElementById("login_password_feedback"), jsonData, "password")
             }
           }
-        }
-      },
-      error: function(data) {
-        console.log('An error occurred.');
-        console.log(data);
-      },
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
     });
-  });
-</script>
 
-<!-- Script for delete valid and invalid classes from fields -->
-<script type="text/javascript">
-  var email1 = document.getElementById("register_email");
-  email1.oninput = function() {
-    email1.classList.remove('is-invalid');
-    email1.classList.remove('is-valid');
-  };
+    var registerForm = $('#registerForm');
+    registerForm.submit(function(e) {
 
-  var password1 = document.getElementById("register_password");
-  password1.oninput = function() {
-    password1.classList.remove('is-invalid');
-    password1.classList.remove('is-valid');
-  };
+      // give data from form
+      formData = {
+        'verification_token': $('input[name=register_verification_token]').val(),
+        'email': $('input[name=register_email]').val(),
+        'password': $('input[name=register_password]').val(),
+        'repeat_password': $('input[name=register_repeat_password]').val()
+      };
+      e.preventDefault();
 
-  var repeat_password = document.getElementById("register_repeat_password");
-  repeat_password.oninput = function() {
-    repeat_password.classList.remove('is-invalid');
-    repeat_password.classList.remove('is-valid');
-  };
+      // ajax request
+      $.ajax({
+        type: "POST",
+        url: "registerStart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
 
-  var email = document.getElementById("login_email");
-  email.oninput = function() {
-    email.classList.remove('is-invalid');
-    email.classList.remove('is-valid');
-  };
+            // parse response from server
+            var jsonData = JSON.parse(response);
 
-  var password = document.getElementById("login_password");
-  password.oninput = function() {
-    password.classList.remove('is-invalid');
-    password.classList.remove('is-valid');
-  };
+            // if success code is true login and reload
+            if (jsonData.success == true) {
+              $.redirect('register.php', formData);
 
-  var email2 = document.getElementById("reset_password_email");
-  email2.oninput = function() {
-    email2.classList.remove('is-invalid');
-    email2.classList.remove('is-valid');
-  };
-
-  var password2 = document.getElementById("reset_password_password");
-  password2.oninput = function() {
-    password2.classList.remove('is-invalid');
-    password2.classList.remove('is-valid');
-  };
-
-  var repeat_password2 = document.getElementById("reset_password_repeat_password");
-  repeat_password2.oninput = function() {
-    repeat_password2.classList.remove('is-invalid');
-    repeat_password2.classList.remove('is-valid');
-  };
-</script>
-
-<!-- Script for register form -->
-<script type="text/javascript">
-  var form = $('#register-form');
-
-  form.submit(function(e) {
-
-    // give data from form
-    formData = {
-      'verification_token': $('input[name=register_verification_token]').val(),
-      'email': $('input[name=register_email]').val(),
-      'password': $('input[name=register_password]').val(),
-      'repeat_password': $('input[name=register_repeat_password]').val()
-    };
-    e.preventDefault();
-
-    // ajax request
-    $.ajax({
-      type: "POST",
-      url: "registerStart.php",
-      data: formData,
-      success: function(response) {
-        if (response != null) {
-
-          // parse response from server
-          var jsonData = JSON.parse(response);
-
-          // if success code is true login and reload
-          if (jsonData.success == true) {
-            $.redirect('register.php', formData);
-
-            // else give html fields and show error messages
-          } else {
-            var email = document.getElementById("register_email");
-            var password = document.getElementById("register_password");
-            var repeat_password = document.getElementById("register_repeat_password");
-            var email_feedback = document.getElementById("register_email_feedback");
-            var password_feedback = document.getElementById("register_password_feedback");
-            var repeat_password_feedback = document.getElementById("register_repeat_password_feedback");
-
-            if (jsonData.hasOwnProperty("email_code") && jsonData.email != '') {
-              email.classList.add('is-invalid');
-              email.classList.remove('is-valid');
-              email_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.email) {
-                email_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
+              // else give html fields and show error messages
             } else {
-              email.classList.remove('is-invalid');
-              email.classList.add('is-valid');
-            }
-            if (jsonData.hasOwnProperty("password") && jsonData.password != '') {
-              password.classList.add('is-invalid');
-              password.classList.remove('is-valid');
-              password_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.password) {
-                password_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
-            } else {
-              password.classList.remove('is-invalid');
-              password.classList.add('is-valid');
-            }
-            if (jsonData.hasOwnProperty("repeat_password") && jsonData.repeat_password != '') {
-              repeat_password.classList.add('is-invalid');
-              repeat_password.classList.remove('is-valid');
-              repeat_password_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.repeat_password) {
-                repeat_password_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
-            } else {
-              repeat_password.classList.remove('is-invalid');
-              repeat_password.classList.add('is-valid');
+              changeInputStatusArray(document.getElementById("register_email"),
+                document.getElementById("register_email_feedback"), jsonData, "email");
+              changeInputGroupStatusArray(document.getElementById("register_password_group"),
+                document.getElementById("register_password"),
+                document.getElementById("register_password_feedback"), jsonData, "password");
+              changeInputGroupStatusArray(document.getElementById("register_repeat_password_group"),
+                document.getElementById("register_repeat_password"),
+                document.getElementById("register_repeat_password_feedback"), jsonData, "repeat_password");
             }
           }
-
-        }
-      },
-      error: function(data) {
-        console.log('An error occurred.');
-        console.log(data);
-      },
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
     });
-  });
-</script>
 
-<!-- Script for remember password form -->
-<script type="text/javascript">
-  var form = $('#remember-form');
+    var rememberForm = $('#rememberForm');
+    rememberForm.submit(function(e) {
 
-  form.submit(function(e) {
+      // give data from form
+      formData = {
+        'verification_token': $('input[name=remember_verification_token]').val(),
+        'email': $('input[name=remember_email]').val(),
+      };
+      e.preventDefault();
 
-    // give data from form
-    formData = {
-      'verification_token': $('input[name=remember_verification_token]').val(),
-      'email': $('input[name=remember_email]').val(),
-    };
-    e.preventDefault();
+      // ajax request
+      $.ajax({
+        type: "POST",
+        url: "remember.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
 
-    // ajax request
-    $.ajax({
-      type: "POST",
-      url: "remember.php",
-      data: formData,
-      success: function(response) {
-        if (response != null) {
+            // parse response from server
+            var jsonData = JSON.parse(response);
 
-          // parse response from server
-          var jsonData = JSON.parse(response);
-
-          // if success code is true login and reload
-          if (jsonData.success == true) {
-            $('#RememberModal').modal('hide');
-            document.getElementById("reset_password_email").value = $('input[name=remember_email]').val();
-            $('#ResetPasswordModal').modal();
-            // else give html fields and show error messages
-          } else {
-            var email = document.getElementById("remember_email");
-            var email_feedback = document.getElementById("remember_email_feedback");
-            if (jsonData.hasOwnProperty("email") && jsonData.email != '') {
-              email.classList.add('is-invalid');
-              email.classList.remove('is-valid');
-              email_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.email) {
-                email_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
+            // if success code is true login and reload
+            if (jsonData.success == true) {
+              $('#RememberModal').modal('hide');
+              document.getElementById("reset_password_email").value = $('input[name=remember_email]').val();
+              $('#ResetPasswordModal').modal();
+              // else give html fields and show error messages
             } else {
-              email.classList.remove('is-invalid');
-              email.classList.add('is-valid');
+              changeInputStatusArray(document.getElementById("remember_email"),
+                document.getElementById("remember_email_feedback"), jsonData, "email")
             }
           }
-        }
-      },
-      error: function(data) {
-        console.log('An error occurred.');
-        console.log(data);
-      },
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
     });
-  });
-</script>
 
-<!-- Script for reset password form -->
-<script type="text/javascript">
-  var form = $('#reset-password-form');
+    var resetPasswordForm = $('#resetPasswordForm');
+    resetPasswordForm.submit(function(e) {
 
-  form.submit(function(e) {
+      // give data from form
+      formData = {
+        'verification_token': $('input[name=reset_password_verification_token]').val(),
+        'email': $('input[name=reset_password_email]').val(),
+        'email_code': $('input[name=reset_password_email_code]').val(),
+        'password': $('input[name=reset_password_password]').val(),
+        'repeat_password': $('input[name=reset_password_repeat_password]').val()
+      };
+      e.preventDefault();
 
-    // give data from form
-    formData = {
-      'verification_token': $('input[name=reset_password_verification_token]').val(),
-      'email': $('input[name=reset_password_email]').val(),
-      'email_code': $('input[name=reset_password_email_code]').val(),
-      'password': $('input[name=reset_password_password]').val(),
-      'repeat_password': $('input[name=reset_password_repeat_password]').val()
-    };
-    e.preventDefault();
+      // ajax request
+      $.ajax({
+        type: "POST",
+        url: "resetPassword.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
 
-    // ajax request
-    $.ajax({
-      type: "POST",
-      url: "resetPassword.php",
-      data: formData,
-      success: function(response) {
-        if (response != null) {
+            // parse response from server
+            var jsonData = JSON.parse(response);
 
-          // parse response from server
-          var jsonData = JSON.parse(response);
+            // if success code is true login and reload
+            if (jsonData.success == true) {
+              location.reload();
 
-          // if success code is true login and reload
-          if (jsonData.success == true) {
-            location.reload();
-
-            // else give html fields and show error messages
-          } else {
-            var email = document.getElementById("reset_password_email_code");
-            var password = document.getElementById("reset_password_password");
-            var repeat_password = document.getElementById("reset_password_repeat_password");
-            var email_feedback = document.getElementById("reset_password_email_code");
-            var password_feedback = document.getElementById("reset_password_password_feedback");
-            var repeat_password_feedback = document.getElementById("reset_password_repeat_password_feedback");
-
-            if (jsonData.hasOwnProperty("email_code")) {
-              email.classList.add('is-invalid');
-              email.classList.remove('is-valid');
-              email_feedback.innerHTML = jsonData.email_code;
+              // else give html fields and show error messages
             } else {
-              email.classList.remove('is-invalid');
-              email.classList.add('is-valid');
-            }
-            if (jsonData.hasOwnProperty("password") && jsonData.password != '') {
-              password.classList.add('is-invalid');
-              password.classList.remove('is-valid');
-              password_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.password) {
-                password_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
-            } else {
-              password.classList.remove('is-invalid');
-              password.classList.add('is-valid');
-            }
-            if (jsonData.hasOwnProperty("repeat_password") && jsonData.repeat_password != '') {
-              repeat_password.classList.add('is-invalid');
-              repeat_password.classList.remove('is-valid');
-              repeat_password_feedback.innerHTML = "";
-              var data;
-              for (data of jsonData.repeat_password) {
-                repeat_password_feedback.innerHTML += ("<p>" + data + "</p>");
-              }
-            } else {
-              repeat_password.classList.remove('is-invalid');
-              repeat_password.classList.add('is-valid');
+              changeInputStatus(document.getElementById("reset_password_email_code"),
+                document.getElementById("reset_password_email_code_feedback"), jsonData, "email_code");
+              changeInputGroupStatusArray(document.getElementById("reset_password_password_group"),
+                document.getElementById("reset_password_password"),
+                document.getElementById("reset_password_password_feedback"), jsonData, "password");
+              changeInputGroupStatusArray(document.getElementById("reset_password_repeat_password_group"),
+                document.getElementById("reset_password_repeat_password"),
+                document.getElementById("reset_password_repeat_password_feedback"), jsonData, "repeat_password");
             }
           }
-        }
-      },
-      error: function(data) {
-        console.log('An error occurred.');
-        console.log(data);
-      },
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
     });
-  });
-</script>
+  }
 
-<!-- Script for logout form -->
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#LogoutButton").click(
-      function(e) {
+  // buttons click event handlers section
+  {
+    // logout button
+    $(document).ready(function() {
+      $("#logoutButton").click(
+        function(e) {
 
-        // give data from form
-        formData = {
-          'verification_token': $('input[name=logout_verification_token]').val(),
-        };
-        e.preventDefault();
+          // give data from form
+          formData = {
+            'verification_token': $('input[name=logout_verification_token]').val(),
+          };
+          e.preventDefault();
 
-        // ajax request
-        $.ajax({
-          type: "POST",
-          url: "logout.php",
-          data: formData,
-          success: function(data) {
-            location.reload();
-            console.log('Logout was successful.');
-            console.log(data);
-          },
-          error: function(data) {
-            console.log('An error occurred.');
-            console.log(data);
-          },
-        });
-      }
-    );
-  });
-</script>
+          // ajax request
+          $.ajax({
+            type: "POST",
+            url: "logout.php",
+            data: formData,
+            success: function(data) {
+              location.reload();
+              console.log('Logout was successful.');
+              console.log(data);
+            },
+            error: function(data) {
+              console.log('An error occurred.');
+              console.log(data);
+            },
+          });
+        }
+      );
+    });
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#UserButton").click(
-      function(e) {
-        e.preventDefault();
-        document.getElementById('user-form').submit();
-      }
-    );
-  });
-</script>
+    // account (user) button
+    $(document).ready(function() {
+      $("#userButton").click(
+        function(e) {
+          e.preventDefault();
+          document.getElementById('userForm').submit();
+        }
+      );
+    });
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#ua_link").click(
-      function(e) {
-        e.stopPropagation();
-        document.cookie = "language=ua;path=/";
-      }
-    );
-  });
-</script>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#ru_link").click(
-      function(e) {
-        e.stopPropagation();
-        document.cookie = "language=ru;path=/";
-      }
-    );
-  });
+    // ua language button
+    $(document).ready(function() {
+      $("#uaLink").click(
+        function(e) {
+          e.stopPropagation();
+          document.cookie = "language=ua;path=/";
+        }
+      );
+    });
+    // ru language button
+    $(document).ready(function() {
+      $("#ruLink").click(
+        function(e) {
+          e.stopPropagation();
+          document.cookie = "language=ru;path=/";
+        }
+      );
+    });
+  }
 </script>
