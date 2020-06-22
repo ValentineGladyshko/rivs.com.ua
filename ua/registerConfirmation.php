@@ -6,7 +6,7 @@ my_session_start();
 // give data from session and post
 $password = $_POST["password"];
 $email_code = $_POST["email_code"];
-$email = $_POST["email"];
+$email = $_SESSION["email"];
 $verification_token = $_POST["verification_token"];
 $verification_token1 = $_SESSION["verification_token"];
 

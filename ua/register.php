@@ -60,10 +60,8 @@ my_session_start();
 
   form.submit(function(e) {
 
-
     formData = {
       'verification_token': <?php echo json_encode($_POST["verification_token"], JSON_UNESCAPED_UNICODE); ?>,
-      'email': <?php echo json_encode($_POST["email"], JSON_UNESCAPED_UNICODE); ?>,
       'password': <?php echo json_encode($_POST["password"], JSON_UNESCAPED_UNICODE); ?>,
       'email_code': $('input[name=email_code]').val()
     };
