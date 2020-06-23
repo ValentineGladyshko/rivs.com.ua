@@ -162,7 +162,10 @@
 
             // if success code is true login and reload
             if (jsonData.success == true) {
-              $.redirect('register.php', formData);
+              $('#registerModal').modal('hide');
+              document.getElementById("register_confirmation_email").value = $('input[name=register_email]').val();
+              document.getElementById("register_confirmation_password").value = $('input[name=register_password]').val();
+              $('#registerConfirmationModal').modal();
 
               // else give html fields and show error messages
             } else {
@@ -174,6 +177,53 @@
               changeInputGroupStatusArray(document.getElementById("register_repeat_password_group"),
                 document.getElementById("register_repeat_password"),
                 document.getElementById("register_repeat_password_feedback"), jsonData, "repeat_password");
+            }
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    });
+
+    var registerConfirmationForm = $('#registerConfirmationForm');
+    registerConfirmationForm.submit(function(e) {
+
+      // give data from form
+      formData = {
+        'verification_token': $('input[name=register_confirmation_verification_token]').val(),
+        'email': $('input[name=register_confirmation_email]').val(),
+        'password': $('input[name=register_confirmation_password]').val(),
+        'email_code': $('input[name=register_confirmation_email_code]').val()
+      };
+      e.preventDefault();
+
+      // ajax request
+      $.ajax({
+        type: "POST",
+        url: "registerConfirmation.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+              location.reload();
+
+            } else {
+              var send_code = document.getElementById("register_confirmation_send_code");
+              var email_code = document.getElementById("register_confirmation_email_code");
+              var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
+
+              changeInputStatusArray(email_code, email_code_feedback, jsonData, "email_code");
+
+              if (jsonData.hasOwnProperty("expired") && jsonData.expired != '') {
+                email_code.classList.add('is-invalid');
+                email_send_code.hidden = false;
+                email_code_feedback.innerHTML = jsonData.expired;
+              } else {
+                email_code.classList.remove('is-invalid');
+              }
             }
           }
         },
@@ -207,9 +257,9 @@
 
             // if success code is true login and reload
             if (jsonData.success == true) {
-              $('#RememberModal').modal('hide');
+              $('#rememberModal').modal('hide');
               document.getElementById("reset_password_email").value = $('input[name=remember_email]').val();
-              $('#ResetPasswordModal').modal();
+              $('#resetPasswordModal').modal();
               // else give html fields and show error messages
             } else {
               changeInputStatusArray(document.getElementById("remember_email"),
@@ -324,12 +374,50 @@
         }
       );
     });
+
     // ru language button
     $(document).ready(function() {
       $("#ruLink").click(
         function(e) {
           e.stopPropagation();
           document.cookie = "language=ru;path=/";
+        }
+      );
+    });
+
+    // send code button
+
+    $(document).ready(function() {
+      $("#register_confirmation_send_code").click(
+        function(e) {
+
+          // give data from form
+          formData = {
+            'verification_token': $('input[name=register_confirmation_verification_token]').val(),
+            'email': $('input[name=register_confirmation_email]').val(),
+            'password': $('input[name=register_confirmation_password]').val(),
+            'repeat_password': $('input[name=register_confirmation_password]').val()
+          };
+          e.preventDefault();
+
+          // ajax request
+          $.ajax({
+            type: "POST",
+            url: "registerStart.php",
+            data: formData,
+            success: function(data) {
+              var send_code = document.getElementById("register_confirmation_send_code");
+              var email_code = document.getElementById("register_confirmation_email_code");
+              var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
+              send_code.hidden = true;
+              email_code.classList.remove('is-invalid');
+              email_code.value = "";
+            },
+            error: function(data) {
+              console.log('An error occurred.');
+              console.log(data);
+            },
+          });
         }
       );
     });

@@ -41,14 +41,13 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h5 class="modal-title" id="changePasswordModalLabel">Скидання паролю</h5>
+                            <h5 class="modal-title" id="changePasswordModalLabel">Змінення паролю</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <input name="change_password_verification_token" id="change_password_verification_token" type="hidden" value=<?= $verification_token ?>>
-                            <input name="change_password_email" id="change_password_email" type="hidden">
                             <div class="form-group">
                                 <label class="control-label" for="change_password_password">Поточний пароль</label>
                                 <div class="input-group" id="change_password_password_group">
@@ -206,8 +205,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <!-- Script for submitting form -->
         <script type="text/javascript">
-            var loginForm = $('#deleteAccountForm');
-            loginForm.submit(function(e) {
+            var deleteAccountForm = $('#deleteAccountForm');
+            deleteAccountForm.submit(function(e) {
 
                 // give data from form
                 formData = {
@@ -236,6 +235,55 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 changeInputGroupStatus(document.getElementById("delete_account_password_group"),
                                     document.getElementById("delete_account_password"),
                                     document.getElementById("delete_account_password_feedback"), jsonData, "password")
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        console.log('An error occurred.');
+                        console.log(data);
+                    },
+                });
+            });
+
+            var changePasswordForm = $('#changePasswordForm');
+            changePasswordForm.submit(function(e) {
+
+                // give data from form
+                formData = {
+                    'verification_token': $('input[name=change_password_verification_token]').val(),
+                    'password': $('input[name=change_password_password]').val(),
+                    'new_password': $('input[name=change_password_new_password]').val(),
+                    'repeat_password': $('input[name=change_password_repeat_password]').val()
+
+                };
+                e.preventDefault();
+
+                // ajax request
+                $.ajax({
+                    type: "POST",
+                    url: "changePassword.php",
+                    data: formData,
+                    success: function(response) {
+                        if (response != null) {
+
+                            // parse response from server
+                            var jsonData = JSON.parse(response);
+
+                            // if success code is true login and reload
+                            if (jsonData.success == true) {
+                                location.reload();
+                                
+                                // else give html fields and show error messages
+                            } else {
+                                changeInputGroupStatus(document.getElementById("change_password_password_group"),
+                                    document.getElementById("change_password_password"),
+                                    document.getElementById("change_password_password_feedback"), jsonData, "password")
+                                changeInputGroupStatusArray(document.getElementById("change_password_new_password_group"),
+                                    document.getElementById("change_password_new_password"),
+                                    document.getElementById("change_password_new_password_feedback"), jsonData, "new_password")
+                                changeInputGroupStatus(document.getElementById("change_password_repeat_password_group"),
+                                    document.getElementById("change_password_repeat_password"),
+                                    document.getElementById("change_password_repeat_password_feedback"), jsonData, "repeat_password")
                             }
                         }
                     },

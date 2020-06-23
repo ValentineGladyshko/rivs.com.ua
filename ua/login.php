@@ -75,6 +75,7 @@ if (hash_equals($verification_token, $verification_token1)) {
 
     my_session_regenerate_id_with_prefix($email);
     $_SESSION["email"] = $email;
+    $_SESSION["verification_token"] = $verification_token;
 
     //generate security token for access to protected resources
     $security_token = base64_encode(openssl_random_pseudo_bytes(32));

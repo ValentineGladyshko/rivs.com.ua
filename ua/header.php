@@ -171,6 +171,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="registerConfirmationModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="registerConfirmationForm" name="registerConfirmationForm" action="registerConfirmation.php" method="post">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerConfirmationModalLabel">Підтвердження електронної адреси</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="register_confirmation_verification_token" id="register_confirmation_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        <input name="register_confirmation_email" id="register_confirmation_email" type="hidden">
+                        <input name="register_confirmation_password" id="register_confirmation_password" type="hidden">
+                        <div class="form-group">
+                            <label class="control-label" for="register_confirmation_email_code">Код для підтвердження електронної адреси</label>
+                            <input type="text" class="form-control" id="register_confirmation_email_code" name="register_confirmation_email_code" placeholder="Введіть код" required>
+                            <div id="register_confirmation_email_code_feedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                        <button id="register_confirmation_send_code" hidden="true" class="btn btn-primary">Відправити код повторно</button>
+                        <button type="submit" class="btn btn-primary">Підтвердити</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade" id="rememberModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="rememberModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="rememberForm" name="rememberForm" action="remember.php" method="post">

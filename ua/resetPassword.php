@@ -74,8 +74,6 @@ if (hash_equals($verification_token, $verification_token1)) {
     $response->email_code = "Цей код підтвердження став недійсним";
   }
   
-
-
   //go out if we have any errors
   if ($response->success == false) {
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

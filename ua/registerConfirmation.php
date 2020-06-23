@@ -6,7 +6,7 @@ my_session_start();
 // give data from session and post
 $password = $_POST["password"];
 $email_code = $_POST["email_code"];
-$email = $_SESSION["email"];
+$email = $_POST["email"];
 $verification_token = $_POST["verification_token"];
 $verification_token1 = $_SESSION["verification_token"];
 
@@ -56,6 +56,7 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   //starting saving data
   $_SESSION['email'] = $email;
+  $_SESSION['verification_token'] = $verification_token;
 
   $cipher = "aes-256-gcm";
 
@@ -81,7 +82,6 @@ if (hash_equals($verification_token, $verification_token1)) {
     };
     $stmt->close();
   }
-  $mysqli->close();
   
   //delete email_code
   if ($stmt = $mysqli->prepare("DELETE FROM register_email_codes WHERE Email=?")) {
