@@ -211,7 +211,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="register_confirmation_phone">Номер телефону</label>
-                            <input type="tel" class="form-control" id="register_confirmation_phone" name="register_confirmation_phone" pattern="^(\+\d{3}\(\d{2}\)\d{3}[\ -]\d{2}[\ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$" value="+380" required>
+                            <input type="tel" class="form-control" id="register_confirmation_phone" name="register_confirmation_phone" pattern="^([+]\d{3}[(]\d{2}[)]\d{3}[ -]\d{2}[ -]\d{2})|([+]\d{12})|([+]\d{3} \d{2} \d{3} \d{2} \d{2})$/m" value="+380" required>
                             <div id="register_confirmation_phone_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>

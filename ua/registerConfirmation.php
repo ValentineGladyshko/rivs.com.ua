@@ -54,7 +54,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     $response->success = false;
     $response->middle_name = "ім'я по-батькові повинно бути довжиною меншою за 32 символи";
   }
-  if (preg_match("^(\+\d{3}\(\d{2}\)\d{3}[\ -]\d{2}[\ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$", $phone) == 0) {
+  if (preg_match('/^(\+\d{3}\(\d{2}\)\d{3}[ -]\d{2}[ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$/m', $phone) != 1) {
     $response->success = false;
     $response->phone = 'Телефон повинен відповідати формату "+380123456789"';
   }

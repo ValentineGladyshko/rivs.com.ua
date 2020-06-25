@@ -229,22 +229,20 @@
               var email_code = document.getElementById("register_confirmation_email_code");
               var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
 
-              changeInputStatusArray(email_code, email_code_feedback, jsonData, "email_code");
+              changeInputStatus(email_code, email_code_feedback, jsonData, "email_code");
               changeInputStatus(document.getElementById("register_confirmation_first_name"),
                 document.getElementById("register_confirmation_first_name_feedback"), jsonData, "first_name");
-                changeInputStatus(document.getElementById("register_confirmation_last_name"),
+              changeInputStatus(document.getElementById("register_confirmation_last_name"),
                 document.getElementById("register_confirmation_last_name_feedback"), jsonData, "last_name");
-                changeInputStatus(document.getElementById("register_confirmation_middle_name"),
+              changeInputStatus(document.getElementById("register_confirmation_middle_name"),
                 document.getElementById("register_confirmation_middle_name_feedback"), jsonData, "middle_name");
-                changeInputStatus(document.getElementById("register_confirmation_phone"),
+              changeInputStatus(document.getElementById("register_confirmation_phone"),
                 document.getElementById("register_confirmation_phone_feedback"), jsonData, "phone");
 
               if (jsonData.hasOwnProperty("expired") && jsonData.expired != '') {
                 email_code.classList.add('is-invalid');
                 email_send_code.hidden = false;
                 email_code_feedback.innerHTML = jsonData.expired;
-              } else {
-                email_code.classList.remove('is-invalid');
               }
             }
           }
