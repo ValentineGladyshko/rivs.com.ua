@@ -81,14 +81,24 @@
         input.classList.remove('is-valid');
       }
     }; {
+      inputRemoveValidationStatus(document.getElementById("login_email"));
+      inputRemoveValidationStatus(document.getElementById("login_password"));
+
       inputRemoveValidationStatus(document.getElementById("register_email"));
       inputRemoveValidationStatus(document.getElementById("register_password"));
       inputRemoveValidationStatus(document.getElementById("register_repeat_password"));
+
+      inputRemoveValidationStatus(document.getElementById("register_confirmation_email_code"));
+      inputRemoveValidationStatus(document.getElementById("register_confirmation_last_name"));
+      inputRemoveValidationStatus(document.getElementById("register_confirmation_first_name"));
+      inputRemoveValidationStatus(document.getElementById("register_confirmation_middle_name"));
+      inputRemoveValidationStatus(document.getElementById("register_confirmation_phone"));
+
+      inputRemoveValidationStatus(document.getElementById("remember_email"));
+
       inputRemoveValidationStatus(document.getElementById("reset_password_email"));
       inputRemoveValidationStatus(document.getElementById("reset_password_password"));
       inputRemoveValidationStatus(document.getElementById("reset_password_repeat_password"));
-      inputRemoveValidationStatus(document.getElementById("login_email"));
-      inputRemoveValidationStatus(document.getElementById("login_password"));
     }
   }
 
@@ -194,6 +204,10 @@
       formData = {
         'verification_token': $('input[name=register_confirmation_verification_token]').val(),
         'email': $('input[name=register_confirmation_email]').val(),
+        'last_name': $('input[name=register_confirmation_last_name]').val(),
+        'first_name': $('input[name=register_confirmation_first_name]').val(),
+        'middle_name': $('input[name=register_confirmation_middle_name]').val(),
+        'phone': $('input[name=register_confirmation_phone]').val(),
         'password': $('input[name=register_confirmation_password]').val(),
         'email_code': $('input[name=register_confirmation_email_code]').val()
       };
@@ -216,6 +230,14 @@
               var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
 
               changeInputStatusArray(email_code, email_code_feedback, jsonData, "email_code");
+              changeInputStatus(document.getElementById("register_confirmation_first_name"),
+                document.getElementById("register_confirmation_first_name_feedback"), jsonData, "first_name");
+                changeInputStatus(document.getElementById("register_confirmation_last_name"),
+                document.getElementById("register_confirmation_last_name_feedback"), jsonData, "last_name");
+                changeInputStatus(document.getElementById("register_confirmation_middle_name"),
+                document.getElementById("register_confirmation_middle_name_feedback"), jsonData, "middle_name");
+                changeInputStatus(document.getElementById("register_confirmation_phone"),
+                document.getElementById("register_confirmation_phone_feedback"), jsonData, "phone");
 
               if (jsonData.hasOwnProperty("expired") && jsonData.expired != '') {
                 email_code.classList.add('is-invalid');

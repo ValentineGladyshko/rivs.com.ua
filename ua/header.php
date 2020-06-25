@@ -172,12 +172,12 @@
     </div>
 
     <div class="modal fade" id="registerConfirmationModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <form id="registerConfirmationForm" name="registerConfirmationForm" action="registerConfirmation.php" method="post">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="registerConfirmationModalLabel">Підтвердження електронної адреси</h5>
+                        <h5 class="modal-title" id="registerConfirmationModalLabel">Завершення реєстрації</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -190,6 +190,29 @@
                             <label class="control-label" for="register_confirmation_email_code">Код для підтвердження електронної адреси</label>
                             <input type="text" class="form-control" id="register_confirmation_email_code" name="register_confirmation_email_code" placeholder="Введіть код" required>
                             <div id="register_confirmation_email_code_feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-4">
+                                <label class="control-label" for="register_confirmation_last_name">Прізвище</label>
+                                <input type="text" class="form-control" id="register_confirmation_last_name" name="register_confirmation_last_name" placeholder="Введіть прізвище" required>
+                                <div id="register_confirmation_last_name_feedback" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label class="control-label" for="register_confirmation_first_name">Ім'я</label>
+                                <input type="text" class="form-control" id="register_confirmation_first_name" name="register_confirmation_first_name" placeholder="Введіть ім'я" required>
+                                <div id="register_confirmation_first_name_feedback" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <label class="control-label" for="register_confirmation_middle_name">Ім'я по-батькові</label>
+                                <input type="text" class="form-control" id="register_confirmation_middle_name" name="register_confirmation_middle_name" placeholder="Введіть ім'я по-батькові" required>
+                                <div id="register_confirmation_middle_name_feedback" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="register_confirmation_phone">Номер телефону</label>
+                            <input type="tel" class="form-control" id="register_confirmation_phone" name="register_confirmation_phone" pattern="^(\+\d{3}\(\d{2}\)\d{3}[\ -]\d{2}[\ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$" value="+380" required>
+                            <div id="register_confirmation_phone_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer">

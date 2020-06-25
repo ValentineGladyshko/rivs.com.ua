@@ -7,6 +7,10 @@ my_session_start();
 $password = $_POST["password"];
 $email_code = $_POST["email_code"];
 $email = $_POST["email"];
+$first_name = $_POST["first_name"];
+$middle_name = $_POST["middle_name"];
+$last_name = $_POST["last_name"];
+$phone = $_POST["phone"];
 $verification_token = $_POST["verification_token"];
 $verification_token1 = $_SESSION["verification_token"];
 
@@ -36,11 +40,29 @@ if (hash_equals($verification_token, $verification_token1)) {
     $stmt->fetch();
     $stmt->close();
   }
+  if (strlen($first_name) > 32) {
+    $response->success = false;
+    $response->first_name = "ім'я повинно бути довжиною меншою за 32 символи";
+  }
+
+  if (strlen($last_name) > 64) {
+    $response->success = false;
+    $response->last_name = "Прізвище повинно бути довжиною меншою за 64 символи";
+  }
+
+  if (strlen($middle_name) > 32) {
+    $response->success = false;
+    $response->middle_name = "ім'я по-батькові повинно бути довжиною меншою за 32 символи";
+  }
+  if (preg_match("^(\+\d{3}\(\d{2}\)\d{3}[\ -]\d{2}[\ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$", $phone) == 0) {
+    $response->success = false;
+    $response->phone = 'Телефон повинен відповідати формату "+380123456789"';
+  }
+
   if ($expired_date == null || time() > strtotime($expired_date)) {
     $response->success = false;
     $response->expired = "Цей код підтвердження став недійсним, будь ласка натисніть кнопку для повторного надсилання";
-  }
-  else if ($email_code != $email_code2 || $email_code == null) {
+  } else if ($email_code != $email_code2 || $email_code == null) {
     $response->success = false;
     $response->email_code = "Цей код не співпадає з тим що висланий на вашу пошту";
   }
@@ -82,7 +104,53 @@ if (hash_equals($verification_token, $verification_token1)) {
     };
     $stmt->close();
   }
-  
+
+  $new_key = $key . md5($email, true);
+  $first_name_iv = openssl_random_pseudo_bytes($ivlen);
+  $middle_name_iv = openssl_random_pseudo_bytes($ivlen);
+  $last_name_iv = openssl_random_pseudo_bytes($ivlen);
+  $phone_iv = openssl_random_pseudo_bytes($ivlen);
+
+  $first_name_encrypted = openssl_encrypt($first_name, $cipher, $new_key, $options = 0, $first_name_iv, $first_name_tag);
+  $middle_name_encrypted = openssl_encrypt($middle_name, $cipher, $new_key, $options = 0, $middle_name_iv, $middle_name_tag);
+  $last_name_encrypted = openssl_encrypt($last_name, $cipher, $new_key, $options = 0, $last_name_iv, $last_name_tag);
+  $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
+
+
+  if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($userID);
+    $stmt->fetch();
+    $stmt->close();
+  }
+
+  if ($userID != null) {
+    if ($stmt = $mysqli->prepare("INSERT INTO `customers`(`UserID`, `FirstName`, `FirstNameNonce`,
+     `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
+      `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+      $stmt->bind_param(
+        "issssssssssss",
+        $userID,
+        $first_name_encrypted,
+        base64_encode($first_name_iv),
+        base64_encode($first_name_tag),
+        $middle_name_encrypted,
+        base64_encode($middle_name_iv),
+        base64_encode($middle_name_tag),
+        $last_name_encrypted,
+        base64_encode($last_name_iv),
+        base64_encode($last_name_tag),
+        $phone_encrypted,
+        base64_encode($phone_iv),
+        base64_encode($phone_tag),
+      );
+      if ($stmt->execute() == false) {
+      };
+      $stmt->close();
+    }
+  }
+
   //delete email_code
   if ($stmt = $mysqli->prepare("DELETE FROM register_email_codes WHERE Email=?")) {
     $stmt->bind_param("s", $email);

@@ -7,6 +7,7 @@ $verification_token = $_POST['user_verification_token'];
 $verification_token1 = $_SESSION['verification_token'];
 $security_token = $_SESSION["security_token"];
 $security_token1 = $_COOKIE["security_token"];
+$email = $_SESSION["email"];
 
 // if some token empty go out
 if ($verification_token == null || $verification_token1 == null || $security_token == null || $security_token1 == null) {
@@ -14,6 +15,59 @@ if ($verification_token == null || $verification_token1 == null || $security_tok
 }
 
 if (hash_equals($verification_token, $verification_token1) && hash_equals($security_token, $security_token1)) {
+    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    if ($mysqli->connect_errno) {
+        $response->success = false;
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+    if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($userID);
+        $stmt->fetch();
+        $stmt->close();
+    }
+
+    if ($userID != null) {
+        if ($stmt = $mysqli->prepare("SELECT `FirstName`, `FirstNameNonce`, `FirstNameTag`,
+         `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
+          `Phone`, `PhoneNonce`, `PhoneTag` FROM `customers` WHERE UserID=?")) {
+            $stmt->bind_param("i", $userID);
+            $stmt->execute();
+            $stmt->bind_result(
+                $first_name_encrypted,
+                $first_name_iv,
+                $first_name_tag,
+                $middle_name_encrypted,
+                $middle_name_iv,
+                $middle_name_tag,
+                $last_name_encrypted,
+                $last_name_iv,
+                $last_name_tag,
+                $phone_encrypted,
+                $phone_iv,
+                $phone_tag
+            );
+            $stmt->fetch();
+            $stmt->close();
+        }
+
+
+        $cipher = "aes-256-gcm";
+
+        $myfile = fopen("../key.txt", "r");
+        $key = base64_decode(fread($myfile, filesize("../key.txt")));
+        fclose($myfile);
+
+        $new_key = $key . md5($email, true);
+
+        $first_name = openssl_decrypt($first_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($first_name_iv), base64_decode($first_name_tag));
+        $middle_name = openssl_decrypt($middle_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($middle_name_iv), base64_decode($middle_name_tag));
+        $last_name = openssl_decrypt($last_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($last_name_iv), base64_decode($last_name_tag));
+        $phone = openssl_decrypt($phone_encrypted, $cipher, $new_key, $options = 0, base64_decode($phone_iv), base64_decode($phone_tag));
+    }
 ?>
     <!--DOCTYPE html-->
     <html lang="en">
@@ -166,12 +220,37 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
                 <form>
                     <div class="form-group row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Електронна адреса</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<?= $_SESSION["email"] ?>>
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<?= $email ?>>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticLastName" class="col-sm-2 col-form-label">Прізвище</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticLastName" value=<?= $last_name ?>>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticFirstName" class="col-sm-2 col-form-label">Ім'я</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticFirstName" value=<?= $first_name ?>>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticMiddleName" class="col-sm-2 col-form-label">Ім'я по-батькові</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticMiddleName" value=<?= $middle_name ?>>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticPhone" class="col-sm-2 col-form-label">Номер телефону</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticPhone" value=<?= $phone ?>>
                         </div>
                     </div>
                 </form>
+
                 <hr>
                 <button class="btn btn-outline-primary" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
                 <hr>
@@ -205,6 +284,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <!-- Script for submitting form -->
         <script type="text/javascript">
+            inputRemoveValidationStatus(document.getElementById("delete_account_password"));
+            inputRemoveValidationStatus(document.getElementById("change_password_password"));
+            inputRemoveValidationStatus(document.getElementById("change_password_new_password"));
+            inputRemoveValidationStatus(document.getElementById("change_password_repeat_password"));
+
             var deleteAccountForm = $('#deleteAccountForm');
             deleteAccountForm.submit(function(e) {
 
@@ -272,7 +356,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             // if success code is true login and reload
                             if (jsonData.success == true) {
                                 location.reload();
-                                
+
                                 // else give html fields and show error messages
                             } else {
                                 changeInputGroupStatus(document.getElementById("change_password_password_group"),
