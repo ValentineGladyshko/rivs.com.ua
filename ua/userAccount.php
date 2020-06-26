@@ -11,14 +11,16 @@ $email = $_SESSION["email"];
 
 // if some token empty go out
 if ($verification_token == null || $verification_token1 == null || $security_token == null || $security_token1 == null) {
+    include("../scripts.php");
+    echo "<script>$(document).ready(function() { $.redirect('index.php'); });</script>";
     exit();
 }
 
 if (hash_equals($verification_token, $verification_token1) && hash_equals($security_token, $security_token1)) {
     $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
     if ($mysqli->connect_errno) {
-        $response->success = false;
-        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        include("../scripts.php");
+        echo "<script>$.redirect('index.php');</script>";
         exit();
     }
 
@@ -88,10 +90,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
     </head>
 
     <body style="overflow-y: overlay;">
-        <? include("header.php"); ?>
+        <? include("functions/header.php"); ?>
         <div class="modal fade" id="changePasswordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form id="changePasswordForm" name="changePasswordForm" action="changePassword.php" method="post">
+                <form id="changePasswordForm">
                     <div class="modal-content">
 
                         <div class="modal-header">
@@ -101,11 +103,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             </button>
                         </div>
                         <div class="modal-body">
-                            <input name="change_password_verification_token" id="change_password_verification_token" type="hidden" value=<?= $verification_token ?>>
+                            <input id="change_password_verification_token" type="hidden" value=<?= $verification_token ?>>
                             <div class="form-group">
                                 <label class="control-label" for="change_password_password">Поточний пароль</label>
                                 <div class="input-group" id="change_password_password_group">
-                                    <input type="password" class="form-control" id="change_password_password" name="change_password_password" placeholder="Введіть поточний пароль" required>
+                                    <input type="password" class="form-control" id="change_password_password" placeholder="Введіть поточний пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_password_img'), document.getElementById('change_password_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_password_img" height="20" src="/icons/eye-fill.svg">
@@ -117,7 +119,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <div class="form-group">
                                 <label class="control-label" for="change_password_new_password">Новий пароль</label>
                                 <div class="input-group" id="change_password_new_password_group">
-                                    <input type="password" class="form-control" id="change_password_new_password" name="change_password_new_password" placeholder="Введіть новий пароль" required>
+                                    <input type="password" class="form-control" id="change_password_new_password" placeholder="Введіть новий пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_new_password_img'), document.getElementById('change_password_new_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_new_password_img" height="20" src="/icons/eye-fill.svg">
@@ -129,7 +131,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <div class="form-group">
                                 <label class="control-label" for="change_password_repeat_password">Повторний пароль</label>
                                 <div class="input-group" id="change_password_repeat_password_group">
-                                    <input type="password" class="form-control" id="change_password_repeat_password" name="change_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                    <input type="password" class="form-control" id="change_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_repeat_password_img'), document.getElementById('change_password_repeat_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_repeat_password_img" height="20" src="/icons/eye-fill.svg">
@@ -170,7 +172,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <div class="modal fade" id="deleteConfirmationModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form id="deleteAccountForm" name="deleteAccountForm" action="deleteAccount.php" method="post">
+                <form id="deleteAccountForm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteConfirmationModalLabel">Видалення аккаунту</h5>
@@ -184,7 +186,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <div class="form-group">
                                 <label class="control-label" for="delete_account_password">Пароль</label>
                                 <div class="input-group" id="delete_account_password_group">
-                                    <input type="password" class="form-control" id="delete_account_password" name="delete_account_password" placeholder="Введіть пароль" required>
+                                    <input type="password" class="form-control" id="delete_account_password" placeholder="Введіть пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('delete_account_password_img'), document.getElementById('delete_account_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="delete_account_password_img" height="20" src="/icons/eye-fill.svg">
@@ -218,8 +220,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     </div>
                 </div>
 
-                <form id="changeUserDataForm" name="changeUserDataForm" action="changeUserData.php" method="post">
-                    <input name="change_user_data_verification_token" id="change_user_data_verification_token" type="hidden" value=<?= $verification_token ?>>
+                <form id="changeUserDataForm" method="post">
+                    <input id="change_user_data_verification_token" type="hidden" value=<?= $verification_token ?>>
                     <div class="form-group row">
                         <label for="change_user_data_email" class="col-sm-2 col-form-label">Електронна адреса</label>
                         <div class="col-sm-10 my-vertical-centered">
@@ -351,15 +353,15 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
                 // give data from form
                 formData = {
-                    'verification_token': $('input[name=delete_account_verification_token]').val(),
-                    'password': $('input[name=delete_account_password]').val()
+                    'verification_token': document.getElementById("delete_account_verification_token").value,
+                    'password': document.getElementById("delete_account_password").value
                 };
                 e.preventDefault();
 
                 // ajax request
                 $.ajax({
                     type: "POST",
-                    url: "deleteAccount.php",
+                    url: "functions/deleteAccount.php",
                     data: formData,
                     success: function(response) {
                         if (response != null) {
@@ -391,18 +393,17 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
                 // give data from form
                 formData = {
-                    'verification_token': $('input[name=change_password_verification_token]').val(),
-                    'password': $('input[name=change_password_password]').val(),
-                    'new_password': $('input[name=change_password_new_password]').val(),
-                    'repeat_password': $('input[name=change_password_repeat_password]').val()
-
+                    'verification_token': document.getElementById("change_password_verification_token").value,
+                    'password': document.getElementById("change_password_password").value,
+                    'new_password': document.getElementById("change_password_new_password").value,
+                    'repeat_password': document.getElementById("change_password_repeat_password").value
                 };
                 e.preventDefault();
 
                 // ajax request
                 $.ajax({
                     type: "POST",
-                    url: "changePassword.php",
+                    url: "functions/changePassword.php",
                     data: formData,
                     success: function(response) {
                         if (response != null) {
@@ -439,7 +440,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             changeUserDataForm.submit(function(e) {
                 // give data from form
                 formData = {
-                    'verification_token': $('input[name=change_user_data_verification_token]').val()
+                    'verification_token': document.getElementById("change_user_data_verification_token").value,
                 };
                 if (document.getElementById("change_user_data_last_name").readOnly == false)
                     formData['last_name'] = document.getElementById("change_user_data_last_name").value;
@@ -456,7 +457,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 // ajax request
                 $.ajax({
                     type: "POST",
-                    url: "changeUserData.php",
+                    url: "functions/changeUserData.php",
                     data: formData,
                     success: function(response) {
                         if (response != null) {
@@ -469,8 +470,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 location.reload();
 
                                 // else give html fields and show error messages
-                            } else {
-                            }
+                            } else {}
                         }
                     },
                     error: function(data) {
@@ -484,5 +484,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
     </html>
 <?php
-} else exit();
+} else {
+    include("../scripts.php");
+    echo "<script>$.redirect('index.php');</script>";
+    exit();
+} 
 ?>

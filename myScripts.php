@@ -109,16 +109,16 @@
 
       // give data from form
       formData = {
-        'verification_token': $('input[name=login_verification_token]').val(),
-        'email': $('input[name=login_email]').val(),
-        'password': $('input[name=login_password]').val()
+        'verification_token': document.getElementById("login_verification_token").value,
+        'email': document.getElementById("login_email").value,
+        'password': document.getElementById("login_password").value
       };
       e.preventDefault();
 
       // ajax request
       $.ajax({
         type: "POST",
-        url: "login.php",
+        url: "functions/login.php",
         data: formData,
         success: function(response) {
           if (response != null) {
@@ -152,17 +152,17 @@
 
       // give data from form
       formData = {
-        'verification_token': $('input[name=register_verification_token]').val(),
-        'email': $('input[name=register_email]').val(),
-        'password': $('input[name=register_password]').val(),
-        'repeat_password': $('input[name=register_repeat_password]').val()
+        'verification_token': document.getElementById("register_verification_token").value,
+        'email': document.getElementById("register_email").value,
+        'password': document.getElementById("register_password").value,
+        'repeat_password': document.getElementById("register_repeat_password").value
       };
       e.preventDefault();
 
       // ajax request
       $.ajax({
         type: "POST",
-        url: "registerStart.php",
+        url: "functions/registerStart.php",
         data: formData,
         success: function(response) {
           if (response != null) {
@@ -173,8 +173,8 @@
             // if success code is true login and reload
             if (jsonData.success == true) {
               $('#registerModal').modal('hide');
-              document.getElementById("register_confirmation_email").value = $('input[name=register_email]').val();
-              document.getElementById("register_confirmation_password").value = $('input[name=register_password]').val();
+              document.getElementById("register_confirmation_email").value = document.getElementById("register_email").value;
+              document.getElementById("register_confirmation_password").value = document.getElementById("register_password").value;
               $('#registerConfirmationModal').modal();
 
               // else give html fields and show error messages
@@ -202,21 +202,21 @@
 
       // give data from form
       formData = {
-        'verification_token': $('input[name=register_confirmation_verification_token]').val(),
-        'email': $('input[name=register_confirmation_email]').val(),
-        'last_name': $('input[name=register_confirmation_last_name]').val(),
-        'first_name': $('input[name=register_confirmation_first_name]').val(),
-        'middle_name': $('input[name=register_confirmation_middle_name]').val(),
-        'phone': $('input[name=register_confirmation_phone]').val(),
-        'password': $('input[name=register_confirmation_password]').val(),
-        'email_code': $('input[name=register_confirmation_email_code]').val()
+        'verification_token': document.getElementById("register_confirmation_verification_token").value,
+        'email': document.getElementById("register_confirmation_email").value,
+        'last_name': document.getElementById("register_confirmation_last_name").value,
+        'first_name': document.getElementById("register_confirmation_first_name").value,
+        'middle_name': document.getElementById("register_confirmation_middle_name").value,
+        'phone': document.getElementById("register_confirmation_phone").value,
+        'password': document.getElementById("register_confirmation_password").value,
+        'email_code': document.getElementById("register_confirmation_email_code").value
       };
       e.preventDefault();
 
       // ajax request
       $.ajax({
         type: "POST",
-        url: "registerConfirmation.php",
+        url: "functions/registerConfirmation.php",
         data: formData,
         success: function(response) {
           if (response != null) {
@@ -259,15 +259,15 @@
 
       // give data from form
       formData = {
-        'verification_token': $('input[name=remember_verification_token]').val(),
-        'email': $('input[name=remember_email]').val(),
+        'verification_token': document.getElementById("remember_verification_token").value,
+        'email': document.getElementById("remember_email").value,
       };
       e.preventDefault();
 
       // ajax request
       $.ajax({
         type: "POST",
-        url: "remember.php",
+        url: "functions/remember.php",
         data: formData,
         success: function(response) {
           if (response != null) {
@@ -278,7 +278,7 @@
             // if success code is true login and reload
             if (jsonData.success == true) {
               $('#rememberModal').modal('hide');
-              document.getElementById("reset_password_email").value = $('input[name=remember_email]').val();
+              document.getElementById("reset_password_email").value = document.getElementById("remember_email").value;
               $('#resetPasswordModal').modal();
               // else give html fields and show error messages
             } else {
@@ -299,18 +299,18 @@
 
       // give data from form
       formData = {
-        'verification_token': $('input[name=reset_password_verification_token]').val(),
-        'email': $('input[name=reset_password_email]').val(),
-        'email_code': $('input[name=reset_password_email_code]').val(),
-        'password': $('input[name=reset_password_password]').val(),
-        'repeat_password': $('input[name=reset_password_repeat_password]').val()
+        'verification_token': document.getElementById("reset_password_verification_token").value,
+        'email': document.getElementById("reset_password_email").value,
+        'email_code': document.getElementById("reset_password_email_code").value,
+        'password': document.getElementById("reset_password_password").value,
+        'repeat_password': document.getElementById("reset_password_repeat_password").value
       };
       e.preventDefault();
 
       // ajax request
       $.ajax({
         type: "POST",
-        url: "resetPassword.php",
+        url: "functions/resetPassword.php",
         data: formData,
         success: function(response) {
           if (response != null) {
@@ -352,14 +352,14 @@
 
           // give data from form
           formData = {
-            'verification_token': $('input[name=logout_verification_token]').val(),
+            'verification_token': document.getElementById("logout_verification_token").value,
           };
           e.preventDefault();
 
           // ajax request
           $.ajax({
             type: "POST",
-            url: "logout.php",
+            url: "functions/logout.php",
             data: formData,
             success: function(data) {
               location.reload();
@@ -413,17 +413,17 @@
 
           // give data from form
           formData = {
-            'verification_token': $('input[name=register_confirmation_verification_token]').val(),
-            'email': $('input[name=register_confirmation_email]').val(),
-            'password': $('input[name=register_confirmation_password]').val(),
-            'repeat_password': $('input[name=register_confirmation_password]').val()
+            'verification_token': document.getElementById("register_confirmation_verification_token").value,
+            'email': document.getElementById("register_confirmation_email").value,
+            'password': document.getElementById("register_confirmation_password").value,
+            'repeat_password': document.getElementById("register_confirmation_password").value
           };
           e.preventDefault();
 
           // ajax request
           $.ajax({
             type: "POST",
-            url: "registerStart.php",
+            url: "functions/registerStart.php",
             data: formData,
             success: function(data) {
               var send_code = document.getElementById("register_confirmation_send_code");

@@ -1,10 +1,10 @@
 <?php
-require_once("../LDLRIVS.php");
-require_once("../PHPMailer/Exception.php");
-require_once("../PHPMailer/OAuth.php");
-require_once("../PHPMailer/PHPMailer.php");
-require_once("../PHPMailer/POP3.php");
-require_once("../PHPMailer/SMTP.php");
+require_once("../../LDLRIVS.php");
+require_once("../../PHPMailer/Exception.php");
+require_once("../../PHPMailer/OAuth.php");
+require_once("../../PHPMailer/PHPMailer.php");
+require_once("../../PHPMailer/POP3.php");
+require_once("../../PHPMailer/SMTP.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -96,8 +96,8 @@ if (hash_equals($verification_token, $verification_token1)) {
 
     // read key to decrypt password
     $cipher = "aes-256-gcm";
-    $myfile = fopen("../key.txt", "r");
-    $key = base64_decode(fread($myfile, filesize("../key.txt")));
+    $myfile = fopen("../../key.txt", "r");
+    $key = base64_decode(fread($myfile, filesize("../../key.txt")));
     fclose($myfile);
 
     //variables to decrypt
@@ -138,11 +138,11 @@ if (hash_equals($verification_token, $verification_token1)) {
     $mail->Subject = 'From: rivs.com.ua';
     $mail->isHTML(true);
     // Mail message
-    $mail->Body = file_get_contents("rememberPassword/page1.html") .
-        $email_code . file_get_contents("rememberPassword/page2.html") .
-        $email. file_get_contents("rememberPassword/page3.html") .
-        $email. file_get_contents("rememberPassword/page4.html") .
-        $email_code . file_get_contents("rememberPassword/page5.html");
+    $mail->Body = file_get_contents("../rememberPassword/page1.html") .
+        $email_code . file_get_contents("../rememberPassword/page2.html") .
+        $email. file_get_contents("../rememberPassword/page3.html") .
+        $email. file_get_contents("../rememberPassword/page4.html") .
+        $email_code . file_get_contents("../rememberPassword/page5.html");
 
     // Mail sending
     if ($mail->send()) {

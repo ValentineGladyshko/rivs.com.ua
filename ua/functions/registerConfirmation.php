@@ -1,5 +1,5 @@
 <?php
-require_once("../LDLRIVS.php");
+require_once("../../LDLRIVS.php");
 
 my_session_start();
 
@@ -83,8 +83,8 @@ if (hash_equals($verification_token, $verification_token1)) {
   $cipher = "aes-256-gcm";
 
   //read key from file 
-  $myfile = fopen("../key.txt", "r");
-  $key = base64_decode(fread($myfile, filesize("../key.txt")));
+  $myfile = fopen("../../key.txt", "r");
+  $key = base64_decode(fread($myfile, filesize("../../key.txt")));
   fclose($myfile);
 
   //hashing password

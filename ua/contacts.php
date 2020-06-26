@@ -28,7 +28,7 @@ $_SESSION['verification_token'] = $verification_token;
 </head>
 
 <body style="overflow-y: overlay;">
-  <? include("header.php"); ?>
+  <? include("functions/header.php"); ?>
 
   <!--Main Navigation-->
   <!--Main layout-->
@@ -63,7 +63,7 @@ $_SESSION['verification_token'] = $verification_token;
 
           <!--Grid column-->
           <div class="col-md-8 col-xl-9">
-            <form id="contact-form" name="contact-form" method="post">
+            <form id="contact-form">
 
               <!--Grid row-->
               <div class="row">
@@ -72,7 +72,7 @@ $_SESSION['verification_token'] = $verification_token;
                 <div class="col-md-6">
                   <div class="md-form">
                     <label for="name">Ваше ім'я</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
+                    <input type="text" id="name" class="form-control" required>
                     <div id="name_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@ $_SESSION['verification_token'] = $verification_token;
                 <div class="col-md-6">
                   <div class="md-form">
                     <label for="email">Ваш email</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <input type="email" id="email" class="form-control" required>
                     <div id="email_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ $_SESSION['verification_token'] = $verification_token;
                 <div class="col-md-12">
                   <div class="md-form">
                     <label for="message">Введіть повідомлення</label>
-                    <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
+                    <textarea type="text" id="message" rows="2" class="form-control md-textarea" required></textarea>
                     <div id="message_feedback" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -173,16 +173,16 @@ $_SESSION['verification_token'] = $verification_token;
 
       // data for request
       formData = {
-        'name': $('input[name=name]').val(),
-        'email': $('input[name=email]').val(),
-        'message': $('textarea[name=message]').val()
+        'name': $document.getElementById("name").value,
+        'email': $document.getElementById("email").value,
+        'message': $document.getElementById("message").value
       };
 
       e.preventDefault();
 
       // ajax post request
       $.ajax({
-        url: "ContactFormSubmit.php",
+        url: "functions/contactFormSubmit.php",
         data: formData,
         type: "POST",
         success: function(response) {
@@ -198,54 +198,10 @@ $_SESSION['verification_token'] = $verification_token;
                 '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
               $('#contact-form').closest('form').find("input[type=email], input[type=text], textarea").val("");
             } else {
-
-              // giving elements of html to change
-              var email = document.getElementById("email");
-              var name = document.getElementById("name");
-              var message = document.getElementById("message");
-              var email_feedback = document.getElementById("email_feedback");
-              var name_feedback = document.getElementById("name_feedback");
-              var message_feedback = document.getElementById("message_feedback");
-
-              // set invalid status to email field and show email error if email is invalid
-              if (jsonData.hasOwnProperty("email")) {
-                email.classList.add('is-invalid');
-                email.classList.remove('is-valid');
-                email_feedback.innerHTML = jsonData.email;
-              }
-
-              // change status if email is valid
-              else {
-                email.classList.remove('is-invalid');
-                email.classList.add('is-valid');
-              }
-
-              // set invalid status to name field and show name error if name is invalid
-              if (jsonData.hasOwnProperty("name")) {
-                name.classList.add('is-invalid');
-                name.classList.remove('is-valid');
-                name_feedback.innerHTML = jsonData.name;
-              }
-
-              // change status if name is valid
-              else {
-                name.classList.remove('is-invalid');
-                name.classList.add('is-valid');
-              }
-
-              // set invalid status to message field and show message error if message is invalid
-              if (jsonData.hasOwnProperty("message")) {
-                message.classList.add('is-invalid');
-                message.classList.remove('is-valid');
-                message_feedback.innerHTML = jsonData.message;
-              }
-
-              // change status if message is valid
-              else {
-                message.classList.remove('is-invalid');
-                message.classList.add('is-valid');
-              }
-
+              changeInputStatus(document.getElementById("email"), document.getElementById("email_feedback"), jsonData, "email");
+              changeInputStatus(document.getElementById("name"), document.getElementById("name_feedback"), jsonData, "name");
+              changeInputStatus(document.getElementById("message"), document.getElementById("message_feedback"), jsonData, "message")
+              
               // change status field
               if (jsonData.hasOwnProperty("send")) {
                 document.getElementById("status").innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
