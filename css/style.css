@@ -34,3 +34,30 @@
 .header .menu .button:hover {
 	background: #A21318;
 }
+
+.my-svg-button
+{
+	fill: #000000;
+}
+
+.my-svg-button:hover
+{
+	fill: #0d6efd;
+	cursor: pointer;
+}
+
+.my-vertical-centered
+{
+	margin: auto 0 auto 0;
+	padding: 0 4 0 4;
+}
+
+.my-padding
+{
+	padding: 6 12 6 12;
+}
+
+.button-margin
+{
+	margin: 4;
+}

@@ -218,43 +218,70 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     </div>
                 </div>
 
-                <form>
+                <form id="changeUserDataForm" name="changeUserDataForm" action="changeUserData.php" method="post">
+                    <input name="change_user_data_verification_token" id="change_user_data_verification_token" type="hidden" value=<?= $verification_token ?>>
                     <div class="form-group row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Електронна адреса</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<?= $email ?>>
+                        <label for="change_user_data_email" class="col-sm-2 col-form-label">Електронна адреса</label>
+                        <div class="col-sm-10 my-vertical-centered">
+                            <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_email" value=<?= $email ?>>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticLastName" class="col-sm-2 col-form-label">Прізвище</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticLastName" value=<?= $last_name ?>>
+                        <label for="change_user_data_last_name" class="col-sm-2 col-form-label">Прізвище</label>
+                        <div class="col-sm-3 my-vertical-centered">
+                            <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>
+                        </div>
+                        <div onclick="activateInput(getElementById('change_user_data_last_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити прізвище">
+                            <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticFirstName" class="col-sm-2 col-form-label">Ім'я</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticFirstName" value=<?= $first_name ?>>
+                        <label for="change_user_data_first_name" class="col-sm-2 col-form-label">Ім'я</label>
+                        <div class="col-sm-3 my-vertical-centered">
+                            <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_first_name" value=<?= $first_name ?> required>
+                        </div>
+                        <div onclick="activateInput(getElementById('change_user_data_first_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я">
+                            <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticMiddleName" class="col-sm-2 col-form-label">Ім'я по-батькові</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticMiddleName" value=<?= $middle_name ?>>
+                        <label for="change_user_data_middle_name" class="col-sm-2 col-form-label">Ім'я по-батькові</label>
+                        <div class="col-sm-3 my-vertical-centered">
+                            <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_middle_name" value=<?= $middle_name ?> required>
+                        </div>
+                        <div onclick="activateInput(getElementById('change_user_data_middle_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я по-батькові">
+                            <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="staticPhone" class="col-sm-2 col-form-label">Номер телефону</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticPhone" value=<?= $phone ?>>
+                        <label for="change_user_data_phone" class="col-sm-2 col-form-label">Номер телефону</label>
+                        <div class="col-sm-3 my-vertical-centered">
+                            <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_phone" value=<?= $phone ?> required>
+                        </div>
+                        <div onclick="activateInput(getElementById('change_user_data_phone'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити номер телефону">
+                            <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
                         </div>
                     </div>
+                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-outline-dark button-margin">Відмінити</button>
+                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-outline-primary button-margin">Змінити особисті дані</button>
                 </form>
 
                 <hr>
-                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
                 <hr>
-                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
 
         </main>
         <!--Main layout-->
@@ -284,6 +311,36 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <!-- Script for submitting form -->
         <script type="text/javascript">
+            $("[data-toggle=tooltip]").tooltip();
+
+            function activateInput(input) {
+                document.getElementById("changeUserDataDismissButton").hidden = false;
+                document.getElementById("changeUserDataSubmitButton").hidden = false;
+                input.classList.remove('form-control-plaintext');
+                input.classList.add('form-control');
+                input.readOnly = false;
+            };
+
+            function deactivateInput(input, value) {
+                input.value = value;
+                input.classList.remove('form-control');
+                input.classList.add('form-control-plaintext');
+                input.readOnly = true;
+            };
+
+            $(document).ready(function() {
+                $("#changeUserDataDismissButton").click(
+                    function(e) {
+                        document.getElementById("changeUserDataDismissButton").hidden = true;
+                        document.getElementById("changeUserDataSubmitButton").hidden = true;
+                        deactivateInput(document.getElementById("change_user_data_last_name"), "<?= $last_name ?>");
+                        deactivateInput(document.getElementById("change_user_data_first_name"), "<?= $first_name ?>");
+                        deactivateInput(document.getElementById("change_user_data_middle_name"), "<?= $middle_name ?>");
+                        deactivateInput(document.getElementById("change_user_data_phone"), "<?= $phone ?>");
+                    }
+                );
+            });
+
             inputRemoveValidationStatus(document.getElementById("delete_account_password"));
             inputRemoveValidationStatus(document.getElementById("change_password_password"));
             inputRemoveValidationStatus(document.getElementById("change_password_new_password"));
@@ -368,6 +425,51 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 changeInputGroupStatus(document.getElementById("change_password_repeat_password_group"),
                                     document.getElementById("change_password_repeat_password"),
                                     document.getElementById("change_password_repeat_password_feedback"), jsonData, "repeat_password")
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        console.log('An error occurred.');
+                        console.log(data);
+                    },
+                });
+            });
+
+            var changeUserDataForm = $('#changeUserDataForm');
+            changeUserDataForm.submit(function(e) {
+                // give data from form
+                formData = {
+                    'verification_token': $('input[name=change_user_data_verification_token]').val()
+                };
+                if (document.getElementById("change_user_data_last_name").readOnly == false)
+                    formData['last_name'] = document.getElementById("change_user_data_last_name").value;
+                if (document.getElementById("change_user_data_first_name").readOnly == false)
+                    formData['first_name'] = document.getElementById("change_user_data_first_name").value;
+                if (document.getElementById("change_user_data_middle_name").readOnly == false)
+                    formData['middle_name'] = document.getElementById("change_user_data_middle_name").value;
+                if (document.getElementById("change_user_data_phone").readOnly == false)
+                    formData['phone'] = document.getElementById("change_user_data_phone").value;
+
+
+                e.preventDefault();
+
+                // ajax request
+                $.ajax({
+                    type: "POST",
+                    url: "changeUserData.php",
+                    data: formData,
+                    success: function(response) {
+                        if (response != null) {
+
+                            // parse response from server
+                            var jsonData = JSON.parse(response);
+
+                            // if success code is true login and reload
+                            if (jsonData.success == true) {
+                                location.reload();
+
+                                // else give html fields and show error messages
+                            } else {
                             }
                         }
                     },
