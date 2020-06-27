@@ -87,6 +87,9 @@ function product($query, $id)
               <p>Замовити можна по телефону</p>
               <p>%s</p>
             </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" style="width:150px">Купити</button>
+            </div>
           </div>
           <div class="col-md-8">
             <h2 class="h1-responsive font-weight-bold text-center my-4">%s</h2>

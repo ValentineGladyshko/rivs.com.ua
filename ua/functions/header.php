@@ -58,7 +58,7 @@
                         <form style="margin:0px" class="nav-item" id="userForm" action="userAccount.php" method="post">
                             <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
                         </form>
-                        <a id="userButton" class="rounded-lg nav-link"><?= $_SESSION["email"] ?></a>
+                        <a id="userButton" class="rounded-lg nav-link"><img height="24" src="/icons/person-fill.svg"><?= $_SESSION["email"] ?></a>
                     </li>
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logoutForm">

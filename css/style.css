@@ -52,6 +52,11 @@
 	padding: 0 4 0 4;
 }
 
+.my-horizontal-centered
+{
+	margin: 0 auto 0 auto;
+}
+
 .my-padding
 {
 	padding: 6 12 6 12;
