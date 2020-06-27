@@ -1,6 +1,5 @@
 <header>
-    <!--Navbar -->
-    <nav class="mb-1 navbar sticky-top navbar-expand-lg navbar-light cyan accent-2 scrolling-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.php">
                 <img src="/Images/logo.png" width="30" height="40" alt="logo">
@@ -20,15 +19,19 @@
                     <li id="store" class="nav-item">
                         <a class="rounded-lg nav-link" href="store.php">Продукція</a>
                     </li>
-                    </li>
                 </ul>
 
                 <ul class="navbar-nav navbar-right">
 
                     <li class="nav-item">
                         <!-- Button trigger modal -->
-                        <a class="nav-link" data-toggle="modal" data-target="#mobileModal">
-                            <img height="20" src="/icons/telephone-fill.svg">Телефони
+                        <a class="rounded-lg nav-link" data-toggle="modal" data-target="#mobileModal" style="padding: 7 8 7 8;">
+                            <svg class="bi bi-telephone-fill d-inline" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
+                            </svg>
+                            <div class="align-middle d-inline">
+                                Телефони
+                            </div>
                         </a>
                     </li>
 
@@ -39,6 +42,8 @@
                     <li class="nav-item active disabled">
                         <a id="uaLink" class="rounded-lg nav-link" href="/">UA
                         </a>
+                    </li>
+                    <li style="min-width:10px; min-height:5px">
                     </li>
                     <?
 
@@ -54,11 +59,18 @@
 
             // if tokens are equal show logout
             } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
-                    <li style="margin-left:15px" id="user" class="nav-item">
+                    <li id="user" class="nav-item">
                         <form style="margin:0px" class="nav-item" id="userForm" action="userAccount.php" method="post">
                             <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
                         </form>
-                        <a id="userButton" class="rounded-lg nav-link"><img height="24" src="/icons/person-fill.svg"><?= $_SESSION["email"] ?></a>
+                        <a id="userButton" class="rounded-lg nav-link" style="padding: 7 8 7 8;">
+                            <svg width="24px" height="24px" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            </svg>
+                            <div class="align-middle d-inline">
+                                <?= $_SESSION["email"] ?>
+                            </div>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logoutForm">
@@ -73,6 +85,19 @@
                     <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
                     <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
                     <? } ?>
+                    <li style="min-width:10px">
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-warning rounded-lg" style="padding: 5 8 5 8;">
+                            <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            </svg>
+                            <div class="align-middle d-inline">
+                                <span class="badge badge-light">10</span>
+                            </div>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
