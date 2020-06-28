@@ -1,4 +1,185 @@
 <?php
+// function to get cart button
+function get_cart_button_html($email, $is_authorized)
+{
+  $empty_cart_button_html =
+    '<li class="nav-item">
+      <button class="btn btn-outline-warning rounded-lg" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
+        <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+          <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+        </svg>
+        <div class="align-middle d-inline">
+          <span class="badge badge-light">0</span>
+        </div>
+      </button>
+    </li>';
+  $cart_button_html = '';
+  if ($is_authorized == true) {
+    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    if ($mysqli->connect_errno) {
+      return $empty_cart_button_html;
+    }
+
+    if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $stmt->bind_result($userID);
+      $stmt->fetch();
+      $stmt->close();
+    }
+    if ($userID != null) {
+      if ($stmt = $mysqli->prepare("SELECT Count(`PriceListID`) FROM cart_items WHERE UserID=?")) {
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        if ($stmt->fetch()) {
+          $cart_button_html = sprintf(
+            '<li class="nav-item">
+              <button class="btn btn-outline-warning rounded-lg" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
+                <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                  <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+                <div class="align-middle d-inline">
+                  <span class="badge badge-light">%s</span>
+                </div>
+              </button>
+            </li>',
+            $count
+          );
+        }
+        $stmt->close();
+      }
+    }
+    $mysqli->close();
+    return $cart_button_html != '' ? $cart_button_html : $empty_cart_button_html;
+  } else {
+    return $empty_cart_button_html;
+  }
+}
+
+// function to get cart modal
+function get_cart_modal_html($email, $is_authorized)
+{
+  $empty_cart_modal_html =
+    '<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Кошик</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="margin:auto;">
+              <svg width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-cart d-inline" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+              </svg>
+              <p class="align-middle d-inline" style="margin:auto; font-size:24px;">Кошик порожній</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+          </div>
+      </div>
+    </div>';
+  $cart_modal_html = '';
+  if ($is_authorized == true) {
+    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    if ($mysqli->connect_errno) {
+      return $empty_cart_modal_html;
+    }
+
+    if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $stmt->bind_result($userID);
+      $stmt->fetch();
+      $stmt->close();
+    }
+    if ($userID != null) {
+      if ($stmt = $mysqli->prepare("SELECT Count(`PriceListID`) FROM cart_items WHERE UserID=?")) {
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $stmt->bind_result($total_count);
+        $stmt->fetch();
+        $stmt->close();
+      }
+      if ($total_count == 0)
+        return $empty_cart_modal_html;
+
+      $cart_modal_html =
+        '<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Кошик</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body container">';
+      if ($stmt = $mysqli->prepare("SELECT `cart_items`.`PriceListID`, ProductName, Price, `Image`, `Count` FROM cart_items JOIN `pricelist` ON `cart_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE UserID=?")) {
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $stmt->bind_result($pricelistID, $product_name, $price, $image, $count);
+        while ($stmt->fetch()) {
+          if ($image != null) {
+            $cart_modal_html .= sprintf(
+              '<div class="card mb-md-3 mb-3">
+                <div class="card-body row">
+                  <div class="col-md-auto">
+                    <a href="product.php?id=%s">
+                      <img class="img-fluid mx-auto" src="/%s" style="height: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                    </a>
+                  </div>
+                  <div class="col-md-10">           
+                    <div class="row" style="height:25%%">
+                      <a style="font-size:20px;" href="product.php?id=%s">%s</a>
+                    </div> 
+                    <div class="row align-items-center" style="height:75%%">
+                      <div class="col-md-8">
+                        <div class="rounded-lg h5" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%s ₴</div>
+                      </div>
+                      <div class="col-md-2">
+                        <h5>%s</h5>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="rounded-lg h5" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%s ₴</div>
+                      </div>
+                    </div>                        
+                  </div>
+                </div>     
+              </div>',
+              $pricelistID,
+              $image,
+              $pricelistID,
+              $product_name,
+              $price,
+              $count,
+              ($count * $price)
+            );
+          }
+        }
+        $stmt->close();
+      }
+      $cart_modal_html .=
+        '</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+              </div>
+            </div>
+          </div>
+        </div>';
+    }
+    $mysqli->close();
+    return $cart_modal_html != '' ? $cart_modal_html : $empty_cart_modal_html;
+  } else {
+    return $empty_cart_modal_html;
+  }
+}
 
 // function for making db query
 function store($query)
@@ -30,7 +211,7 @@ function store($query)
           $row['Image'],
           $row['ProductName'],
           (($row['Price'] != 0) ?
-            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . $row['Price'] . ' грн.</b>') : ''),
+            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . $row['Price'] . ' ₴</b>') : ''),
           $row['PriceListID'],
           (($row['ProductAvailability'] == 0) ?
             ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>') : '')
@@ -96,7 +277,7 @@ function product($query, $id)
             %s%s%s%s%s%s%s%s%s
             <div class="text-justify w-responsive mx-auto mb-5">%s</div>',
           $image,
-          (($price != 0) ? ('<b>Ціна – ' . $price . ' грн.</b>') : ''),
+          (($price != 0) ? ('<b>Ціна – ' . $price . ' ₴</b>') : ''),
           $product_name,
           empty_or_html($appointment),
           empty_or_html($properties),

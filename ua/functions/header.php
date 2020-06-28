@@ -1,14 +1,25 @@
+<?php
+$is_authorized = false;
+$security_token = $_SESSION["security_token"];
+$security_token1 = $_COOKIE["security_token"];
+if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) {
+    $is_authorized = false;
+} else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) {
+    $is_authorized = true;
+}
+?>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.php">
                 <img src="/Images/logo.png" width="30" height="40" alt="logo">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsedContent" aria-controls="navbarCollapsedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+            <div class="collapse navbar-collapse" id="navbarCollapsedContent">
                 <ul class="navbar-nav mr-auto">
                     <li id="main" class="nav-item">
                         <a class="rounded-lg nav-link" href="index.php">Головна</a>
@@ -45,20 +56,7 @@
                     </li>
                     <li style="min-width:10px; min-height:5px">
                     </li>
-                    <?
-
-            // getting security tokens from session and cookies
-            $security_token = $_SESSION["security_token"];
-            $security_token1 = $_COOKIE["security_token"];
-
-            // if security tokens are unset show registration and login
-            if ($security_token == null || $security_token1 == null || !isset($_SESSION["email"])) { ?>
-                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
-                    <? 
-
-            // if tokens are equal show logout
-            } else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) { ?>
+                    <? if($is_authorized) { ?>
                     <li id="user" class="nav-item">
                         <form style="margin:0px" class="nav-item" id="userForm" action="userAccount.php" method="post">
                             <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
@@ -78,31 +76,19 @@
                             <a id="logoutButton" class="rounded nav-link">Вийти</a>
                         </form>
                     </li>
-                    <? 
-
-            // if security tokens are not equal show registration and login
-              } else { ?>
+                    <? } else { ?>
                     <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
                     <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
                     <? } ?>
                     <li style="min-width:10px">
                     </li>
-                    <li class="nav-item">
-                        <button class="btn btn-outline-warning rounded-lg" style="padding: 5 8 5 8;">
-                            <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            </svg>
-                            <div class="align-middle d-inline">
-                                <span class="badge badge-light">10</span>
-                            </div>
-                        </button>
-                    </li>
+                    <? echo get_cart_button_html($_SESSION["email"], $is_authorized); ?>
                 </ul>
             </div>
         </div>
     </nav>
     <!-- Modal login -->
+    <? echo get_cart_modal_html($_SESSION["email"], $is_authorized); ?>
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="loginForm">
