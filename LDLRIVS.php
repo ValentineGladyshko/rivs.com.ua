@@ -10,7 +10,7 @@ function get_cart_button_html($email, $is_authorized)
           <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
         </svg>
         <div class="align-middle d-inline">
-          <span class="badge badge-light">0</span>
+          <span id="cart_count_span" class="badge badge-light">0</span>
         </div>
       </button>
     </li>';
@@ -42,7 +42,7 @@ function get_cart_button_html($email, $is_authorized)
                   <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                 </svg>
                 <div class="align-middle d-inline">
-                  <span class="badge badge-light">%s</span>
+                  <span id="cart_count_span" class="badge badge-light">%s</span>
                 </div>
               </button>
             </li>',
@@ -109,6 +109,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
       if ($total_count == 0)
         return $empty_cart_modal_html;
 
+      $cart_price = 0;
       $cart_modal_html =
         '<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -119,22 +120,24 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body container">';
+              <div class="modal-body">
+                <div id="cartContent" class="container" style="padding:0">';
       if ($stmt = $mysqli->prepare("SELECT `cart_items`.`PriceListID`, ProductName, Price, `Image`, `Count` FROM cart_items JOIN `pricelist` ON `cart_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE UserID=?")) {
         $stmt->bind_param("i", $userID);
         $stmt->execute();
         $stmt->bind_result($pricelistID, $product_name, $price, $image, $count);
         while ($stmt->fetch()) {
           if ($image != null) {
+            $cart_price += ($count * $price);
             $cart_modal_html .= sprintf(
               '<div class="card mb-md-3 mb-3">
                 <div class="card-body row">
-                  <div class="col-md-auto">
+                  <div class="col-md-3">
                     <a href="product.php?id=%1$s">
-                      <img class="img-fluid mx-auto" src="/%2$s" style="height: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                      <img class="img-fluid mx-auto" src="/%2$s" style="max-height: 120px; max-width: 120px; margin:auto; padding: 0 20 0 20" alt="">
                     </a>
                   </div>
-                  <div class="col-md-10">           
+                  <div class="col-md-9">           
                     <div class="row" style="height:25%%">
                       <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
                     </div> 
@@ -145,7 +148,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                       <div class="col-md-4">
                         <div class="input-group">
                           <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button" onclick="cartItemMinus(%1$s, %4$s, 
+                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
                             document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
                               <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
@@ -153,9 +156,9 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                             </button>
                           </div>
                           <input type="number" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" 
-                            oninput="cartCountInputChange(%1$s, %4$s, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                            oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" onclick="cartItemPlus(%1$s, %4$s, 
+                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
                               document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
                               <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
@@ -167,7 +170,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                       </div>
 
                       <div class="col-md-3">
-                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" id="item_total_price_%1$s">%6$s ₴</div>
+                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
                       </div>
                     </div>                        
                   </div>
@@ -185,14 +188,24 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
         }
         $stmt->close();
       }
-      $cart_modal_html .=
+      $cart_modal_html .= sprintf(
         '</div>
+        <div class="row">
+          <div class="col-md-12" style="padding: 0 36 0 0;">          
+            <div id="cart_total_price" class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%1$s ₴</div>
+            <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+          </div>
+        </div>
+      </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Оформити замовлення</button>
               </div>
             </div>
           </div>
-        </div>';
+        </div>',
+        $cart_price
+      );
     }
     $mysqli->close();
     return $cart_modal_html != '' ? $cart_modal_html : $empty_cart_modal_html;
@@ -251,7 +264,7 @@ function empty_or_html($var)
   } else return ('<div class="text-justify w-responsive mx-auto mb-5">' . $var . '</div>');
 }
 
-function product($query, $id)
+function product($query, $id, $verification_token)
 {
   $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
   if ($mysqli->connect_errno) {
@@ -282,20 +295,26 @@ function product($query, $id)
         $html .= sprintf(
           '<div class="col-md-4">
             <div class="text-center">
-              <img src="/%s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
+              <img src="/%1$s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
             </div>
             <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
               <p>Замовити можна по телефону</p>
-              <p>%s</p>
+              <p>%2$s</p>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-dark rounded-xl btn-lg" style="width:150px">Придбати</button>
+              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%14$s`, `%3$s`, `%16$s`, 1, `%1$s`, `%15$s`)" style="width:200px">
+                <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
+                  <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
+                  <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg> Придбати
+              </button>
             </div>
           </div>
           <div class="col-md-8">
-            <h2 class="h1-responsive font-weight-bold text-center my-4">%s</h2>
-            %s%s%s%s%s%s%s%s%s
-            <div class="text-justify w-responsive mx-auto mb-5">%s</div>',
+            <h2 class="h1-responsive font-weight-bold text-center my-4">%3$s</h2>
+            %4$s%5$s%6$s%7$s%8$s%9$s%10$s%11$s%12%s
+            <div class="text-justify w-responsive mx-auto mb-5">%13$s</div>',
           $image,
           (($price != 0) ? ('<b>Ціна – ' . $price . ' ₴</b>') : ''),
           $product_name,
@@ -308,7 +327,10 @@ function product($query, $id)
           empty_or_html($storage_conditions),
           empty_or_html($expiration_date),
           empty_or_html($manufacturer),
-          $info
+          $info,
+          $id,
+          $verification_token,
+          $price
         );
       }
     }

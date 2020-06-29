@@ -126,7 +126,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   }
 
   if ($userID != null) {
-    if ($stmt = $mysqli->prepare("INSERT INTO `customers`(`UserID`, `FirstName`, `FirstNameNonce`,
+    if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`UserID`, `FirstName`, `FirstNameNonce`,
      `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
       `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
       $stmt->bind_param(

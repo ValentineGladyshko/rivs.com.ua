@@ -12,10 +12,19 @@
       }
     };
 
-    function cartItemPlus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken)
-    {
+    function sumTotalPriceOfCart() {
+      var totalCartPrice = 0;
+      document.getElementsByName('item_total_price').forEach((el) => {
+        totalCartPrice += Number(el.innerText.substring(0, el.innerText.length - 2))
+      });
+      document.getElementById("cart_total_price").innerHTML = totalCartPrice + " ₴";
+    };
+
+    function cartItemPlus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
+
       itemCount.value++;
       itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      sumTotalPriceOfCart();
 
       formData = {
         'verification_token': verificationToken,
@@ -31,11 +40,11 @@
 
             // parse response from server
             var jsonData = JSON.parse(response);
-            if (jsonData.success == true) {
-            } else {
+            if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            sumTotalPriceOfCart();
           }
         },
         error: function(data) {
@@ -45,10 +54,10 @@
       });
     };
 
-    function cartItemMinus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken)
-    {
+    function cartItemMinus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
       itemCount.value--;
       itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      sumTotalPriceOfCart();
 
       formData = {
         'verification_token': verificationToken,
@@ -64,11 +73,11 @@
 
             // parse response from server
             var jsonData = JSON.parse(response);
-            if (jsonData.success == true) {
-            } else {
+            if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            sumTotalPriceOfCart();
           }
         },
         error: function(data) {
@@ -79,9 +88,10 @@
     };
 
     function cartCountInputChange(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
-        itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      sumTotalPriceOfCart();
 
-        formData = {
+      formData = {
         'verification_token': verificationToken,
         'pricelistID': itemId,
         'count': itemCount.value
@@ -95,11 +105,88 @@
 
             // parse response from server
             var jsonData = JSON.parse(response);
-            if (jsonData.success == true) {
-            } else {
+            if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            sumTotalPriceOfCart();
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    };
+
+    function productBuyButton(itemId, itemName, itemPrice, itemCount, itemImage, verificationToken) {
+      formData = {
+        'verification_token': verificationToken,
+        'pricelistID': itemId,
+        'count': itemCount
+      };
+      $.ajax({
+        type: "POST",
+        url: "functions/addItemToCart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+
+            // parse response from server
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+              cartTotalPrice = (itemCount * itemName);
+              const str = `<div class="card mb-md-3 mb-3">
+                <div class="card-body row">
+                  <div class="col-md-3">
+                    <a href="product.php?id=${itemId}">
+                      <img class="img-fluid mx-auto" src="/${itemImage}" style="max-height: 120px; max-width: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                    </a>
+                  </div>
+                  <div class="col-md-9">           
+                    <div class="row" style="height:25%">
+                      <a style="font-size:20px;" href="product.php?id=${itemId}">${itemName}</a>
+                    </div> 
+                    <div class="row align-items-center" style="height:75%">
+                      <div class="col-md-5">
+                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_${itemId}">${itemPrice} ₴</div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, ${itemPrice}, 
+                            document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <input type="number" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" 
+                            oninput="cartCountInputChange(${itemId}, ${itemPrice}, document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, ${itemPrice}, 
+                              document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_${itemId}">${cartTotalPrice} ₴</div>
+                      </div>
+                    </div>                        
+                  </div>
+                </div>     
+              </div>`
+              document.getElementById('cartContent').insertAdjacentHTML('beforeend', str);
+              sumTotalPriceOfCart();
+              var cartCountSpan = document.getElementById('cart_count_span');
+              cartCountSpan.innerText = Number(cartCountSpan) ++;
+            } else {}
           }
         },
         error: function(data) {
