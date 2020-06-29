@@ -281,7 +281,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 </form>
 
                 <hr>
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
+                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
                 <hr>
                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
 
@@ -289,7 +289,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         <!--Main layout-->
 
         <!-- Footer -->
-        <footer class="page-footer font-small bottom cyan accent-4 mt-4">
+        <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"

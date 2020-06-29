@@ -20,7 +20,7 @@
       formData = {
         'verification_token': verificationToken,
         'pricelistID': itemId,
-        'count': itemCount.value
+        'count': (itemCount.value + 1)
       };
       $.ajax({
         type: "POST",

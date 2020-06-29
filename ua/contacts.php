@@ -104,7 +104,7 @@ $_SESSION['verification_token'] = $verification_token;
               <!--Grid row-->
 
               <div class="center-on-small-only">
-                <button style="margin-top:10px" type="submit" class="btn btn-primary">Надіслати</a>
+                <button style="margin-top:10px" type="submit" class="btn btn-dark btn-lg">Надіслати</a>
               </div>
               <div style="margin-top:10px" id="status"></div>
             </form>
@@ -144,7 +144,7 @@ $_SESSION['verification_token'] = $verification_token;
   <!--Main layout-->
 
   <!-- Footer -->
-  <footer class="page-footer font-small bottom cyan accent-4 mt-4">
+  <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"

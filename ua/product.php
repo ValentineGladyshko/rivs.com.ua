@@ -46,7 +46,7 @@ $_SESSION['verification_token'] = $verification_token;
   <!--Main layout-->
 
   <!-- Footer -->
-  <footer class="page-footer font-small bottom cyan accent-4 mt-4">
+  <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
