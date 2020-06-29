@@ -65,3 +65,8 @@
 .my-button:hover{
 	cursor: pointer;
 }
+
+.rounded-xl
+{
+	border-radius: .6rem!important;
+}

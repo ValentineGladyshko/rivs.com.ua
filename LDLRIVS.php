@@ -4,7 +4,7 @@ function get_cart_button_html($email, $is_authorized)
 {
   $empty_cart_button_html =
     '<li class="nav-item">
-      <button class="btn btn-outline-warning rounded-lg" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
+      <button class="btn btn-outline-warning rounded-xl" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
         <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
           <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -36,7 +36,7 @@ function get_cart_button_html($email, $is_authorized)
         if ($stmt->fetch()) {
           $cart_button_html = sprintf(
             '<li class="nav-item">
-              <button class="btn btn-outline-warning rounded-lg" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
+              <button class="btn btn-outline-warning rounded-xl" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
                 <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
                   <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -60,7 +60,7 @@ function get_cart_button_html($email, $is_authorized)
 }
 
 // function to get cart modal
-function get_cart_modal_html($email, $is_authorized)
+function get_cart_modal_html($email, $is_authorized, $verification_token)
 {
   $empty_cart_modal_html =
     '<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
@@ -130,24 +130,44 @@ function get_cart_modal_html($email, $is_authorized)
               '<div class="card mb-md-3 mb-3">
                 <div class="card-body row">
                   <div class="col-md-auto">
-                    <a href="product.php?id=%s">
-                      <img class="img-fluid mx-auto" src="/%s" style="height: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                    <a href="product.php?id=%1$s">
+                      <img class="img-fluid mx-auto" src="/%2$s" style="height: 120px; margin:auto; padding: 0 20 0 20" alt="">
                     </a>
                   </div>
                   <div class="col-md-10">           
                     <div class="row" style="height:25%%">
-                      <a style="font-size:20px;" href="product.php?id=%s">%s</a>
+                      <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
                     </div> 
                     <div class="row align-items-center" style="height:75%%">
-                      <div class="col-md-8">
-                        <div class="rounded-lg h5" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%s ₴</div>
+                      <div class="col-md-5">
+                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_%1$s">%4$s ₴</div>
                       </div>
-                      <div class="col-md-2">
-                        <h5>%s</h5>
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button" onclick="cartItemMinus(%1$s, %4$s, 
+                            document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <input type="number" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" 
+                            oninput="cartCountInputChange(%1$s, %4$s, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="cartItemPlus(%1$s, %4$s, 
+                              document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
                       </div>
 
-                      <div class="col-md-2">
-                        <div class="rounded-lg h5" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%s ₴</div>
+                      <div class="col-md-3">
+                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" id="item_total_price_%1$s">%6$s ₴</div>
                       </div>
                     </div>                        
                   </div>
@@ -155,11 +175,11 @@ function get_cart_modal_html($email, $is_authorized)
               </div>',
               $pricelistID,
               $image,
-              $pricelistID,
               $product_name,
               $price,
               $count,
-              ($count * $price)
+              ($count * $price),
+              $verification_token
             );
           }
         }
@@ -269,7 +289,7 @@ function product($query, $id)
               <p>%s</p>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary btn-lg" style="width:150px">Купити</button>
+              <button type="button" class="btn btn-dark rounded-xl btn-lg" style="width:150px">Придбати</button>
             </div>
           </div>
           <div class="col-md-8">

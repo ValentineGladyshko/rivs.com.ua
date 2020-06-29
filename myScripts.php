@@ -12,6 +12,103 @@
       }
     };
 
+    function cartItemPlus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken)
+    {
+      itemCount.value++;
+      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+
+      formData = {
+        'verification_token': verificationToken,
+        'pricelistID': itemId,
+        'count': itemCount.value
+      };
+      $.ajax({
+        type: "POST",
+        url: "functions/changeCart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+
+            // parse response from server
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+            } else {
+              itemCount.value = jsonData.count;
+              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+            }
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    };
+
+    function cartItemMinus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken)
+    {
+      itemCount.value--;
+      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+
+      formData = {
+        'verification_token': verificationToken,
+        'pricelistID': itemId,
+        'count': itemCount.value
+      };
+      $.ajax({
+        type: "POST",
+        url: "functions/changeCart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+
+            // parse response from server
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+            } else {
+              itemCount.value = jsonData.count;
+              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+            }
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    };
+
+    function cartCountInputChange(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
+        itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+
+        formData = {
+        'verification_token': verificationToken,
+        'pricelistID': itemId,
+        'count': itemCount.value
+      };
+      $.ajax({
+        type: "POST",
+        url: "functions/changeCart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+
+            // parse response from server
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+            } else {
+              itemCount.value = jsonData.count;
+              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+            }
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    };
+
     function changeInputStatus(input, inputFeedback, jsonData, propertyName) {
       if (jsonData.hasOwnProperty(propertyName)) {
         input.classList.add('is-invalid');

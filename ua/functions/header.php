@@ -22,13 +22,13 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
             <div class="collapse navbar-collapse" id="navbarCollapsedContent">
                 <ul class="navbar-nav mr-auto">
                     <li id="main" class="nav-item">
-                        <a class="rounded-lg nav-link" href="index.php">Головна</a>
+                        <a class="rounded-xl nav-link" href="index.php">Головна</a>
                     </li>
                     <li id="contacts" class="nav-item">
-                        <a class="rounded-lg nav-link" href="contacts.php">Контакти</a>
+                        <a class="rounded-xl nav-link" href="contacts.php">Контакти</a>
                     </li>
                     <li id="store" class="nav-item">
-                        <a class="rounded-lg nav-link" href="store.php">Продукція</a>
+                        <a class="rounded-xl nav-link" href="store.php">Продукція</a>
                     </li>
                 </ul>
 
@@ -36,7 +36,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
 
                     <li class="nav-item">
                         <!-- Button trigger modal -->
-                        <a class="rounded-lg nav-link" data-toggle="modal" data-target="#mobileModal" style="padding: 7 8 7 8;">
+                        <a class="rounded-xl nav-link" data-toggle="modal" data-target="#mobileModal" style="padding: 7 8 7 8;">
                             <svg class="bi bi-telephone-fill d-inline" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
                             </svg>
@@ -47,11 +47,11 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </li>
 
                     <li class="nav-item">
-                        <a id="ruLink" class="rounded-lg nav-link" href="/">RU
+                        <a id="ruLink" class="rounded-xl nav-link" href="/">RU
                         </a>
                     </li>
                     <li class="nav-item active disabled">
-                        <a id="uaLink" class="rounded-lg nav-link" href="/">UA
+                        <a id="uaLink" class="rounded-xl nav-link" href="/">UA
                         </a>
                     </li>
                     <li style="min-width:10px; min-height:5px">
@@ -61,7 +61,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <form style="margin:0px" class="nav-item" id="userForm" action="userAccount.php" method="post">
                             <input name="user_verification_token" id="user_verification_token" type="hidden" value=<?= $verification_token ?>>
                         </form>
-                        <a id="userButton" class="rounded-lg nav-link" style="padding: 7 8 7 8;">
+                        <a id="userButton" class="rounded-xl nav-link" style="padding: 7 8 7 8;">
                             <svg width="24px" height="24px" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg>
@@ -77,8 +77,8 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         </form>
                     </li>
                     <? } else { ?>
-                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="rounded-lg nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
+                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
                     <? } ?>
                     <li style="min-width:10px">
                     </li>
@@ -88,7 +88,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
         </div>
     </nav>
     <!-- Modal login -->
-    <? echo get_cart_modal_html($_SESSION["email"], $is_authorized); ?>
+    <? echo get_cart_modal_html($_SESSION["email"], $is_authorized, $_SESSION["verification_token"]); ?>
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="loginForm">
