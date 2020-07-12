@@ -276,14 +276,14 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             </svg>
                         </div>
                     </div>
-                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-outline-secondary button-margin">Відмінити</button>
-                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-outline-dark button-margin">Змінити особисті дані</button>
+                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
+                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-dark m-1">Змінити особисті дані</button>
                 </form>
 
                 <hr>
-                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
                 <hr>
-                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
 
         </main>
         <!--Main layout-->
@@ -488,5 +488,5 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
     include("../scripts.php");
     echo "<script>$.redirect('index.php');</script>";
     exit();
-} 
+}
 ?>

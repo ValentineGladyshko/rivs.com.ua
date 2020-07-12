@@ -83,6 +83,10 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     <li style="min-width:10px">
                     </li>
                     <? echo get_cart_button_html($_SESSION["email"], $is_authorized); ?>
+                    <form style="margin:0px" class="nav-item" id="checkoutCartForm" action="checkoutCart.php" method="post">
+                        <input name="cart_verification_token" id="cart_verification_token" type="hidden" value=<?= $verification_token ?>>
+                        <input name="cart_is_authorized" id="cart_is_authorized" type="hidden" value=<?= $is_authorized ?>>
+                    </form>
                 </ul>
             </div>
         </div>

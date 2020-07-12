@@ -186,6 +186,7 @@
                         </div> 
                         <div class="row align-items-center divfillHeight">
                           <div class="col-md-5">
+                            <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
                             <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_${itemId}">${itemPrice} ₴</div>
                           </div>
                           <div class="col-md-4">
@@ -244,7 +245,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Оформити замовлення</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="checkoutCart('${verificationToken}', true)">Оформити замовлення</button>
                   </div>
                   </div>
                   </div>`
@@ -323,6 +324,10 @@
           console.log(data);
         },
       });
+    };
+
+    function checkoutCart(verificationToken, isAuthorized) {
+      document.getElementById('checkoutCartForm').submit();
     };
 
     function changeInputStatus(input, inputFeedback, jsonData, propertyName) {
@@ -783,6 +788,11 @@
         $(this).width(width);
       });
     }
+
+    $(document).ready(function() {
+      $(".divfillHeight").fillHeight();
+      $(".divfillWidth").fillWidth();
+    });
 
     $('#cartModal').on('shown.bs.modal', function() {
       $(".divfillHeight").fillHeight();
