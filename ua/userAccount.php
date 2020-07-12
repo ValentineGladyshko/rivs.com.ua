@@ -276,8 +276,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             </svg>
                         </div>
                     </div>
-                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-outline-dark button-margin">Відмінити</button>
-                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-outline-primary button-margin">Змінити особисті дані</button>
+                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-outline-secondary button-margin">Відмінити</button>
+                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-outline-dark button-margin">Змінити особисті дані</button>
                 </form>
 
                 <hr>

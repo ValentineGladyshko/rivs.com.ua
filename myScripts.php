@@ -170,7 +170,7 @@
                       </a>
                     </div>
                     <div class="col-md-10">
-                      <div class="container" style="height:120px">           
+                      <div class="container pr-0 pl-1" style="height:120px">           
                         <div class="row" style="min-height:25%">
                           <div class="col-md-10">
                             <a style="font-size:20px;" href="product.php?id=${itemId}">${jsonData.itemName}</a>

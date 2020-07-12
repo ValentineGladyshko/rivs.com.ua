@@ -138,7 +138,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                     </a>
                   </div>
                   <div class="col-md-10">
-                    <div class="container" style="height:120px">           
+                    <div class="container pr-0 pl-1" style="height:120px">           
                       <div class="row" style="min-height:25%%">
                         <div class="col-md-10">
                           <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
@@ -249,7 +249,7 @@ function store($query)
               <div class="card-body text-center">
                 <h5 class="card-title">%s</h5>%s
               </div>
-              <a href="product.php?id=%s" class="btn mybtn btn-bottom-outline-info-dark-green rounded" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%s
+              <a href="product.php?id=%s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%s
             </div>
           </div>',
           $row['PriceListID'],
