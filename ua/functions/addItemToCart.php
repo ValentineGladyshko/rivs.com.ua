@@ -66,6 +66,14 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
     exit();
   }
 
+  if ($stmt = $mysqli->prepare("SELECT `ProductName` FROM `pricelist` WHERE PriceListID=?")) {
+    $stmt->bind_param("i", $pricelistID);
+    $stmt->execute();
+    $stmt->bind_result($productName);
+    $stmt->fetch();
+    $stmt->close();
+  }
+
   if ($stmt = $mysqli->prepare("INSERT INTO `cart_items` (`UserID`, `PriceListID`, `Count`) VALUES (?, ?, ?)")) {
     $stmt->bind_param("iii", $userID, $pricelistID, $count);
     if ($stmt->execute() == false) {
@@ -75,6 +83,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
   $mysqli->close();
   //sending success code
   $response->success = true;
+  $response->itemName = $productName;
   echo json_encode($response, JSON_UNESCAPED_UNICODE);
   exit();
 }

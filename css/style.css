@@ -70,3 +70,15 @@
 {
 	border-radius: .6rem!important;
 }
+
+.my-svg .altSVG{
+	display: none;
+}
+
+.my-svg:hover .defaultSVG{
+	display: none;
+}
+
+.my-svg:hover .altSVG{
+	display: block;
+}

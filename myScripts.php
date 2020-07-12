@@ -20,16 +20,35 @@
       document.getElementById("cart_total_price").innerHTML = totalCartPrice + " ₴";
     };
 
+    function changeItemButtons(item) {
+
+      var itemMinusButton = item.parentNode.childNodes[1].childNodes[1];
+      var itemPlusButton = item.parentNode.childNodes[5].childNodes[1];
+
+      if (item.value <= 1) {
+        itemMinusButton.disabled = true;
+      } else {
+        itemMinusButton.disabled = false;
+      }
+
+      if (item.value >= 999) {
+        itemPlusButton.disabled = true;
+      } else {
+        itemPlusButton.disabled = false;
+      }
+    }
+
     function cartItemPlus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
 
       itemCount.value++;
       itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
       formData = {
         'verification_token': verificationToken,
         'pricelistID': itemId,
-        'count': (itemCount.value + 1)
+        'count': itemCount.value
       };
       $.ajax({
         type: "POST",
@@ -44,6 +63,7 @@
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            changeItemButtons(itemCount);
             sumTotalPriceOfCart();
           }
         },
@@ -57,6 +77,7 @@
     function cartItemMinus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
       itemCount.value--;
       itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
       formData = {
@@ -77,6 +98,7 @@
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            changeItemButtons(itemCount);
             sumTotalPriceOfCart();
           }
         },
@@ -88,7 +110,9 @@
     };
 
     function cartCountInputChange(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
+
       itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
       formData = {
@@ -109,6 +133,7 @@
               itemCount.value = jsonData.count;
               itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
             }
+            changeItemButtons(itemCount);
             sumTotalPriceOfCart();
           }
         },
@@ -119,7 +144,7 @@
       });
     };
 
-    function productBuyButton(itemId, itemName, itemPrice, itemCount, itemImage, verificationToken) {
+    function productBuyButton(itemId, itemPrice, itemCount, itemImage, verificationToken) {
       formData = {
         'verification_token': verificationToken,
         'pricelistID': itemId,
@@ -135,58 +160,162 @@
             // parse response from server
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {
-              cartTotalPrice = (itemCount * itemName);
-              const str = `<div class="card mb-md-3 mb-3">
+              cartTotalPrice = (itemCount * Number(itemPrice));
+              const itemHTML = `<div class="card mb-md-3 mb-3">
                 <div class="card-body row">
-                  <div class="col-md-3">
+                  <div class="col-md-2 pr-0">
                     <a href="product.php?id=${itemId}">
-                      <img class="img-fluid mx-auto" src="/${itemImage}" style="max-height: 120px; max-width: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                      <img class="m-auto" src="/${itemImage}" style="display: block; max-height: 120px; max-width: 100px;" alt="">
                     </a>
                   </div>
-                  <div class="col-md-9">           
-                    <div class="row" style="height:25%">
-                      <a style="font-size:20px;" href="product.php?id=${itemId}">${itemName}</a>
-                    </div> 
-                    <div class="row align-items-center" style="height:75%">
-                      <div class="col-md-5">
-                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_${itemId}">${itemPrice} ₴</div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, ${itemPrice}, 
-                            document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
-                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
-                              </svg>
-                            </button>
-                          </div>
-                          <input type="number" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" 
-                            oninput="cartCountInputChange(${itemId}, ${itemPrice}, document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, ${itemPrice}, 
+                  <div class="col-md-10">
+                    <div class="container" style="height:120px">           
+                      <div class="row" style="min-height:25%">
+                        <div class="col-md-10">
+                          <a style="font-size:20px;" href="product.php?id=${itemId}">${jsonData.itemName}</a>
+                        </div>
+                        <div class="col-md-2">
+                          <svg width="30px" height="30px" style="float:right;" viewBox="0 0 16 16" onclick="deleteItemFromCart(${itemId}, document.getElementById('item_card_${itemId}'), '${verificationToken}')" class="my-svg my-button bi bi-x-circle text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path class="defaultSVG" fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                            <path class="altSVG" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+                          </svg>
+                        </div>                 
+                      </div> 
+                      <div class="row align-items-center divfillHeight">
+                        <div class="col-md-5">
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_${itemId}">${itemPrice} ₴</div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, ${itemPrice}, 
                               document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
-                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
-                                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
-                              </svg>
-                            </button>
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                              </button>
+                            </div>
+                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" min="1" max="999"
+                              oninput="cartCountInputChange(${itemId}, ${itemPrice}, document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, ${itemPrice}, 
+                                document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                  <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                                </svg>
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="col-md-3">
-                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_${itemId}">${cartTotalPrice} ₴</div>
-                      </div>
-                    </div>                        
-                  </div>
+                        <div class="col-md-3">
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_${itemId}">${cartTotalPrice} ₴</div>
+                        </div>
+                      </div>                        
+                    </div>
+                    </div>
                 </div>     
               </div>`
-              document.getElementById('cartContent').insertAdjacentHTML('beforeend', str);
+              if (document.getElementById('cartContent') == null) {
+                const cartStartHTML =
+                  `<div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="cartModalLabel">Кошик</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div id="cartContent" class="container" style="padding:0">`;
+
+                const cartEndHTML =
+                  `</div>
+                    <div class="row">
+                      <div class="col-md-12" style="padding: 0 36 0 0;">          
+                        <div id="cart_total_price" class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">${cartTotalPrice} ₴</div>
+                        <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Оформити замовлення</button>
+                  </div>
+                  </div>
+                  </div>`
+                document.getElementById('cartModal').innerHTML = (cartStartHTML + itemHTML + cartEndHTML);
+              } else {
+                document.getElementById('cartContent').insertAdjacentHTML('beforeend', itemHTML);
+              }
+
               sumTotalPriceOfCart();
               var cartCountSpan = document.getElementById('cart_count_span');
-              cartCountSpan.innerText = Number(cartCountSpan) ++;
+              var cartCount = Number(cartCountSpan.innerText);
+              cartCount++;
+              cartCountSpan.innerText = cartCount;
             } else {}
+            $('#cartModal').modal();
+          }
+        },
+        error: function(data) {
+          console.log('An error occurred.');
+          console.log(data);
+        },
+      });
+    };
+
+    function deleteItemFromCart(itemId, itemCard, verificationToken) {
+      removedChild = document.getElementById('cartContent').removeChild(itemCard);
+      formData = {
+        'verification_token': verificationToken,
+        'pricelistID': itemId
+      };
+      $.ajax({
+        type: "POST",
+        url: "functions/deleteItemFromCart.php",
+        data: formData,
+        success: function(response) {
+          if (response != null) {
+            // parse response from server
+            var jsonData = JSON.parse(response);
+            if (jsonData.success == true) {
+              sumTotalPriceOfCart();
+              var cartCountSpan = document.getElementById('cart_count_span');
+              var cartCount = Number(cartCountSpan.innerText);
+              cartCount--;
+              cartCountSpan.innerText = cartCount;
+              if(cartCount == 0)
+              {
+                const emptyCartHTML = 
+                `<div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="cartModalLabel">Кошик</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" style="margin:auto;">
+                        <svg width="40px" height="40px" viewBox="0 0 16 16" class="bi bi-cart d-inline" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        </svg>
+                        <p class="align-middle d-inline" style="margin:auto; font-size:24px;">Кошик порожній</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                      </div>
+                    </div>
+                </div>`;
+
+                document.getElementById('cartModal').innerHTML = emptyCartHTML;
+              }
+            } else {
+              document.getElementById('cartContent').appendChild(removedChild);
+            }
           }
         },
         error: function(data) {
@@ -625,5 +754,48 @@
         }
       );
     });
+  }
+
+  {
+    $.fn.fillHeight = function() {
+
+      this.each(function() {
+        var siblingsHeight = 0;
+        $(this).siblings().each(function() {
+          siblingsHeight += $(this).height();
+        });
+
+        var height = $(this).parent().height() - siblingsHeight;
+        $(this).height(height);
+      });
+    };
+
+
+    $.fn.fillWidth = function() {
+
+      this.each(function() {
+        var siblingsWidth = 0;
+        $(this).siblings().each(function() {
+          siblingsWidth += $(this).width();
+        });
+
+        var width = $(this).parent().width() - siblingsWidth;
+        $(this).width(width);
+      });
+    }
+
+    $('#cartModal').on('shown.bs.modal', function() {
+      $(".divfillHeight").fillHeight();
+      $(".divfillWidth").fillWidth();
+      document.getElementsByName('item_count').forEach((el) => {
+        changeItemButtons(el);
+      });
+
+    });
+
+    window.onresize = function(event) {
+      $(".divfillHeight").fillHeight();
+      $(".divfillWidth").fillWidth();
+    }
   }
 </script>

@@ -130,49 +130,61 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
           if ($image != null) {
             $cart_price += ($count * $price);
             $cart_modal_html .= sprintf(
-              '<div class="card mb-md-3 mb-3">
+              '<div class="card mb-md-3 mb-3" id="item_card_%1$s">
                 <div class="card-body row">
-                  <div class="col-md-3">
+                  <div class="col-md-2 pr-0">
                     <a href="product.php?id=%1$s">
-                      <img class="img-fluid mx-auto" src="/%2$s" style="max-height: 120px; max-width: 120px; margin:auto; padding: 0 20 0 20" alt="">
+                      <img src="/%2$s" class="m-auto" style="display: block; max-height: 120px; max-width: 100px;" alt="">
                     </a>
                   </div>
-                  <div class="col-md-9">           
-                    <div class="row" style="height:25%%">
-                      <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
-                    </div> 
-                    <div class="row align-items-center" style="height:75%%">
-                      <div class="col-md-5">
-                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_%1$s">%4$s ₴</div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
-                            document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
-                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
-                              </svg>
-                            </button>
-                          </div>
-                          <input type="number" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" 
-                            oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
+                  <div class="col-md-10">
+                    <div class="container" style="height:120px">           
+                      <div class="row" style="min-height:25%%">
+                        <div class="col-md-10">
+                          <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
+                        </div>
+                        <div class="col-md-2">
+                          <svg width="30px" height="30px" style="float:right;" viewBox="0 0 16 16" onclick="deleteItemFromCart(`%1$s`, document.getElementById(`item_card_%1$s`), `%7$s`)" class="my-svg my-button bi bi-x-circle text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path class="defaultSVG" fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                            <path class="altSVG" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+                          </svg>
+                        </div>
+                      </div> 
+                      <div class="row align-items-center divfillHeight">
+                        <div class="col-md-5">
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_%1$s">%4$s ₴</div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
                               document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
-                              <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
-                                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
-                              </svg>
-                            </button>
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                              </button>
+                            </div>
+                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="999"
+                              oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
+                                document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                  <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                                </svg>
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="col-md-3">
-                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
-                      </div>
-                    </div>                        
+                        <div class="col-md-3">
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
+                        </div>
+                      </div>                        
+                    </div>
                   </div>
                 </div>     
               </div>',
@@ -302,7 +314,7 @@ function product($query, $id, $verification_token)
               <p>%2$s</p>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%14$s`, `%3$s`, `%16$s`, 1, `%1$s`, `%15$s`)" style="width:200px">
+              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%14$s`, `%16$s`, 1, `%1$s`, `%15$s`)" style="width:200px">
                 <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
                   <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
