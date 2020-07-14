@@ -72,7 +72,7 @@ if ($is_authorized) {
             $middle_name = openssl_decrypt($middle_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($middle_name_iv), base64_decode($middle_name_tag));
             $last_name = openssl_decrypt($last_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($last_name_iv), base64_decode($last_name_tag));
             $phone = openssl_decrypt($phone_encrypted, $cipher, $new_key, $options = 0, base64_decode($phone_iv), base64_decode($phone_tag));
-            
+
             $cart_price = 0;
             $cart_modal_html = '';
             if ($stmt = $mysqli->prepare("SELECT `cart_items`.`PriceListID`, ProductName, Price, `Image`, `Count` FROM cart_items JOIN `pricelist` ON `cart_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE UserID=?")) {
@@ -229,8 +229,8 @@ if ($is_authorized) {
                         </div>
                     </div>-->
                     <? echo $cart_modal_html ?>
-                    <button id="changeUserDataDismissButton" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
-                    <button id="changeUserDataSubmitButton" type="submit" class="btn btn-dark m-1">Підтвердити замовлення</button>
+                    <button id="checkoutDismissButton" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
+                    <button id="checkoutSubmitButton" type="button" class="btn btn-dark m-1">Підтвердити замовлення</button>
 
             </main>
             <!--Main layout-->
@@ -257,6 +257,31 @@ if ($is_authorized) {
             </script>
 
             <!-- Script for submitting form -->
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#checkoutSubmitButton").click(
+                        function(e) {
+                            formData = {
+                                'verification_token': '<?= $verification_token ?>',
+                                'is_authorized': <?= $is_authorized ?>                                
+                            };
+                            e.preventDefault();
+
+                            // ajax request
+                            $.ajax({
+                                type: "POST",
+                                url: "functions/checkoutConfirmation.php",
+                                data: formData,
+                                success: function(data) {
+                                    document.getElementById('userForm').submit();
+                                },
+                                error: function(data) {
+                                },
+                            });
+                        }
+                    );
+                });
+            </script>
         </body>
 
         </html>

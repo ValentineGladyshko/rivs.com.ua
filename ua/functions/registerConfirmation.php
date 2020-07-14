@@ -102,6 +102,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     $stmt->bind_param("ssss", $email, $hashedpassword, base64_encode($iv), base64_encode($tag));
     if ($stmt->execute() == false) {
     };
+    $userID = $stmt->insert_id;
     $stmt->close();
   }
 
@@ -115,15 +116,6 @@ if (hash_equals($verification_token, $verification_token1)) {
   $middle_name_encrypted = openssl_encrypt($middle_name, $cipher, $new_key, $options = 0, $middle_name_iv, $middle_name_tag);
   $last_name_encrypted = openssl_encrypt($last_name, $cipher, $new_key, $options = 0, $last_name_iv, $last_name_tag);
   $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
-
-
-  if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($userID);
-    $stmt->fetch();
-    $stmt->close();
-  }
 
   if ($userID != null) {
     if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`UserID`, `FirstName`, `FirstNameNonce`,

@@ -724,7 +724,6 @@
     });
 
     // send code button
-
     $(document).ready(function() {
       $("#register_confirmation_send_code").click(
         function(e) {
