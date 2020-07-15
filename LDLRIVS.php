@@ -55,7 +55,29 @@ function get_cart_button_html($email, $is_authorized)
     $mysqli->close();
     return $cart_button_html != '' ? $cart_button_html : $empty_cart_button_html;
   } else {
-    return $empty_cart_button_html;
+    $cart = $_COOKIE["cart"];
+    if ($cart != null) {
+      $cart = json_decode($cart, true);
+      $cart_button_html = sprintf(
+        '<li class="nav-item">
+          <button class="btn btn-outline-warning rounded-xl" data-toggle="modal" data-target="#cartModal" style="padding: 5 8 5 8;">
+            <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+              <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+            </svg>
+            <div class="align-middle d-inline">
+              <span id="cart_count_span" class="badge badge-light">%s</span>
+            </div>
+          </button>
+        </li>',
+        count($cart)
+      );
+      return $cart_button_html != '' ? $cart_button_html : $empty_cart_button_html;
+    }
+    else
+    {
+      return $empty_cart_button_html;
+    }
   }
 }
 
@@ -224,7 +246,133 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
     $mysqli->close();
     return $cart_modal_html != '' ? $cart_modal_html : $empty_cart_modal_html;
   } else {
-    return $empty_cart_modal_html;
+    $cart = $_COOKIE["cart"];
+    if ($cart != null) {
+      $cart = json_decode($cart, true);
+
+      $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+      if ($mysqli->connect_errno) {
+        return $empty_cart_modal_html;
+      }
+
+      $cart_price = 0;
+      $cart_modal_html =
+        '<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="cartModalLabel">Кошик</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div id="cartContent" class="container" style="padding:0">';
+
+      foreach ($cart as $value) {
+        $count = $value["count"];
+        if ($stmt = $mysqli->prepare("SELECT `PriceListID`, ProductName, Price, `Image` FROM `pricelist` WHERE `PriceListID`=?")) {
+          $stmt->bind_param("i", $value["priceListID"]);
+          $stmt->execute();
+          $stmt->bind_result($pricelistID, $product_name, $price, $image);
+          $stmt->fetch();
+          if ($image != null) {
+            $cart_price += ($count * $price);
+            $cart_modal_html .= sprintf(
+              '<div class="card mb-md-3 mb-3" id="item_card_%1$s">
+                <div class="card-body row">
+                  <div class="col-md-2 pr-0">
+                    <a href="product.php?id=%1$s">
+                      <img src="/%2$s" class="m-auto" style="display: block; max-height: 120px; max-width: 100px;" alt="">
+                    </a>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="container pr-0 pl-1" style="height:120px">           
+                      <div class="row" style="min-height:25%%">
+                        <div class="col-md-10">
+                          <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
+                        </div>
+                        <div class="col-md-2">
+                          <svg width="30px" height="30px" style="float:right;" viewBox="0 0 16 16" onclick="deleteItemFromCart(`%1$s`, document.getElementById(`item_card_%1$s`), `%7$s`)" class="my-svg my-button bi bi-x-circle text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path class="defaultSVG" fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                            <path class="defaultSVG" fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                            <path class="altSVG" fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+                          </svg>
+                        </div>
+                      </div> 
+                      <div class="row align-items-center divfillHeight">
+                        <div class="col-md-5">
+                        <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;" id="item_price_%1$s">%4$s ₴</div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
+                              document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                              </button>
+                            </div>
+                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="999"
+                              oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
+                                document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
+                                <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+                                  <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                          <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
+                        </div>
+                      </div>                        
+                    </div>
+                  </div>
+                </div>     
+              </div>',
+              $pricelistID,
+              $image,
+              $product_name,
+              $price,
+              $count,
+              ($count * $price),
+              $verification_token
+            );
+          }
+          $stmt->close();
+        }
+      }
+      $cart_modal_html .= sprintf(
+        '</div>
+                <div class="row">
+                  <div class="col-md-12" style="padding: 0 36 0 0;">          
+                    <div id="cart_total_price" class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%1$s ₴</div>
+                    <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="checkoutCart(`%2$s`, true)">Оформити замовлення</button>
+              </div>
+            </div>
+          </div>
+        </div>',
+        $cart_price,
+        $verification_token
+      );
+      return $cart_modal_html != '' ? $cart_modal_html : $empty_cart_modal_html;
+    } else {
+      return $empty_cart_modal_html;
+    }
   }
 }
 

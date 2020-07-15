@@ -390,7 +390,7 @@ if ($is_authorized) {
             }
             $stmt->close();
         }
-        foreach ($cart_items as &$value) {
+        foreach ($cart_items as $value) {
             $fh = $value->pricelistID;
             if ($stmt = $mysqli->prepare("INSERT INTO `orders_items` (`OrderId`, `PriceListId`, `Count`, `Price`) VALUES (?, ?, ?, ?)")) {
                 $stmt->bind_param("iiii", $orderID, $value->pricelistID, $value->count, $value->price);
