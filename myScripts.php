@@ -758,6 +758,12 @@
         }
       );
     });
+
+    $(document).ready(function() {
+      $('#orderModal').on('hidden.bs.modal', function(e) {
+        window.location.replace('index.php');
+      })
+    });
   }
 
   {

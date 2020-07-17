@@ -352,7 +352,7 @@ $cart_modal_html .= sprintf(
     <script type="text/javascript">
         var checkoutForm = $('#checkoutForm');
         checkoutForm.submit(function(e) {
-            var isAuthorized = <?php if ($is_authorized) {?>1<?php } else { ?>0<?php } ?>;
+            var isAuthorized = <?php if ($is_authorized) { ?>1<?php } else { ?>0<?php } ?>;
             // give data from form
             formData = {
                 'verification_token': '<?= $verification_token ?>',
@@ -381,7 +381,7 @@ $cart_modal_html .= sprintf(
                             if (isAuthorized == true) {
                                 document.getElementById('userForm').submit();
                             } else {
-                                $.redirect('index.php');
+                                $('#orderModal').modal('show');
                             }
 
                             // else give html fields and show error messages

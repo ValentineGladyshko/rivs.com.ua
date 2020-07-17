@@ -185,7 +185,24 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
             </form>
         </div>
     </div>
-
+    <div class="modal fade" id="orderModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Замовлення</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами зв'яжеться співробітник компанії для підтвердження замовлення.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Закрити</button>
+      </div>
+    </div>
+  </div>
+</div>
     <div class="modal fade" id="registerConfirmationModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerConfirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form id="registerConfirmationForm">
