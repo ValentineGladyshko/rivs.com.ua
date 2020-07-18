@@ -45,6 +45,7 @@ if ($stmt = $mysqli->prepare("SELECT UserLogin FROM passwords WHERE UserLogin=?"
 if ($email != $email2 || $email == null) {
 
   //exiting with error
+  $mysqli->close();
   $response->success = false;
   echo json_encode($response, JSON_UNESCAPED_UNICODE);
   exit();
@@ -109,6 +110,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
   }
 
   if ($response->success == false) {
+    $mysqli->close();
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();
   }

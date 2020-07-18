@@ -36,6 +36,7 @@ if ($stmt = $mysqli->prepare("SELECT UserLogin FROM passwords WHERE UserLogin=?"
 if ($email != $email2 || $email == null) {
 
   //exiting with error
+  $mysqli->close();
   $response->success = false;
   $response->email = "Ця електронна адреса не зареєстрована";
   echo json_encode($response, JSON_UNESCAPED_UNICODE);

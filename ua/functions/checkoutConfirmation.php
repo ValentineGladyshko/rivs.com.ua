@@ -52,6 +52,7 @@ if ($is_authorized) {
             $stmt->close();
         }
         if ($userID == null) {
+            $mysqli->close();
             $response->success = false;
             echo json_encode($response, JSON_UNESCAPED_UNICODE);
             exit();

@@ -53,24 +53,20 @@ if ($email != $email2 || $email == null) {
 }
 
 if (strlen($first_name) > 32) {
-  $mysqli->close();
   $response->success = false;
   $response->first_name = "ім'я повинно бути довжиною меншою за 32 символи";
 }
 
 if (strlen($last_name) > 64) {
-  $mysqli->close();
   $response->success = false;
   $response->last_name = "Прізвище повинно бути довжиною меншою за 64 символи";
 }
 
 if (strlen($middle_name) > 32) {
-  $mysqli->close();
   $response->success = false;
   $response->middle_name = "ім'я по-батькові повинно бути довжиною меншою за 32 символи";
 }
 if (preg_match('/^(\+\d{3}\(\d{2}\)\d{3}[ -]\d{2}[ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$/m', $phone) != 1 && !is_null($phone)) {
-  $mysqli->close();
   $response->success = false;
   $response->phone = 'Телефон повинен відповідати формату "+380123456789"';
 }

@@ -70,6 +70,7 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   //go out if we have any errors
   if ($response->success == false) {
+    $mysqli->close();
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();
   }

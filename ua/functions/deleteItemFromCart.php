@@ -47,6 +47,7 @@ if (hash_equals($verification_token, $verification_token1)) {
       $stmt->close();
     }
     if ($userID == null) {
+      $mysqli->close();
       $response->success = false;
       echo json_encode($response, JSON_UNESCAPED_UNICODE);
       exit();
@@ -60,6 +61,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     }
 
     if ($db_pricelistID == null) {
+      $mysqli->close();
       $response->success = false;
       echo json_encode($response, JSON_UNESCAPED_UNICODE);
       exit();

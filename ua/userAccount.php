@@ -228,7 +228,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_email" value=<?= $email ?>>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="">
                         <label for="change_user_data_last_name" class="col-sm-2 col-form-label">Прізвище</label>
                         <div class="col-sm-3 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>
@@ -239,6 +239,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                             </svg>
                         </div>
+                        <div id="change_user_data_last_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
                         <label for="change_user_data_first_name" class="col-sm-2 col-form-label">Ім'я</label>
@@ -251,6 +252,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                             </svg>
                         </div>
+                        <div id="change_user_data_first_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
                         <label for="change_user_data_middle_name" class="col-sm-2 col-form-label">Ім'я по-батькові</label>
@@ -263,6 +265,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                             </svg>
                         </div>
+                        <div id="change_user_data_middle_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
                         <label for="change_user_data_phone" class="col-sm-2 col-form-label">Номер телефону</label>
@@ -275,6 +278,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                             </svg>
                         </div>
+                        <div id="change_user_data_phone_feedback" class="invalid-feedback"></div>
                     </div>
                     <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
                     <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-dark m-1">Змінити особисті дані</button>
@@ -470,7 +474,16 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 location.reload();
 
                                 // else give html fields and show error messages
-                            } else {}
+                            } else {
+                                changeInputStatus(document.getElementById("change_user_data_phone"),
+                                    document.getElementById("change_user_data_phone_feedback"), jsonData, "phone");
+                                changeInputStatus(document.getElementById("change_user_data_first_name"),
+                                    document.getElementById("change_user_data_first_name_feedback"), jsonData, "first_name");
+                                changeInputStatus(document.getElementById("change_user_data_last_name"),
+                                    document.getElementById("change_user_data_last_name_feedback"), jsonData, "last_name");
+                                changeInputStatus(document.getElementById("change_user_data_middle_name"),
+                                    document.getElementById("change_user_data_middle_name_feedback"), jsonData, "middle_name");
+                            }
                         }
                     },
                     error: function(data) {
