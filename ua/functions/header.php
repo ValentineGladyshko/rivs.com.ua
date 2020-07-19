@@ -114,7 +114,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <div class="form-group">
                             <label class="control-label" for="login_password">Пароль</label>
                             <div class="input-group" id="login_password_group">
-                                <input type="password" class="form-control" id="login_password" placeholder="Введіть пароль" aria-describedby="login_password_addon" required>
+                                <input type="password" class="form-control" id="login_password" placeholder="Введіть пароль" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('login_password_img'), document.getElementById('login_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="login_password_img" height="20" src="/icons/eye-fill.svg">

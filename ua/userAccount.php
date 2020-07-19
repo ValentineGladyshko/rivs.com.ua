@@ -69,6 +69,70 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         $middle_name = openssl_decrypt($middle_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($middle_name_iv), base64_decode($middle_name_tag));
         $last_name = openssl_decrypt($last_name_encrypted, $cipher, $new_key, $options = 0, base64_decode($last_name_iv), base64_decode($last_name_tag));
         $phone = openssl_decrypt($phone_encrypted, $cipher, $new_key, $options = 0, base64_decode($phone_iv), base64_decode($phone_tag));
+
+        $orders = array();
+        if ($stmt = $mysqli->prepare("SELECT `orders_in_process`.`OrderId`, `orders_items`.`PriceListID`, `Count`, `orders_items`.`Price`, `ProductName`, `Image`, `Date` 
+            FROM `orders_in_process` JOIN `orders_items` ON `orders_in_process`.`OrderId` = `orders_items`.`OrderId` 
+            JOIN `pricelist` ON `orders_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE Email = ? ORDER BY `Date` DESC")) {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->bind_result(
+                $orderId,
+                $priceListID,
+                $count,
+                $price,
+                $productName,
+                $image,
+                $date
+            );
+            while ($stmt->fetch()) {
+                $order = new stdClass();
+                $order->orderId = $orderId;
+                $order->date = $date;
+                if (array_key_exists($orderId, $orders)) {
+                    $order = $orders[$orderId];
+                }
+
+                $item = new stdClass();
+                $item->priceListID = $priceListID;
+                $item->count = $count;
+                $item->price = $price;
+                $item->productName = $productName;
+                $item->image = $image;
+
+                $order->items[] = $item;
+
+                $orders[$orderId] = $order;
+            }
+            $stmt->close();
+        }
+
+        if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`StatusName`, `orders_statuses`.`Date` 
+            FROM `orders_in_process` JOIN `orders_statuses` ON `orders_in_process`.`OrderId` = `orders_statuses`.`OrderId` 
+            JOIN `statuses` ON `orders_statuses`.`StatusId` = `statuses`.`StatusId` WHERE `orders_in_process`.`OrderId` = ? ORDER BY `orders_statuses`.`Date` DESC")) {
+            foreach ($orders as $key => $value) {
+                $stmt->bind_param("i", $key);
+                $stmt->execute();
+                $stmt->bind_result(
+                    $statusId,
+                    $statusName,
+                    $date
+                );
+                while ($stmt->fetch()) {
+
+                    $item = new stdClass();
+                    $item->statusId = $statusId;
+                    $item->statusName = $statusName;
+                    $item->date = $date;
+    
+                    $orders[$key]->statuses[] = $item;
+                }
+                $orders[$key]->status = $orders[$key]->statuses[0];              
+            }
+            $stmt->close();
+        }
+        if(1 == true)
+        {}
     }
 ?>
     <!--DOCTYPE html-->
@@ -233,7 +297,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="col-sm-3 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_last_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити прізвище">
+                        <div onclick="activateInput(getElementById('change_user_data_last_name'))" id="change_user_data_last_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити прізвище">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -246,7 +310,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="col-sm-3 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_first_name" value=<?= $first_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_first_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я">
+                        <div onclick="activateInput(getElementById('change_user_data_first_name'))" id="change_user_data_first_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -259,7 +323,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="col-sm-3 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_middle_name" value=<?= $middle_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_middle_name'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я по-батькові">
+                        <div onclick="activateInput(getElementById('change_user_data_middle_name'))" id="change_user_data_middle_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я по-батькові">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -272,7 +336,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="col-sm-3 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_phone" value=<?= $phone ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_phone'))" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити номер телефону">
+                        <div onclick="activateInput(getElementById('change_user_data_phone'))" id="change_user_data_phone_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити номер телефону">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -288,6 +352,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
                 <hr>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
+                <hr>
+
 
         </main>
         <!--Main layout-->
@@ -440,6 +506,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 });
             });
 
+            inputGroupRemoveValidationStatus(document.getElementById("change_user_data_last_name"), document.getElementById("change_user_data_last_name_button"));
+            inputGroupRemoveValidationStatus(document.getElementById("change_user_data_first_name"), document.getElementById("change_user_data_first_name_button"));
+            inputGroupRemoveValidationStatus(document.getElementById("change_user_data_middle_name"), document.getElementById("change_user_data_middle_name_button"));
+            inputGroupRemoveValidationStatus(document.getElementById("change_user_data_phone"), document.getElementById("change_user_data_phone_button"));
+
             var changeUserDataForm = $('#changeUserDataForm');
             changeUserDataForm.submit(function(e) {
                 // give data from form
@@ -475,13 +546,17 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
                                 // else give html fields and show error messages
                             } else {
-                                changeInputStatus(document.getElementById("change_user_data_phone"),
+                                changeInputGroupStatus(document.getElementById("change_user_data_phone_button"),
+                                    document.getElementById("change_user_data_phone"),
                                     document.getElementById("change_user_data_phone_feedback"), jsonData, "phone");
-                                changeInputStatus(document.getElementById("change_user_data_first_name"),
+                                changeInputGroupStatus(document.getElementById("change_user_data_first_name_button"),
+                                    document.getElementById("change_user_data_first_name"),
                                     document.getElementById("change_user_data_first_name_feedback"), jsonData, "first_name");
-                                changeInputStatus(document.getElementById("change_user_data_last_name"),
+                                changeInputGroupStatus(document.getElementById("change_user_data_last_name_button"),
+                                    document.getElementById("change_user_data_last_name"),
                                     document.getElementById("change_user_data_last_name_feedback"), jsonData, "last_name");
-                                changeInputStatus(document.getElementById("change_user_data_middle_name"),
+                                changeInputGroupStatus(document.getElementById("change_user_data_middle_name_button"),
+                                    document.getElementById("change_user_data_middle_name"),
                                     document.getElementById("change_user_data_middle_name_feedback"), jsonData, "middle_name");
                             }
                         }

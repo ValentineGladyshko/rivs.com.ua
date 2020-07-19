@@ -418,6 +418,15 @@
       inputRemoveValidationStatus(document.getElementById("reset_password_password"));
       inputRemoveValidationStatus(document.getElementById("reset_password_repeat_password"));
     }
+
+    function inputGroupRemoveValidationStatus(input, group) {
+      input.oninput = function() {
+        input.classList.remove('is-invalid');
+        input.classList.remove('is-valid');
+        group.classList.remove('is-invalid');
+        group.classList.remove('is-valid');
+      }
+    }
   }
 
   // forms section
