@@ -3,25 +3,30 @@
 	width: 1000px;
 	margin: center;
 }
+
 .header .logo {
 	display: inline-block;
 	width: 100px;
 	margin: 7px;
 }
+
 .header .logo img {
 	width: 100%;
 }
+
 .header .phone {
 	display: inline-block;
 	color: black;
 	margin: 15px 10px;
 	text-decoration: none;
 }
+
 .header .menu {
 	border-top: 3px solid blue;
 	padding: 10px;
 	text-align: center;
 }
+
 .header .menu .button {
 	display: inline-block;
 	background: #CC181E;
@@ -31,49 +36,95 @@
 	text-decoration: none;
 	font-family: Times New Roman;
 }
+
 .header .menu .button:hover {
 	background: #A21318;
 }
 
-.my-svg-button
-{
+.my-svg-button {
 	fill: #000000;
 }
 
-.my-svg-button:hover
-{
+.my-svg-button:hover {
 	fill: #0d6efd;
 	cursor: pointer;
 }
 
-.my-vertical-centered
-{
+.my-vertical-centered {
 	margin: auto 0 auto 0;
 	padding: 0 4 0 4;
 }
 
-.my-padding
-{
+.my-padding {
 	padding: 6 12 6 12;
 }
 
-.my-button:hover{
+.my-button:hover {
 	cursor: pointer;
 }
 
-.rounded-xl
-{
+.rounded-xl {
 	border-radius: .6rem!important;
 }
 
-.my-svg .altSVG{
+.my-svg .altSVG {
 	display: none;
 }
 
-.my-svg:hover .defaultSVG{
+.my-svg:hover .defaultSVG {
 	display: none;
 }
 
-.my-svg:hover .altSVG{
+.my-svg:hover .altSVG {
 	display: block;
+}
+
+.gray4 {
+	color: #889098;
+}
+
+.gray4 {
+	color: #889098;
+}
+
+.golden {
+	color: #ffb229;
+}
+
+.bg-dark-alt {
+	background-color: #212529;
+}
+
+.sidebar {
+	width: 225px;
+}
+
+.feather {
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
+}
+
+/*
+   * Sidebar
+   */
+
+.sidebar .nav-link {
+	color: #7f7f7f;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.sidebar .nav-link .feather {
+	margin-right: 4px;
+	color: #7f7f7f;
+}
+
+.sidebar .nav-link:hover .feather, .sidebar .nav-link.active .feather, .sidebar .nav-link.active, .sidebar .nav-link:hover {
+	color: #f8f9fa;
+}
+
+.sidebar-heading {
+	font-size: .75rem;
+	text-transform: uppercase;
 }

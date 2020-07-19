@@ -111,11 +111,20 @@ $_SESSION['verification_token'] = $verification_token;
           </div>
           <div class="col-md-3 text-center">
             <ul class="list-unstyled mb-0">
-              <li><img height="32" src="/icons/geo-alt.svg">
+              <li>
+                <svg height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                  <g>
+                    <path fill="currentColor" class="gray4" d="M554.06 161.16L416 224v288l139.88-55.95A32 32 0 0 0 576 426.34V176a16 16 0 0 0-21.94-14.84zM20.12 216A32 32 0 0 0 0 245.66V496a16 16 0 0 0 21.94 14.86L160 448V214.92a302.84 302.84 0 0 1-21.25-46.42zM288 359.67a47.78 47.78 0 0 1-36.51-17C231.83 319.51 210.92 293.09 192 266v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72A47.8 47.8 0 0 1 288 359.67z" class="fa-secondary"></path>
+                    <path fill="currentColor" d="M288 0a126 126 0 0 0-126 126c0 56.26 82.35 158.8 113.9 196a15.77 15.77 0 0 0 24.2 0C331.65 284.8 414 182.26 414 126A126 126 0 0 0 288 0zm0 168a42 42 0 1 1 42-42 42 42 0 0 1-42 42z" class="fa-primary"></path>
+                  </g>
+                </svg>
                 <p>Місто Київ, вулиця Північна 3</p>
               </li>
 
-              <li><img height="32" src="/icons/telephone-fill.svg">
+              <li>
+                <svg class="bi bi-telephone-fill" height="32" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
+                </svg>
                 <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                 <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
                 <a class="link waves-effect waves-light">
@@ -125,7 +134,13 @@ $_SESSION['verification_token'] = $verification_token;
                 </a>
               </li>
 
-              <li><img width="32" src="/icons/envelope-open-fill.svg">
+              <li>
+                <svg height="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <g>
+                    <path fill="currentColor" class="gray4" d="M64,257.6,227.9,376a47.72,47.72,0,0,0,56.2,0L448,257.6V96a32,32,0,0,0-32-32H96A32,32,0,0,0,64,96ZM160,160a16,16,0,0,1,16-16H336a16,16,0,0,1,16,16v16a16,16,0,0,1-16,16H176a16,16,0,0,1-16-16Zm0,80a16,16,0,0,1,16-16H336a16,16,0,0,1,16,16v16a16,16,0,0,1-16,16H176a16,16,0,0,1-16-16Z" class="fa-secondary"></path>
+                    <path fill="currentColor" d="M352,160a16,16,0,0,0-16-16H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16Zm-16,64H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16V240A16,16,0,0,0,336,224ZM329.4,41.4C312.6,29.2,279.2-.3,256,0c-23.2-.3-56.6,29.2-73.4,41.4L152,64H360ZM64,129c-23.9,17.7-42.7,31.6-45.6,34A48,48,0,0,0,0,200.7v10.7l64,46.2Zm429.6,34c-2.9-2.3-21.7-16.3-45.6-33.9V257.6l64-46.2V200.7A48,48,0,0,0,493.6,163ZM256,417.1a80,80,0,0,1-46.9-15.2L0,250.9V464a48,48,0,0,0,48,48H464a48,48,0,0,0,48-48V250.9l-209.1,151A80,80,0,0,1,256,417.1Z" class="fa-primary"></path>
+                  </g>
+                </svg>
                 <p>avtomagnetik@gmail.com</p>
               </li>
             </ul>
@@ -201,7 +216,7 @@ $_SESSION['verification_token'] = $verification_token;
               changeInputStatus(document.getElementById("email"), document.getElementById("email_feedback"), jsonData, "email");
               changeInputStatus(document.getElementById("name"), document.getElementById("name_feedback"), jsonData, "name");
               changeInputStatus(document.getElementById("message"), document.getElementById("message_feedback"), jsonData, "message")
-              
+
               // change status field
               if (jsonData.hasOwnProperty("send")) {
                 document.getElementById("status").innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
@@ -218,4 +233,5 @@ $_SESSION['verification_token'] = $verification_token;
     });
   </script>
 </body>
+
 </html>
