@@ -341,13 +341,6 @@ $cart_modal_html .= sprintf(
     <!-- JQuery -->
     <? include("../myScripts.php"); ?>
 
-    <script type="text/javascript">
-        var ru_link = document.getElementById("ru_link");
-        ru_link.href = "/ru/checkoutCart.php";
-        var ua_link = document.getElementById("ua_link");
-        ua_link.href = "/ua/checkoutCart.php";
-    </script>
-
     <!-- Script for submitting form -->
     <script type="text/javascript">
         var checkoutForm = $('#checkoutForm');

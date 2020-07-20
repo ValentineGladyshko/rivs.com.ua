@@ -174,10 +174,6 @@ $_SESSION['verification_token'] = $verification_token;
   <script type="text/javascript">
     var elem = document.getElementById("contacts");
     elem.classList.add('active');
-    var ru_link = document.getElementById("ru_link");
-    ru_link.href = "/ru/contacts.php";
-    var ua_link = document.getElementById("ua_link");
-    ua_link.href = "/ua/contacts.php";
   </script>
 
   <!-- Script for submitting form -->

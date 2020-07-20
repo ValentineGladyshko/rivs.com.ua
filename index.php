@@ -1,4 +1,6 @@
 <?php
+header("Location: /ua/index.php");
+exit;
 $security_token = $_SESSION["security_token"];
 $security_token1 = $_COOKIE["security_token"];
 

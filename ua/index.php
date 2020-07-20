@@ -161,10 +161,6 @@ $_SESSION['verification_token'] = $verification_token;
 <script type="text/javascript">
   var elem = document.getElementById("main");
   elem.classList.add('active');
-  var ru_link = document.getElementById("ru_link");
-  ru_link.href = "/ru/index.php";
-  var ua_link = document.getElementById("ua_link");
-  ua_link.href = "/ua/index.php";
 </script>
 
 </html>

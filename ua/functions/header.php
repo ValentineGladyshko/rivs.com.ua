@@ -45,17 +45,6 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                             </div>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a id="ruLink" class="rounded-xl nav-link" href="/">RU
-                        </a>
-                    </li>
-                    <li class="nav-item active disabled">
-                        <a id="uaLink" class="rounded-xl nav-link" href="/">UA
-                        </a>
-                    </li>
-                    <li style="min-width:10px; min-height:5px">
-                    </li>
                     <? if($is_authorized) { ?>
                     <li id="user" class="nav-item">
                         <form style="margin:0px" class="nav-item" id="userForm" action="userAccount.php" method="post">
