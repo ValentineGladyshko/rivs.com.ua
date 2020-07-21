@@ -25,7 +25,7 @@ if ($verification_token == null || $verification_token1 == null) {
   exit();
 }
 if (hash_equals($verification_token, $verification_token1)) {
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     $response->success = false;
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -90,9 +90,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   $cipher = "aes-256-gcm";
 
   //read key from file 
-  $myfile = fopen("../../key.txt", "r");
-  $key = base64_decode(fread($myfile, filesize("../../key.txt")));
-  fclose($myfile);
+  $key = base64_decode(file_get_contents('../../../../key.txt'));
 
   //hashing password
   $hash = password_hash(hash('sha512', $password), PASSWORD_ARGON2ID);
@@ -124,8 +122,7 @@ if (hash_equals($verification_token, $verification_token1)) {
   //generate security token for access to protected resources
   $security_token = base64_encode(openssl_random_pseudo_bytes(32));
   $_SESSION["security_token"] = $security_token;
-  setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', 'rivs.com.ua', false, true);
-  setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', '25.142.71.242', false, true);
+  setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', 'rivs.com.ua', true, true);
 }
 $response->success = true;
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

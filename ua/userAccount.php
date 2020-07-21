@@ -17,7 +17,7 @@ if ($verification_token == null || $verification_token1 == null || $security_tok
 }
 
 if (hash_equals($verification_token, $verification_token1) && hash_equals($security_token, $security_token1)) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
         include("../scripts.php");
         echo "<script>$.redirect('index.php');</script>";
@@ -59,9 +59,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         $cipher = "aes-256-gcm";
 
-        $myfile = fopen("../key.txt", "r");
-        $key = base64_decode(fread($myfile, filesize("../key.txt")));
-        fclose($myfile);
+        $key = base64_decode(file_get_contents('../../../key.txt'));
 
         $new_key = $key . md5($email, true);
 

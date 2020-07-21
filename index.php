@@ -25,7 +25,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
 else if (hash_equals($security_token, $security_token1) && isset($_SESSION["email"]))
 {
   $email = $_SESSION["email"];
-  $mysqli = mysqli_connect("localhost", "Noob", "noob", "webapp");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     $response->success = false;
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

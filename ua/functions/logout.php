@@ -19,7 +19,6 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
   my_session_regenerate_id();
 
   // delete cookies
-  setcookie('security_token', null, time() - 60 * 60, '/', 'rivs.com.ua', false, true);
-  setcookie('security_token', null, time() - 60 * 60, '/', '25.142.71.242', false, true);
+  setcookie('security_token', null, time() - 60 * 60, '/', 'rivs.com.ua', true, true);
 }
 exit();

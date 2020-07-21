@@ -23,7 +23,7 @@ $last_name = $_POST["last_name"];
 $phone = $_POST["phone"];
 $email2 = $_POST["email"];
 
-$from_email = '55coursework99@gmail.com';
+$from_email = 'rivs.com.ua@gmail.com';
 
 //variables for response
 $response = new stdClass();
@@ -38,7 +38,7 @@ if ($is_authorized) {
 
     if (hash_equals($verification_token, $verification_token1) && hash_equals($security_token, $security_token1)) {
 
-        $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+        $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
         if ($mysqli->connect_errno) {
             $response->success = false;
             echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -99,9 +99,7 @@ if ($is_authorized) {
         }
 
         $cipher = "aes-256-gcm";
-        $myfile = fopen("../../key.txt", "r");
-        $key = base64_decode(fread($myfile, filesize("../../key.txt")));
-        fclose($myfile);
+        $key = base64_decode(file_get_contents('../../../../key.txt'));
 
         $new_key = $key . md5($email, true);
 
@@ -494,9 +492,9 @@ if ($is_authorized) {
         }
 
         //variables to decrypt
-        $hashedpassword = "i6/Qv5L9B7Hd";
+        $hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
+        $tag = "OQBmpCsN+7ocXYzIrSPGPg==";
         $iv = "RucZWE5OFpqG0UlE";
-        $tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
         // decode variables
         $iv = base64_decode($iv);
@@ -504,7 +502,6 @@ if ($is_authorized) {
 
         // decrypting password
         $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $tag);
-
 
         $mail2 = new PHPMailer;
         $mail2->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -628,7 +625,7 @@ if ($is_authorized) {
 
     if (hash_equals($verification_token, $verification_token1)) {
 
-        $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+        $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
         if ($mysqli->connect_errno) {
             $response->success = false;
             echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -1046,18 +1043,16 @@ if ($is_authorized) {
             $total_cart_price
         );
 
-        setcookie('cart', null, time() - 60 * 60, '/', 'rivs.com.ua', false, true);
-        setcookie('cart', null, time() - 60 * 60, '/', '25.142.71.242', false, true);
-        $hashedpassword = "i6/Qv5L9B7Hd";
+        setcookie('cart', null, time() - 60 * 60, '/', 'rivs.com.ua', true, true);
+        $cipher = "aes-256-gcm";
+        $key = base64_decode(file_get_contents('../../../../key.txt'));
+        $hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
+        $tag = "OQBmpCsN+7ocXYzIrSPGPg==";
         $iv = "RucZWE5OFpqG0UlE";
-        $tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
         // decode variables
         $iv = base64_decode($iv);
         $tag = base64_decode($tag);
-
-        $cipher = "aes-256-gcm";
-        $key = base64_decode(file_get_contents("../../key.txt"));
 
         // decrypting password
         $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $tag);

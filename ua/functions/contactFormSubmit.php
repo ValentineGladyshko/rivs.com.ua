@@ -17,7 +17,7 @@ $response->success = true;
 $name = $_POST['name'];
 $email = $_POST['email'];
 $message = $_POST['message'];
-$from_email = '55coursework99@gmail.com';
+$from_email = 'rivs.com.ua@gmail.com';
 
 // check validity of name
 if ($name == null) {
@@ -51,14 +51,12 @@ if ($response->success == false) {
 
 // read key to decrypt password
 $cipher = "aes-256-gcm";
-$myfile = fopen("../../key.txt", "r");
-$key = base64_decode(fread($myfile, filesize("../../key.txt")));
-fclose($myfile);
+$key = base64_decode(file_get_contents('../../../../key.txt'));
 
 //variables to decrypt
-$hashedpassword = "i6/Qv5L9B7Hd";
+$hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
+$tag = "OQBmpCsN+7ocXYzIrSPGPg==";
 $iv = "RucZWE5OFpqG0UlE";
-$tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
 // decode variables
 $iv = base64_decode($iv);
@@ -66,37 +64,40 @@ $tag = base64_decode($tag);
 
 // decrypting password
 $password = openssl_decrypt($hashedpassword, $cipher, $key, $options = 0, $iv, $tag);
+try {
+    // create object for email
+    $mail = new PHPMailer;
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->CharSet = 'UTF-8';
 
-// create object for email
-$mail = new PHPMailer;
-$mail->SMTPDebug = SMTP::DEBUG_SERVER;
-$mail->CharSet = 'UTF-8';
+    // SMTP settings
+    $mail->isSMTP();
+    $mail->SMTPDebug = 3;
 
-// SMTP settings
-$mail->isSMTP();
-$mail->SMTPDebug = 0;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPAuth = true;
+    $mail->Username = $from_email;
+    $mail->Password = $password;
 
-$mail->Host = 'smtp.gmail.com';
-$mail->Port = 587;
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-$mail->SMTPAuth = true;
-$mail->Username = $from_email;
-$mail->Password = $password;
+    // from who
+    $mail->setFrom($from_email, $name);
 
-// from who
-$mail->setFrom($from_email, $name);
+    // to who
+    $mail->addAddress($from_email, 'Site');
 
-// to who
-$mail->addAddress($from_email, 'Site');
+    // mail subject
+    $mail->Subject = 'From: rivs.com.ua';
 
-// mail subject
-$mail->Subject = 'From: rivs.com.ua';
+    // mail body
+    $mail->Body = "From: $name \nEmail: $email \nMessage: $message";
 
-// mail body
-$mail->Body = "From: $name \nEmail: $email \nMessage: $message";
-
-// send email
-$mail->send();
+    // send email
+    $mail->send();
+} catch (Exception $e) {
+    echo $e->getMessage(); //Boring error messages from anything else!
+}
 $response->success = true;
 $response->send = 'Повідомлення успішно відправлено!';
 echo json_encode($response, JSON_UNESCAPED_UNICODE);

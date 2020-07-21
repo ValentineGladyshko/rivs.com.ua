@@ -104,7 +104,7 @@ $_SESSION['verification_token'] = $verification_token;
               <!--Grid row-->
 
               <div class="center-on-small-only">
-                <button style="margin-top:10px" type="submit" class="btn btn-dark btn-lg">Надіслати</a>
+                <button style="margin-top:10px" type="submit" class="disabled btn btn-dark btn-lg">Надіслати</a>
               </div>
               <div style="margin-top:10px" id="status"></div>
             </form>
@@ -141,7 +141,7 @@ $_SESSION['verification_token'] = $verification_token;
                     <path fill="currentColor" d="M352,160a16,16,0,0,0-16-16H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16Zm-16,64H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16V240A16,16,0,0,0,336,224ZM329.4,41.4C312.6,29.2,279.2-.3,256,0c-23.2-.3-56.6,29.2-73.4,41.4L152,64H360ZM64,129c-23.9,17.7-42.7,31.6-45.6,34A48,48,0,0,0,0,200.7v10.7l64,46.2Zm429.6,34c-2.9-2.3-21.7-16.3-45.6-33.9V257.6l64-46.2V200.7A48,48,0,0,0,493.6,163ZM256,417.1a80,80,0,0,1-46.9-15.2L0,250.9V464a48,48,0,0,0,48,48H464a48,48,0,0,0,48-48V250.9l-209.1,151A80,80,0,0,1,256,417.1Z" class="fa-primary"></path>
                   </g>
                 </svg>
-                <p>avtomagnetik@gmail.com</p>
+                <p>rivs.com.ua@gmail.com</p>
               </li>
             </ul>
           </div>

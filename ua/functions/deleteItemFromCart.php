@@ -32,7 +32,7 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   if ($is_authorized) {
 
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       $response->success = false;
       echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -81,7 +81,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     exit();
   } else {
 
-    $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       $response->success = false;
       echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -131,8 +131,7 @@ if (hash_equals($verification_token, $verification_token1)) {
       $cart = json_encode(array_values($cart));
     }
 
-    setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', 'rivs.com.ua', false, true);
-    setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', '25.142.71.242', false, true);
+    setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', 'rivs.com.ua', true, true);
 
     $response->success = true;
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

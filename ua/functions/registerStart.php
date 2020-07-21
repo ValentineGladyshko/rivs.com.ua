@@ -27,7 +27,7 @@ $response->password = array();
 $response->email = array();
 $response->repeat_password = array();
 
-$from_email = '55coursework99@gmail.com';
+$from_email = 'rivs.com.ua@gmail.com';
 
 //checking verification tokens
 if ($verification_token == null || $verification_token1 == null) {
@@ -36,7 +36,7 @@ if ($verification_token == null || $verification_token1 == null) {
   exit();
 }
 if (hash_equals($verification_token, $verification_token1)) {
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     $response->success = false;
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
@@ -124,14 +124,12 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   // read key to decrypt password
   $cipher = "aes-256-gcm";
-  $myfile = fopen("../../key.txt", "r");
-  $key = base64_decode(fread($myfile, filesize("../../key.txt")));
-  fclose($myfile);
+  $key = base64_decode(file_get_contents('../../../../key.txt'));
 
   //variables to decrypt
-  $hashedpassword = "i6/Qv5L9B7Hd";
+  $hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
+  $tag = "OQBmpCsN+7ocXYzIrSPGPg==";
   $iv = "RucZWE5OFpqG0UlE";
-  $tag = "OUZcLNNGYuiakaNdQgRyDw==";
 
   // decode variables
   $iv = base64_decode($iv);

@@ -16,7 +16,7 @@ function get_cart_button_html($email, $is_authorized)
     </li>';
   $cart_button_html = '';
   if ($is_authorized == true) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       return $empty_cart_button_html;
     }
@@ -108,7 +108,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
     </div>';
   $cart_modal_html = '';
   if ($is_authorized == true) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       return $empty_cart_modal_html;
     }
@@ -250,7 +250,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
     if ($cart != null) {
       $cart = json_decode($cart, true);
 
-      $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+      $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
       if ($mysqli->connect_errno) {
         return $empty_cart_modal_html;
       }
@@ -379,7 +379,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
 // function for making db query
 function store($query)
 {
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     exit();
   }
@@ -428,7 +428,7 @@ function empty_or_html($var)
 
 function product($query, $id, $verification_token)
 {
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     exit();
   }
@@ -561,7 +561,7 @@ function my_session_start()
 
         // write token to session and cookie
         $_SESSION['security_token'] = $security_token;
-        setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', 'rivs.com.ua', false, true);
+        setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', 'rivs.com.ua', true, true);
       } else {
 
         // if session security token is incorrect create new empty session
