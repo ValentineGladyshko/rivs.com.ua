@@ -73,9 +73,7 @@ function get_cart_button_html($email, $is_authorized)
         count($cart)
       );
       return $cart_button_html != '' ? $cart_button_html : $empty_cart_button_html;
-    }
-    else
-    {
+    } else {
       return $empty_cart_button_html;
     }
   }
@@ -460,7 +458,7 @@ function product($query, $id, $verification_token)
               <img src="/%1$s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
             </div>
             <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
-              <p>Замовити можна по телефону</p>
+              <p><a>Here must be link to original photos</a></p>
               <p>%2$s</p>
             </div>
             <div class="text-center">
@@ -475,7 +473,7 @@ function product($query, $id, $verification_token)
           </div>
           <div class="col-md-8">
             <h2 class="h1-responsive font-weight-bold text-center my-4">%3$s</h2>
-            %4$s%5$s%6$s%7$s%8$s%9$s%10$s%11$s%12%s
+            %4$s%5$s%6$s%7$s%8$s%9$s%10$s%11$s%12$s
             <div class="text-justify w-responsive mx-auto mb-5">%13$s</div>',
           $image,
           (($price != 0) ? ('<b>Ціна – ' . $price . ' ₴</b>') : ''),

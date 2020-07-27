@@ -47,7 +47,6 @@ $_SESSION['verification_token'] = $verification_token;
 
           <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal3">
             <img src="/Images/WithPaintExample/3.jpg" alt="3 example" class="img-fluid" />
-
           </figure>
 
           <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal4">
