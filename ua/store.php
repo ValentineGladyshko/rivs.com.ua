@@ -37,7 +37,6 @@ $_SESSION['verification_token'] = $verification_token;
 
       <!--Grid row-->
       <div class="row">
-        <h1 class="text-center">ГУАНПОЛІСЕПТ ВИПРАВЛЯЄ ТЕ, ЩО СПИРТОВІ АНТИСЕПТИКИ НАКОЇЛИ З ВАШИМИ РУКАМИ</h1>
         <? echo store('SELECT * FROM pricelist ORDER BY ProductAvailability DESC'); ?>
       </div>
       <!--Main container-->
