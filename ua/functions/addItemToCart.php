@@ -145,7 +145,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     $cart = json_encode($cart);
 
     setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', 'rivs.com.ua', false, true);
-    setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', '25.142.71.242', false, true);
+    setcookie('cart', $cart, time() + 60 * 60 * 24 * 90, '/', '25.87.94.182', false, true);
 
     $response->success = true;
     $response->itemName = $productName;

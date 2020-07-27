@@ -155,7 +155,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
   $security_token = base64_encode(openssl_random_pseudo_bytes(32));
   $_SESSION["security_token"] = $security_token;
   setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', 'rivs.com.ua', false, true);
-  setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', '25.142.71.242', false, true);
+  setcookie('security_token', $security_token, time() + 60 * 60 * 24 * 30, '/', '25.87.94.182', false, true);
 
   //sending success code
   $response->success = true;

@@ -1047,7 +1047,7 @@ if ($is_authorized) {
         );
 
         setcookie('cart', null, time() - 60 * 60, '/', 'rivs.com.ua', false, true);
-        setcookie('cart', null, time() - 60 * 60, '/', '25.142.71.242', false, true);
+        setcookie('cart', null, time() - 60 * 60, '/', '25.87.94.182', false, true);
         $hashedpassword = "i6/Qv5L9B7Hd";
         $iv = "RucZWE5OFpqG0UlE";
         $tag = "OUZcLNNGYuiakaNdQgRyDw==";
