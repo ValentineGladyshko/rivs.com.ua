@@ -125,8 +125,11 @@ $_SESSION['verification_token'] = $verification_token;
                 <svg class="bi bi-telephone-fill" height="32" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
                 </svg>
+                <p><a class="phone-ph" href="tel:+380443324517"><strong>+38(044)332-45-17</strong></a></p>
+                <p>Для крупних оптових закупівель:</p>
                 <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                 <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
+                <p><a class="phone-ph" href="tel:+380674061192"><strong>+38(067)406-11-92</strong></a></p>
                 <a class="link waves-effect waves-light">
                   <p><a href="viber://chat?number=+380504400767" style="font-size:28px;"><img height="40" src="/icons/viber-logo.png" style="margin-right:5px;">Viber</a></p>
                   <p><a href="https://t.me/rivs_com_ua_sales" style="font-size:28px;"><img height="40" src="/icons/telegram.svg" style="margin-right:5px;">Telegram</a></p>
@@ -141,7 +144,7 @@ $_SESSION['verification_token'] = $verification_token;
                     <path fill="currentColor" d="M352,160a16,16,0,0,0-16-16H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16Zm-16,64H176a16,16,0,0,0-16,16v16a16,16,0,0,0,16,16H336a16,16,0,0,0,16-16V240A16,16,0,0,0,336,224ZM329.4,41.4C312.6,29.2,279.2-.3,256,0c-23.2-.3-56.6,29.2-73.4,41.4L152,64H360ZM64,129c-23.9,17.7-42.7,31.6-45.6,34A48,48,0,0,0,0,200.7v10.7l64,46.2Zm429.6,34c-2.9-2.3-21.7-16.3-45.6-33.9V257.6l64-46.2V200.7A48,48,0,0,0,493.6,163ZM256,417.1a80,80,0,0,1-46.9-15.2L0,250.9V464a48,48,0,0,0,48,48H464a48,48,0,0,0,48-48V250.9l-209.1,151A80,80,0,0,1,256,417.1Z" class="fa-primary"></path>
                   </g>
                 </svg>
-                <p>rivs.com.ua@gmail.com</p>
+                <p>rivsantiseptik@gmail.com</p>
               </li>
             </ul>
           </div>

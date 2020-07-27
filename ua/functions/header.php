@@ -175,23 +175,23 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
         </div>
     </div>
     <div class="modal fade" id="orderModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Замовлення</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами зв'яжеться співробітник компанії для підтвердження замовлення.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Закрити</button>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Замовлення</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами зв'яжеться співробітник компанії для підтвердження замовлення.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
     <div class="modal fade" id="registerConfirmationModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerConfirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form id="registerConfirmationForm">
@@ -338,8 +338,11 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                 </div>
                 <div class="modal-body">
                     <p class="text-justify">Консультації та замовлення за телефонами:</p>
+                    <p><a class="phone-ph" href="tel:+380443324517"><strong>+38(044)332-45-17</strong></a></p>
+                    <p>Для крупних оптових закупівель:</p>
                     <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                     <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
+                    <p><a class="phone-ph" href="tel:+380674061192"><strong>+38(067)406-11-92</strong></a></p>
                     <p class="text-justify">Графік прийому замовлень:</p>
                     <p class="text-justify">Будні: з 10:00 до 20:00</p>
                     <p class="text-justify">Вихідні: з 11:00 до 19:00</p>
