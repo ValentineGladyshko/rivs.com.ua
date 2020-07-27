@@ -377,7 +377,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-12 border-lg-left border-sm-top border-secondary">
+                            <div class="col-lg-3 col-sm-12 mt-3 mt-lg-0 border-lg-left border-lg-top">
                                 <div class="row align-items-center">
                                     <div class="col-lg-7 col-md-10 col-sm-9 col-7">
                                         <div class="text-body float-sm-right">Обробка оператором</div>
