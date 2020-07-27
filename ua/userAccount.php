@@ -275,26 +275,18 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             <!-- style="background-color: #eee;" -->
             <div class="container">
                 <!--Grid row-->
-                <div class="row">
-                    <div class="col-md-7 mb-4">
-                        <div class="view overlay z-depth-1-half">
-                            <div class="mask rgba-white-light">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <form id="changeUserDataForm" method="post">
                     <input id="change_user_data_verification_token" type="hidden" value=<?= $verification_token ?>>
                     <div class="form-group row">
-                        <label for="change_user_data_email" class="col-sm-2 col-form-label">Електронна адреса</label>
-                        <div class="col-sm-10 my-vertical-centered">
+                        <label for="change_user_data_email" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Електронна адреса</label>
+                        <div class="col-lg-10 col-md-9 col-sm-8 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_email" value=<?= $email ?>>
                         </div>
                     </div>
                     <div class="form-group row" id="">
-                        <label for="change_user_data_last_name" class="col-sm-2 col-form-label">Прізвище</label>
-                        <div class="col-sm-3 my-vertical-centered">
+                        <label for="change_user_data_last_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Прізвище</label>
+                        <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>
                         </div>
                         <div onclick="activateInput(getElementById('change_user_data_last_name'))" id="change_user_data_last_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити прізвище">
@@ -306,8 +298,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_last_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_first_name" class="col-sm-2 col-form-label">Ім'я</label>
-                        <div class="col-sm-3 my-vertical-centered">
+                        <label for="change_user_data_first_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Ім'я</label>
+                        <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_first_name" value=<?= $first_name ?> required>
                         </div>
                         <div onclick="activateInput(getElementById('change_user_data_first_name'))" id="change_user_data_first_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я">
@@ -319,8 +311,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_first_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_middle_name" class="col-sm-2 col-form-label">Ім'я по-батькові</label>
-                        <div class="col-sm-3 my-vertical-centered">
+                        <label for="change_user_data_middle_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Ім'я по-батькові</label>
+                        <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_middle_name" value=<?= $middle_name ?> required>
                         </div>
                         <div onclick="activateInput(getElementById('change_user_data_middle_name'))" id="change_user_data_middle_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я по-батькові">
@@ -332,8 +324,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_middle_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_phone" class="col-sm-2 col-form-label">Номер телефону</label>
-                        <div class="col-sm-3 my-vertical-centered">
+                        <label for="change_user_data_phone" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Номер телефону</label>
+                        <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_phone" value=<?= $phone ?> required>
                         </div>
                         <div onclick="activateInput(getElementById('change_user_data_phone'))" id="change_user_data_phone_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити номер телефону">
@@ -358,13 +350,13 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="row align-items-center">
                             <div class="col-lg-4 col-md-6 col-sm-7">
                                 <div class="row align-items-center">
-                                    <div class="col-lg-6 col-sm-6">
+                                    <div class="col-6">
                                         <button id="order_button" onclick="chevronToggle(document.getElementById('order_img'), document.getElementById('order_button'))" class="btn btn-link chevron-down p-0" style="font-weight: 500; font-size: 18px;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             <img id="order_img" height="18" src="/icons/chevron-down.svg">
                                             №000001
                                         </button>
                                     </div>
-                                    <div class="col-lg-6 col-sm-6 px-0">
+                                    <div class="col-6 px-0">
                                         <h6 class="mb-0">
                                             21/06/2020 20:02
                                         </h6>
@@ -387,10 +379,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             </div>
                             <div class="col-lg-3 col-sm-12 border-lg-left border-sm-top border-secondary">
                                 <div class="row align-items-center">
-                                    <div class="col-lg-7 col-md-10 col-sm-9">
+                                    <div class="col-lg-7 col-md-10 col-sm-9 col-7">
                                         <div class="text-body float-sm-right">Обробка оператором</div>
                                     </div>
-                                    <div class="col-lg-5 col-md-2 col-sm-3 p-0">
+                                    <div class="col-lg-5 col-md-2 col-sm-3 col-5 p-0">
                                         <button id="status_button" onclick="chevronToggle(document.getElementById('status_img'), document.getElementById('status_button'))" class="btn btn-link pl-0 chevron-down float-sm-right" style="font-weight: 500;" type="button" data-toggle="popover" title="Popover title" data-html="true" data-placement="bottom" data-content="<div class='row'>
                                                 <div class='col-12'>
                                                     <div class='h6'>26/07/2020</div>
