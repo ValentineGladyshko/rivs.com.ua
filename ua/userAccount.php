@@ -124,15 +124,15 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     $item->statusId = $statusId;
                     $item->statusName = $statusName;
                     $item->date = $date;
-    
+
                     $orders[$key]->statuses[] = $item;
                 }
-                $orders[$key]->status = $orders[$key]->statuses[0];              
+                $orders[$key]->status = $orders[$key]->statuses[0];
             }
             $stmt->close();
         }
-        if(1 == true)
-        {}
+        if (1 == true) {
+        }
     }
 ?>
     <!--DOCTYPE html-->
@@ -353,7 +353,166 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 <hr>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
                 <hr>
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-md-6 col-sm-7">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-sm-6">
+                                        <button id="order_button" onclick="chevronToggle(document.getElementById('order_img'), document.getElementById('order_button'))" class="btn btn-link chevron-down p-0" style="font-weight: 500; font-size: 18px;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <img id="order_img" height="18" src="/icons/chevron-down.svg">
+                                            №000001
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 px-0">
+                                        <h6 class="mb-0">
+                                            21/06/2020 20:02
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="col-lg-5 col-md-6 col-sm-5">
+                                <div class="row">
+                                    <a href="product.php?id=1" class="mx-2">
+                                        <img src="/Store_photos/ForHands0.15L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                    </a>
+                                    <a href="product.php?id=4" class="mx-2">
+                                        <img src="/Store_photos/ForHands0.1L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                    </a>
+                                    <a href="product.php?id=8" class="mx-2">
+                                        <img src="/Store_photos/ForHands10L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-12 border-lg-left border-sm-top border-secondary">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-7 col-md-10 col-sm-9">
+                                        <div class="text-body float-sm-right">Обробка оператором</div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-2 col-sm-3 p-0">
+                                        <button id="status_button" onclick="chevronToggle(document.getElementById('status_img'), document.getElementById('status_button'))" class="btn btn-link pl-0 chevron-down float-sm-right" style="font-weight: 500;" type="button" data-toggle="popover" title="Popover title" data-html="true" data-placement="bottom" data-content="<div class='row'>
+                                                <div class='col-12'>
+                                                    <div class='h6'>26/07/2020</div>
+                                                    <hr class='solid mt-0'>
+                                                </div>
+                                                <div class='divider'></div>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>
+                                                <div class='col-9'>
+                                                    <div class='h6 text-danger font-weight-normal'>Відмінено</div>
+                                                </div>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>
+                                                <div class='col-9'>
+                                                    <div class='h6 text-success font-weight-normal'>Виконано</div>
+                                                </div>
+                                                <div class='col-12'>
+                                                    <div class='h6'>25/07/2020</div>
+                                                    <hr class='solid mt-0'>
+                                                </div>
+                                                <hr/>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>                                                
+                                                <div class='col-9'>
+                                                    <div class='h6 text-info font-weight-normal'>Очікує в пункті видачі</div>
+                                                </div>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>
+                                                <div class='col-9'>
+                                                    <div class='h6 text-primary font-weight-normal'>Оплачено</div>
+                                                </div>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>
+                                                <div class='col-9'>
+                                                    <div class='h6 text-primary font-weight-normal'>Прийнято</div>
+                                                </div>
+                                                <div class='col-3'>
+                                                    <div class='h6 font-weight-normal'>20:02</div>
+                                                </div>
+                                                <div class='col-9'>
+                                                    <div class='h6 text-body font-weight-normal'>Обробка оператором</div>
+                                                </div>
+                                            </div>">
+                                            Історія
+                                            <img id="status_img" height="16" src="/icons/chevron-down.svg">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                        <div class="card-body">
+                            <div class="card mb-lg-3 mb-3">
+                                <div class="card-body row">
+                                    <div class="col-lg-1 pr-0">
+                                        <a href="product.php?id=7">
+                                            <img src="/Store_photos/ForHands5L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-11">
+                                        <div class="container pr-0 pl-1" style="min-height:60px">
+                                            <div class="row" style="min-height:25%">
+                                                <div class="col-lg-12">
+                                                    <a style="font-size:20px;" href="product.php?id=7">ГУАНПОЛІСЕПТ Антисептик для рук | 5 л</a>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center" style="min-height:40px;">
+                                                <div class="col-lg-8">
+                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
+                                                    <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">480 ₴</div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">3 шт.</div>
+                                                </div>
+                                                <div class="col-lg-2 pl-0">
+                                                    <div class="rounded-xl h5 mb-0 float-lg-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">1440 ₴</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-sm-3 mb-3">
+                                <div class="card-body row">
+                                    <div class="col-sm-1 pr-0">
+                                        <a href="product.php?id=13">
+                                            <img src="/Store_photos/ForPools1L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-11">
+                                        <div class="container pr-0 pl-1" style="min-height:60px">
+                                            <div class="row" style="min-height:25%">
+                                                <div class="col-sm-12">
+                                                    <a style="font-size:20px;" href="product.php?id=13">Дезінфекційний засіб "Гуанполісепт" для ран опіків (Гель-пов`язка) 9х10 | 1 шт.</a>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center" style="min-height: 40px;">
+                                                <div class="col-lg-8 col-md-6 col-sm-6">
+                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
+                                                    <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">5555 ₴</div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-3 col-sm-2">
+                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">100 шт.</div>
+                                                </div>
+                                                <div class="col-lg-2 pl-0 col-md-3 col-sm-4">
+                                                    <div class="rounded-xl h5 mb-0 float-lg-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">555500 ₴</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
         </main>
         <!--Main layout-->
@@ -380,6 +539,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         <!-- Script for submitting form -->
         <script type="text/javascript">
             $("[data-toggle=tooltip]").tooltip();
+            $('[data-toggle="popover"]').popover();
 
             function activateInput(input) {
                 document.getElementById("changeUserDataDismissButton").hidden = false;

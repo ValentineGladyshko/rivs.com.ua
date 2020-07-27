@@ -12,6 +12,18 @@
       }
     };
 
+    function chevronToggle(img, button) {
+      if (button.classList.contains("chevron-down")) {
+        button.classList.add("chevron-up");
+        button.classList.remove("chevron-down");
+        img.src = "/icons/chevron-up.svg"
+      } else {
+        button.classList.add("chevron-down");
+        button.classList.remove("chevron-up");
+        img.src = "/icons/chevron-down.svg"
+      }
+    };
+
     function sumTotalPriceOfCart() {
       var totalCartPrice = 0;
       document.getElementsByName('item_total_price').forEach((el) => {
