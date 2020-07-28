@@ -88,7 +88,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             while ($stmt->fetch()) {
                 $order = new stdClass();
                 $order->orderId = $orderId;
-                $order->date = $date;
+                $date = new DateTime($date);
+                $order->date = $date->format('d/m/Y H:i');
+                $order->totalPrice = 0;
                 if (array_key_exists($orderId, $orders)) {
                     $order = $orders[$orderId];
                 }
@@ -99,7 +101,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 $item->price = $price;
                 $item->productName = $productName;
                 $item->image = $image;
+                $item->totalPrice = $price * $count;
 
+                $order->totalPrice += $item->totalPrice;
                 $order->items[] = $item;
 
                 $orders[$orderId] = $order;
@@ -123,15 +127,176 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     $item = new stdClass();
                     $item->statusId = $statusId;
                     $item->statusName = $statusName;
-                    $item->date = $date;
+                    $date = new DateTime($date);
+                    $item->time = $date->format('H:i');
 
-                    $orders[$key]->statuses[] = $item;
+                    $orders[$key]->statuses[$date->format('d/m/Y')][] = $item;
                 }
-                $orders[$key]->status = $orders[$key]->statuses[0];
+                foreach ($orders[$key]->statuses as $statusDate => $statusValue) {
+                    $orders[$key]->status = $statusValue[0];
+                    break;
+                }
             }
             $stmt->close();
         }
-        if (1 == true) {
+        $order_html = '';
+        foreach ($orders as $orderKey => $order) {
+
+            $order_header = '';
+            $order_items = '';
+            $order_statuses = '';
+
+            foreach ($order->items as $item) {
+                $order_header .= sprintf(
+                    '<a href="product.php?id=%1$s" class="mx-2">
+                            <img src="/%2$s" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                         </a>',
+                    $item->priceListID,
+                    $item->image
+                );
+                $order_items .= sprintf(
+                    '<div class="card mb-sm-3 mb-3">
+                            <div class="card-body row">
+                                <div class="col-sm-1 pr-0">
+                                    <a href="product.php?id=%1$s">
+                                        <img src="/%2$s" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-sm-11">
+                                    <div class="container pr-0 pl-1" style="min-height:60px">
+                                        <div class="row" style="min-height:25%%">
+                                            <div class="col-sm-12">
+                                                <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center" style="min-height: 40px;">
+                                            <div class="col-lg-8 col-md-6 col-sm-6">
+                                                <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
+                                                <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%4$s ₴</div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-2">
+                                                <div class="h5 mb-0 float-left" style="padding: 8 14 8 0;">%5$s шт.</div>
+                                            </div>
+                                            <div class="col-lg-2 pl-0 col-md-3 col-sm-4">
+                                                <div class="rounded-xl h5 mb-0 float-sm-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">%6$s ₴</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>',
+                    $item->priceListID,
+                    $item->image,
+                    $item->productName,
+                    $item->price,
+                    $item->count,
+                    $item->totalPrice
+                );
+            };
+
+            foreach ($order->statuses as $statusDate => $statusValue) {
+                $order_statuses .= sprintf(
+                    '<div class=%2$scol-12%2$s>
+                            <hr class=%2$ssolid mt-2 mb-2%2$s>
+                            <div class=%2$sh6%2$s>%1$s</div>
+                            <hr class=%2$ssolid mt-0 mb-2%2$s>
+                        </div>',
+                    $statusDate,
+                    "'"
+                );
+
+                foreach ($statusValue as $status) {
+                    $order_statuses .= sprintf(
+                        '<div class=%4$scol-3%4$s>
+                                <div class=%4$sh6 font-weight-normal%4$s>%1$s</div>
+                            </div>
+                            <div class=%4$scol-9%4$s>
+                                <div class=%4$sh6 %2$s font-weight-normal%4$s>%3$s</div>
+                            </div>',
+                        $status->time,
+                        text_status_color($status->statusId),
+                        $status->statusName,
+                        "'"
+                    );
+                }
+            };
+            $order_html .= sprintf(
+                '<div class="card mt-4">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-6 col-sm-7">
+                                    <div class="row align-items-center">
+                                        <div class="col-6">
+                                            <button id="order_button_%1$s" onclick="chevronToggle(document.getElementById(`order_img_%1$s`), 
+                                                document.getElementById(`order_button_%1$s`))" class="btn btn-link chevron-down p-0" 
+                                                style="font-weight: 500; font-size: 18px;" type="button" data-toggle="collapse" 
+                                                data-target="#order_collapse_%1$s" aria-expanded="true" aria-controls="order_collapse_%1$s">
+                                                <img id="order_img_%1$s" height="18" src="/icons/chevron-down.svg">
+                                                №%1$s
+                                            </button>
+                                        </div>
+                                        <div class="col-6 px-0">
+                                            <h6 class="mb-0">
+                                                %2$s
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 col-sm-5 border-lg-right">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-9 col-md-8 col-sm-6">
+                                            <div class="row">
+                                                %3$s
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6 pl-0 pr-2">
+                                            <div class="float-right h6 mb-0">
+                                                %4$s ₴
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12 mt-3 mt-lg-0 border-lg-top">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-7 col-md-10 col-sm-9 col-7">
+                                            <div class="%5$s float-sm-right float-lg-left">%6$s</div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-2 col-sm-3 col-5 p-0">
+                                            <button id="status_button_%1$s" onclick="chevronToggle(document.getElementById(`status_img_%1$s`), 
+                                                document.getElementById(`status_button_%1$s`))" class="btn btn-link pl-0 chevron-down float-sm-right" 
+                                                style="font-weight: 500;" type="button" data-toggle="popover" title="Історія замовлення" data-html="true" 
+                                                data-placement="bottom" data-content="<div class=%9$srow%9$s>%7$s</div>">
+                                                Історія
+                                                <img id="status_img_%1$s" height="16" src="/icons/chevron-down.svg">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="order_collapse_%1$s" class="collapse">
+                            <div class="card-body">
+                                %8$s
+                                <div class="row">
+                                    <div class="col-md-12" style="padding: 8 36 8 8;">
+                                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%4$s ₴</div>
+                                        <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>',
+                sprintf("%06d", $order->orderId),
+                $order->date,
+                $order_header,
+                $order->totalPrice,
+                text_status_color($order->status->statusId),
+                $order->status->statusName,
+                $order_statuses,
+                $order_items,
+                "'"
+            );
         }
     }
 ?>
@@ -345,167 +510,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 <hr>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити аккаунт</button>
                 <hr>
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <div class="row align-items-center">
-                            <div class="col-lg-4 col-md-6 col-sm-7">
-                                <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <button id="order_button" onclick="chevronToggle(document.getElementById('order_img'), document.getElementById('order_button'))" class="btn btn-link chevron-down p-0" style="font-weight: 500; font-size: 18px;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <img id="order_img" height="18" src="/icons/chevron-down.svg">
-                                            №000001
-                                        </button>
-                                    </div>
-                                    <div class="col-6 px-0">
-                                        <h6 class="mb-0">
-                                            21/06/2020 20:02
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-md-6 col-sm-5">
-                                <div class="row">
-                                    <a href="product.php?id=1" class="mx-2">
-                                        <img src="/Store_photos/ForHands0.15L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
-                                    </a>
-                                    <a href="product.php?id=4" class="mx-2">
-                                        <img src="/Store_photos/ForHands0.1L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
-                                    </a>
-                                    <a href="product.php?id=8" class="mx-2">
-                                        <img src="/Store_photos/ForHands10L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-12 mt-3 mt-lg-0 border-lg-left border-lg-top">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-7 col-md-10 col-sm-9 col-7">
-                                        <div class="text-body float-sm-right">Обробка оператором</div>
-                                    </div>
-                                    <div class="col-lg-5 col-md-2 col-sm-3 col-5 p-0">
-                                        <button id="status_button" onclick="chevronToggle(document.getElementById('status_img'), document.getElementById('status_button'))" class="btn btn-link pl-0 chevron-down float-sm-right" style="font-weight: 500;" type="button" data-toggle="popover" title="Popover title" data-html="true" data-placement="bottom" data-content="<div class='row'>
-                                                <div class='col-12'>
-                                                    <div class='h6'>26/07/2020</div>
-                                                    <hr class='solid mt-0'>
-                                                </div>
-                                                <div class='divider'></div>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>
-                                                <div class='col-9'>
-                                                    <div class='h6 text-danger font-weight-normal'>Відмінено</div>
-                                                </div>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>
-                                                <div class='col-9'>
-                                                    <div class='h6 text-success font-weight-normal'>Виконано</div>
-                                                </div>
-                                                <div class='col-12'>
-                                                    <div class='h6'>25/07/2020</div>
-                                                    <hr class='solid mt-0'>
-                                                </div>
-                                                <hr/>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>                                                
-                                                <div class='col-9'>
-                                                    <div class='h6 text-info font-weight-normal'>Очікує в пункті видачі</div>
-                                                </div>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>
-                                                <div class='col-9'>
-                                                    <div class='h6 text-primary font-weight-normal'>Оплачено</div>
-                                                </div>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>
-                                                <div class='col-9'>
-                                                    <div class='h6 text-primary font-weight-normal'>Прийнято</div>
-                                                </div>
-                                                <div class='col-3'>
-                                                    <div class='h6 font-weight-normal'>20:02</div>
-                                                </div>
-                                                <div class='col-9'>
-                                                    <div class='h6 text-body font-weight-normal'>Обробка оператором</div>
-                                                </div>
-                                            </div>">
-                                            Історія
-                                            <img id="status_img" height="16" src="/icons/chevron-down.svg">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-                        <div class="card-body">
-                            <div class="card mb-lg-3 mb-3">
-                                <div class="card-body row">
-                                    <div class="col-lg-1 pr-0">
-                                        <a href="product.php?id=7">
-                                            <img src="/Store_photos/ForHands5L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-11">
-                                        <div class="container pr-0 pl-1" style="min-height:60px">
-                                            <div class="row" style="min-height:25%">
-                                                <div class="col-lg-12">
-                                                    <a style="font-size:20px;" href="product.php?id=7">ГУАНПОЛІСЕПТ Антисептик для рук | 5 л</a>
-                                                </div>
-                                            </div>
-                                            <div class="row align-items-center" style="min-height:40px;">
-                                                <div class="col-lg-8">
-                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
-                                                    <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">480 ₴</div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">3 шт.</div>
-                                                </div>
-                                                <div class="col-lg-2 pl-0">
-                                                    <div class="rounded-xl h5 mb-0 float-lg-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">1440 ₴</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-sm-3 mb-3">
-                                <div class="card-body row">
-                                    <div class="col-sm-1 pr-0">
-                                        <a href="product.php?id=13">
-                                            <img src="/Store_photos/ForPools1L.png" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-11">
-                                        <div class="container pr-0 pl-1" style="min-height:60px">
-                                            <div class="row" style="min-height:25%">
-                                                <div class="col-sm-12">
-                                                    <a style="font-size:20px;" href="product.php?id=13">Дезінфекційний засіб "Гуанполісепт" для ран опіків (Гель-пов`язка) 9х10 | 1 шт.</a>
-                                                </div>
-                                            </div>
-                                            <div class="row align-items-center" style="min-height: 40px;">
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
-                                                    <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">5555 ₴</div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-sm-2">
-                                                    <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">100 шт.</div>
-                                                </div>
-                                                <div class="col-lg-2 pl-0 col-md-3 col-sm-4">
-                                                    <div class="rounded-xl h5 mb-0 float-lg-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">555500 ₴</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <?php echo $order_html; ?>
         </main>
         <!--Main layout-->
 

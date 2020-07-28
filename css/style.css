@@ -125,13 +125,13 @@
 	text-transform: uppercase;
 }
 
-.border-lg-left {
-	border-left: 2px solid #606060!important;
+.border-lg-right {
+	border-right: 2px solid #606060!important;
 }
 
 @media (max-width: 991px) {
-	.border-lg-left {
-		border-left: 0px!important;
+	.border-lg-right {
+		border-right: 0px!important;
 	}
 
 	.border-lg-top {

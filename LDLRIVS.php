@@ -73,9 +73,7 @@ function get_cart_button_html($email, $is_authorized)
         count($cart)
       );
       return $cart_button_html != '' ? $cart_button_html : $empty_cart_button_html;
-    }
-    else
-    {
+    } else {
       return $empty_cart_button_html;
     }
   }
@@ -417,6 +415,25 @@ function store($query)
   }
   $mysqli->close();
   return $html;
+}
+
+function text_status_color($statusId)
+{
+  if ($statusId == 1) {
+    return "text-body";
+  } elseif ($statusId == 2) {
+    return "text-primary";
+  } elseif ($statusId == 3) {
+    return "text-primary";
+  } elseif ($statusId == 4) {
+    return "text-info";
+  } elseif ($statusId == 5) {
+    return "text-success";
+  } elseif ($statusId == 6) {
+    return "text-danger";
+  } else {
+    return "text-body";
+  }
 }
 
 function empty_or_html($var)
