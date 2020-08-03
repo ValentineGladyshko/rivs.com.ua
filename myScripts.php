@@ -178,6 +178,9 @@
     };
 
     function productBuyButton(itemId, itemPrice, itemCount, itemImage, verificationToken) {
+      document.getElementById("productBuyButtonSpinner").classList.add("spinner-border");
+      document.getElementById("productBuyButton").disabled = true;
+
       formData = {
         'verification_token': verificationToken,
         'pricelistID': itemId,
@@ -190,6 +193,8 @@
         success: function(response) {
           if (response != null) {
 
+            document.getElementById("productBuyButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("productBuyButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {
@@ -467,6 +472,8 @@
     var loginForm = $('#loginForm');
     loginForm.submit(function(e) {
 
+      document.getElementById("loginButtonSpinner").classList.add("spinner-border");
+      document.getElementById("loginButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("login_verification_token").value,
@@ -483,6 +490,8 @@
         success: function(response) {
           if (response != null) {
 
+            document.getElementById("loginButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("loginButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
 
@@ -509,7 +518,8 @@
 
     var registerForm = $('#registerForm');
     registerForm.submit(function(e) {
-
+      document.getElementById("registerButtonSpinner").classList.add("spinner-border");
+      document.getElementById("registerButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("register_verification_token").value,
@@ -527,6 +537,8 @@
         success: function(response) {
           if (response != null) {
 
+            document.getElementById("registerButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("registerButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
 
@@ -560,6 +572,8 @@
     var registerConfirmationForm = $('#registerConfirmationForm');
     registerConfirmationForm.submit(function(e) {
 
+      document.getElementById("registerConfirmationButtonSpinner").classList.add("spinner-border");
+      document.getElementById("registerConfirmationButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("register_confirmation_verification_token").value,
@@ -580,12 +594,15 @@
         data: formData,
         success: function(response) {
           if (response != null) {
+
+            document.getElementById("registerConfirmationButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("registerConfirmationButton").disabled = false;
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {
               location.reload();
 
             } else {
-              var send_code = document.getElementById("register_confirmation_send_code");
+              var send_code = document.getElementById("registerConfirmationSendCodeButton");
               var email_code = document.getElementById("register_confirmation_email_code");
               var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
 
@@ -617,6 +634,8 @@
     var rememberForm = $('#rememberForm');
     rememberForm.submit(function(e) {
 
+      document.getElementById("rememberButtonSpinner").classList.add("spinner-border");
+      document.getElementById("rememberButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("remember_verification_token").value,
@@ -632,6 +651,8 @@
         success: function(response) {
           if (response != null) {
 
+            document.getElementById("rememberButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("rememberButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
 
@@ -657,6 +678,8 @@
     var resetPasswordForm = $('#resetPasswordForm');
     resetPasswordForm.submit(function(e) {
 
+      document.getElementById("resetPasswordButtonSpinner").classList.add("spinner-border");
+      document.getElementById("resetPasswordButtonButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("reset_password_verification_token").value,
@@ -675,6 +698,8 @@
         success: function(response) {
           if (response != null) {
 
+            document.getElementById("resetPasswordButtonSpinner").classList.remove("spinner-border");
+            document.getElementById("resetPasswordButtonButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
 
@@ -767,9 +792,11 @@
 
     // send code button
     $(document).ready(function() {
-      $("#register_confirmation_send_code").click(
+      $("#registerConfirmationSendCodeButton").click(
         function(e) {
 
+          document.getElementById("registerConfirmationSendCodeButtonSpinner").classList.add("spinner-border");
+          document.getElementById("registerConfirmationSendCodeButton").disabled = true;
           // give data from form
           formData = {
             'verification_token': document.getElementById("register_confirmation_verification_token").value,
@@ -785,9 +812,11 @@
             url: "functions/registerStart.php",
             data: formData,
             success: function(data) {
-              var send_code = document.getElementById("register_confirmation_send_code");
+              var send_code = document.getElementById("registerConfirmationSendCodeButton");
               var email_code = document.getElementById("register_confirmation_email_code");
               var email_code_feedback = document.getElementById("register_confirmation_email_code_feedback");
+              send_code.classList.remove("spinner-border");
+              document.getElementById("registerConfirmationSendCodeButton").disabled = false;
               send_code.hidden = true;
               email_code.classList.remove('is-invalid');
               email_code.value = "";

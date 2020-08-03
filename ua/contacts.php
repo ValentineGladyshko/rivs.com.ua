@@ -104,7 +104,7 @@ $_SESSION['verification_token'] = $verification_token;
               <!--Grid row-->
 
               <div class="center-on-small-only">
-                <button style="margin-top:10px" type="submit" class="btn btn-dark btn-lg">Надіслати</a>
+                <button id="sendButton" style="margin-top:10px" type="submit" class="btn btn-dark btn-lg"><span id="sendButtonSpinner" style="width: 20px; height: 20px;"></span>Надіслати</a>
               </div>
               <div style="margin-top:10px" id="status"></div>
             </form>
@@ -182,6 +182,8 @@ $_SESSION['verification_token'] = $verification_token;
 
     form.submit(function(e) {
 
+      document.getElementById("sendButtonSpinner").classList.add("spinner-border");
+      document.getElementById("sendButton").disabled = true;
       // data for request
       formData = {
         'name': $document.getElementById("name").value,
@@ -198,6 +200,10 @@ $_SESSION['verification_token'] = $verification_token;
         type: "POST",
         success: function(response) {
           if (response != null) {
+
+            document.getElementById("sendButtonSpinner").classList.add("spinner-border");
+            document.getElementById("sendButton").disabled = true;
+
             // parsing response from back-end
             var jsonData = JSON.parse(response);
 

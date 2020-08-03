@@ -390,34 +390,33 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
 // function for making db query
 function store($query)
 {
+  $html = '';
   $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
   if ($mysqli->connect_errno) {
     exit();
   }
   $mysqli->set_charset("utf8");
   if ($result = mysqli_query($mysqli, $query)) {
-    $html = '';
     while ($row = $result->fetch_assoc()) {
       $html .= sprintf(
         '<div class="col-lg-4 col-md-6 mb-md-3 mb-3">
             <div class="card" style="height:100%%;">
               <div class="view overlay zoom">
-                <a href="product.php?id=%s">
-                  <img class="img-fluid mx-auto" src="/%s" style="max-height: 400px; padding:20px" alt="">
+                <a href="product.php?id=%1$s">
+                  <img class="img-fluid mx-auto" src="/%2$s" style="max-height: 400px; padding:20px" alt="">
                 </a>
               </div>
               <div class="card-body text-center">
-                <h5 class="card-title">%s</h5>%s
+                <h5 class="card-title">%3$s</h5>%4$s
               </div>
-              <a href="product.php?id=%s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%s
+              <a href="product.php?id=%1$s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%5$s
             </div>
           </div>',
         $row['PriceListID'],
-        $row['Image'],
+        $row['Image'],       
         $row['ProductName'],
         (($row['Price'] != 0) ?
           ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
-        $row['PriceListID'],
         (($row['ProductAvailability'] == 0) ?
           ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає в наявності</a>') : '')
       );
@@ -497,7 +496,8 @@ function product($query, $id, $verification_token)
       if ($product_availability == 1) {
         $html .= sprintf(
           '<div class="text-center">
-              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%1$s`, `%2$s`, 1, `%3$s`, `%4$s`)" style="width:200px">
+              <button id="productBuyButton" type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%1$s`, `%2$s`, 1, `%3$s`, `%4$s`)" style="width:200px">
+                <span id="productBuyButtonSpinner" style="width: 28px; height: 28px;"></span>
                 <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
                   <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
