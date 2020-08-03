@@ -24,12 +24,33 @@
       }
     };
 
+    function pennyPriceToViewPrice(pennyPrice) {
+      pennyPrice = pennyPrice.toString();
+      return pennyPrice.substring(0, pennyPrice.length - 2) + "." + pennyPrice.substring(pennyPrice.length - 2, pennyPrice.length) + " ₴";
+    }
+
+    function viewPriceToPennyPrice(viewPrice) {
+      viewPrice = viewPrice.toString();
+      return viewPrice.substring(0, viewPrice.length - 5) + viewPrice.substring(viewPrice.length - 4, viewPrice.length - 2);
+    }
+
+    function pennyPriceToNormalPrice(pennyPrice) {
+      pennyPrice = pennyPrice.toString();
+      return pennyPrice.substring(0, pennyPrice.length - 2) + "." + pennyPrice.substring(pennyPrice.length - 2, pennyPrice.length);
+    }
+
+    function normalPriceToPennyPrice(normalPrice) {
+      normalPrice = normalPrice.toString();
+      return Number(normalPrice.substring(0, normalPrice.length - 3) + normalPrice.substring(normalPrice.length - 2, normalPrice.length));
+    }
+
     function sumTotalPriceOfCart() {
       var totalCartPrice = 0;
       document.getElementsByName('item_total_price').forEach((el) => {
-        totalCartPrice += Number(el.innerText.substring(0, el.innerText.length - 2))
+        totalCartPrice += Number(viewPriceToPennyPrice(el.innerText));
       });
-      document.getElementById("cart_total_price").innerHTML = totalCartPrice + " ₴";
+      var str = pennyPriceToViewPrice(totalCartPrice.toString());
+      document.getElementById("cart_total_price").innerHTML = pennyPriceToViewPrice(totalCartPrice.toString());
     };
 
     function changeItemButtons(item) {
@@ -53,7 +74,7 @@
     function cartItemPlus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
 
       itemCount.value++;
-      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      itemTotalPrice.innerHTML = pennyPriceToViewPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString());
       changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
@@ -73,7 +94,7 @@
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
-              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+              itemTotalPrice.innerHTML = pennyPriceToViewPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString());
             }
             changeItemButtons(itemCount);
             sumTotalPriceOfCart();
@@ -88,7 +109,7 @@
 
     function cartItemMinus(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
       itemCount.value--;
-      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      itemTotalPrice.innerHTML = pennyPriceToViewPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString());
       changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
@@ -108,7 +129,7 @@
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
-              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+              itemTotalPrice.innerHTML = pennyPriceToViewPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString());
             }
             changeItemButtons(itemCount);
             sumTotalPriceOfCart();
@@ -123,7 +144,7 @@
 
     function cartCountInputChange(itemId, itemPrice, itemCount, itemTotalPrice, verificationToken) {
 
-      itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+      itemTotalPrice.innerHTML = pennyPriceToViewPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString());
       changeItemButtons(itemCount);
       sumTotalPriceOfCart();
 
@@ -143,7 +164,7 @@
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {} else {
               itemCount.value = jsonData.count;
-              itemTotalPrice.innerHTML = ((itemCount.value * itemPrice) + " ₴");
+              itemTotalPrice.innerHTML = (pennyPriceToNormalPrice((itemCount.value * normalPriceToPennyPrice(itemPrice)).toString()) + " ₴");
             }
             changeItemButtons(itemCount);
             sumTotalPriceOfCart();
@@ -172,7 +193,7 @@
             // parse response from server
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {
-              cartTotalPrice = (itemCount * Number(itemPrice));
+              cartTotalPrice = (pennyPriceToNormalPrice(itemCount * normalPriceToPennyPrice(itemPrice)).toString());
               const itemHTML =
                 `<div class="card mb-md-3 mb-3" id="item_card_${itemId}">
                   <div class="card-body row">
@@ -204,7 +225,7 @@
                           <div class="col-md-4">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, ${itemPrice}, 
+                                <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, '${itemPrice}', 
                                 document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
                                   <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z"/>
@@ -212,9 +233,9 @@
                                 </button>
                               </div>
                               <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" min="1" max="999"
-                                oninput="cartCountInputChange(${itemId}, ${itemPrice}, document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
+                                oninput="cartCountInputChange(${itemId}, '${itemPrice}', document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
                               <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, ${itemPrice}, 
+                                <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, '${itemPrice}', 
                                   document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
                                   <svg width="26px" height="26px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
@@ -260,7 +281,7 @@
                     <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="checkoutCart('${verificationToken}', true)">Оформити замовлення</button>
                   </div>
                   </div>
-                  </div>`
+                  </div>`;
                 document.getElementById('cartModal').innerHTML = (cartStartHTML + itemHTML + cartEndHTML);
               } else {
                 document.getElementById('cartContent').insertAdjacentHTML('beforeend', itemHTML);

@@ -188,9 +188,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     $item->priceListID,
                     $item->image,
                     $item->productName,
-                    $item->price,
+                    penny_price_to_normal_price($item->price),
                     $item->count,
-                    $item->totalPrice
+                    penny_price_to_normal_price($item->totalPrice)
                 );
             };
 
@@ -290,7 +290,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 sprintf("%06d", $order->orderId),
                 $order->date,
                 $order_header,
-                $order->totalPrice,
+                penny_price_to_normal_price($order->totalPrice),
                 text_status_color($order->status->statusId),
                 $order->status->statusName,
                 $order_statuses,

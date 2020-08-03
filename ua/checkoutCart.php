@@ -260,9 +260,9 @@ foreach ($cart_items as $item) {
         $item["pricelistID"],
         $item["image"],
         $item["product_name"],
-        $item["price"],
+        penny_price_to_normal_price($item["price"]),
         $item["count"],
-        $item["total_count"]
+        penny_price_to_normal_price($item["total_count"])
     );
 }
 
@@ -273,7 +273,7 @@ $cart_modal_html .= sprintf(
             <div class="h2 mb-0 font-weight-normal" style=" padding: 8 14 8 14; float:right;">Разом:</div>
         </div>
     </div>',
-    $cart_price
+    penny_price_to_normal_price($cart_price)
 );
 
 
@@ -320,7 +320,8 @@ $cart_modal_html .= sprintf(
 
                 <? echo $cart_modal_html ?>
                 <button id="checkoutDismissButton" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
-                <button id="checkoutSubmitButton" type="submit" class="btn btn-dark m-1">Підтвердити замовлення</button>
+                <button id="checkoutSubmitButton" type="submit" class="btn btn-dark m-1"><span id="checkoutSubmitButtonSpinner" style="width: 20px; height: 20px;"></span>
+                    Підтвердити замовлення</button>
             </div>
         </form>
 
@@ -358,6 +359,8 @@ $cart_modal_html .= sprintf(
             };
             e.preventDefault();
 
+            document.getElementById("checkoutSubmitButtonSpinner").classList.add("spinner-border");
+            document.getElementById("checkoutSubmitButton").disabled = true;
             // ajax request
             $.ajax({
                 type: "POST",
@@ -365,6 +368,9 @@ $cart_modal_html .= sprintf(
                 data: formData,
                 success: function(response) {
                     if (response != null) {
+
+                        document.getElementById("checkoutSubmitButtonSpinner").classList.remove("spinner-border");
+                        document.getElementById("checkoutSubmitButton").disabled = false;
 
                         // parse response from server
                         var jsonData = JSON.parse(response);

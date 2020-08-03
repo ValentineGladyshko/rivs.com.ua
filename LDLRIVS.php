@@ -79,6 +79,19 @@ function get_cart_button_html($email, $is_authorized)
   }
 }
 
+function penny_price_to_normal_price($penny_price)
+{
+  if ($penny_price < 100) {
+    $normal_price = sprintf("%03d", $penny_price);
+    $str = substr_replace($normal_price, '.', (strlen($normal_price) - 2), 0);
+    return $str;
+  } else {
+    $normal_price = sprintf("%d", $penny_price);
+    $str = substr_replace($normal_price, '.', (strlen($normal_price) - 2), 0);
+    return $str;
+  }
+}
+
 // function to get cart modal
 function get_cart_modal_html($email, $is_authorized, $verification_token)
 {
@@ -212,9 +225,9 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
               $pricelistID,
               $image,
               $product_name,
-              $price,
+              penny_price_to_normal_price($price),
               $count,
-              ($count * $price),
+              penny_price_to_normal_price($count * $price),
               $verification_token
             );
           }
@@ -237,7 +250,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
             </div>
           </div>
         </div>',
-        $cart_price,
+        penny_price_to_normal_price($cart_price),
         $verification_token
       );
     }
@@ -339,9 +352,9 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
               $pricelistID,
               $image,
               $product_name,
-              $price,
+              penny_price_to_normal_price($price),
               $count,
-              ($count * $price),
+              penny_price_to_normal_price($count * $price),
               $verification_token
             );
           }
@@ -364,7 +377,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
             </div>
           </div>
         </div>',
-        $cart_price,
+        penny_price_to_normal_price($cart_price),
         $verification_token
       );
       return $cart_modal_html != '' ? $cart_modal_html : $empty_cart_modal_html;
@@ -404,7 +417,7 @@ function store($query)
           $row['Image'],
           $row['ProductName'],
           (($row['Price'] != 0) ?
-            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . $row['Price'] . ' ₴</b>') : ''),
+            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
           $row['PriceListID'],
           (($row['ProductAvailability'] == 0) ?
             ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>') : '')
@@ -495,7 +508,7 @@ function product($query, $id, $verification_token)
             %4$s%5$s%6$s%7$s%8$s%9$s%10$s%11$s%12%s
             <div class="text-justify w-responsive mx-auto mb-5">%13$s</div>',
           $image,
-          (($price != 0) ? ('<b>Ціна – ' . $price . ' ₴</b>') : ''),
+          (($price != 0) ? ('<b>Ціна – ' . penny_price_to_normal_price($price) . ' ₴</b>') : ''),
           $product_name,
           empty_or_html($appointment),
           empty_or_html($properties),
@@ -509,7 +522,7 @@ function product($query, $id, $verification_token)
           $info,
           $id,
           $verification_token,
-          $price
+          penny_price_to_normal_price($price)
         );
       }
     }
