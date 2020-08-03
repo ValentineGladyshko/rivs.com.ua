@@ -398,9 +398,8 @@ function store($query)
   if ($result = mysqli_query($mysqli, $query)) {
     $html = '';
     while ($row = $result->fetch_assoc()) {
-      if ($row['Image'] != null) {
-        $html .= sprintf(
-          '<div class="col-lg-4 col-md-6 mb-md-3 mb-3">
+      $html .= sprintf(
+        '<div class="col-lg-4 col-md-6 mb-md-3 mb-3">
             <div class="card" style="height:100%%;">
               <div class="view overlay zoom">
                 <a href="product.php?id=%s">
@@ -413,16 +412,15 @@ function store($query)
               <a href="product.php?id=%s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%s
             </div>
           </div>',
-          $row['PriceListID'],
-          $row['Image'],
-          $row['ProductName'],
-          (($row['Price'] != 0) ?
-            ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
-          $row['PriceListID'],
-          (($row['ProductAvailability'] == 0) ?
-            ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає тари</a>') : '')
-        );
-      }
+        $row['PriceListID'],
+        $row['Image'],
+        $row['ProductName'],
+        (($row['Price'] != 0) ?
+          ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
+        $row['PriceListID'],
+        (($row['ProductAvailability'] == 0) ?
+          ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає в наявності</a>') : '')
+      );
     }
     $result->close();
   }
@@ -479,52 +477,60 @@ function product($query, $id, $verification_token)
       $storage_conditions,
       $expiration_date,
       $manufacturer,
-      $info
+      $info,
+      $product_availability
     );
     if ($stmt->fetch()) {
-      $html = '';
-      if ($image != null) {
-        $html .= sprintf(
-          '<div class="col-md-4">
+
+      $html = sprintf(
+        '<div class="col-md-4">
             <div class="text-center">
               <img src="/%1$s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
             </div>
             <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
               <p>Замовити можна по телефону</p>
               <p>%2$s</p>
-            </div>
-            <div class="text-center">
-              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%14$s`, `%16$s`, 1, `%1$s`, `%15$s`)" style="width:200px">
+            </div>',
+        $image,
+        (($price != 0) ? ('<b>Ціна – ' . penny_price_to_normal_price($price) . ' ₴</b>') : '')
+      );
+      if ($product_availability == 1) {
+        $html .= sprintf(
+          '<div class="text-center">
+              <button type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%1$s`, `%2$s`, 1, `%3$s`, `%4$s`)" style="width:200px">
                 <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
                   <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
                   <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                 </svg> Придбати
               </button>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <h2 class="h1-responsive font-weight-bold text-center my-4">%3$s</h2>
-            %4$s%5$s%6$s%7$s%8$s%9$s%10$s%11$s%12%s
-            <div class="text-justify w-responsive mx-auto mb-5">%13$s</div>',
-          $image,
-          (($price != 0) ? ('<b>Ціна – ' . penny_price_to_normal_price($price) . ' ₴</b>') : ''),
-          $product_name,
-          empty_or_html($appointment),
-          empty_or_html($properties),
-          empty_or_html($structure),
-          empty_or_html($application_method),
-          empty_or_html($contraindications),
-          empty_or_html($warnings),
-          empty_or_html($storage_conditions),
-          empty_or_html($expiration_date),
-          empty_or_html($manufacturer),
-          $info,
+            </div>',
           $id,
-          $verification_token,
-          penny_price_to_normal_price($price)
+          penny_price_to_normal_price($price),
+          $image,
+          $verification_token
         );
       }
+
+      $html .= sprintf(
+        '</div>
+        <div class="col-md-8">
+          <h2 class="h1-responsive font-weight-bold text-center my-4">%1$s</h2>
+          %2$s%3$s%4$s%5$s%6$s%7$s%8$s%9$s%10$s
+          <div class="text-justify w-responsive mx-auto mb-5">%11$s</div>
+        </div>',
+        $product_name,
+        empty_or_html($appointment),
+        empty_or_html($properties),
+        empty_or_html($structure),
+        empty_or_html($application_method),
+        empty_or_html($contraindications),
+        empty_or_html($warnings),
+        empty_or_html($storage_conditions),
+        empty_or_html($expiration_date),
+        empty_or_html($manufacturer),
+        $info
+      );
     }
     $stmt->close();
   }
