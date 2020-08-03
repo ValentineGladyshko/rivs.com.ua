@@ -116,7 +116,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button type="submit" class="btn btn-dark">Підтвердити</button>
+                        <button id="loginButton" type="submit" class="btn btn-dark"><span id="loginButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
                     </div>
                 </div>
             </form>
@@ -168,7 +168,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button type="submit" class="btn btn-dark">Підтвердити</button>
+                        <button id="registerButton" type="submit" class="btn btn-dark"><span id="registerButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
                     </div>
                 </div>
             </form>
@@ -238,8 +238,8 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="register_confirmation_send_code" hidden="true" class="btn btn-dark">Відправити код повторно</button>
-                        <button type="submit" class="btn btn-dark">Підтвердити</button>
+                        <button id="registerConfirmationSendCodeButton" hidden="true" class="btn btn-dark"><span id="registerConfirmationSendCodeButtonSpinner" style="width: 20px; height: 20px;"></span>Відправити код повторно</button>
+                        <button id="registerConfirmationButton" type="submit" class="btn btn-dark"><span id="registerConfirmationButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
                     </div>
                 </div>
             </form>
@@ -267,7 +267,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button type="submit" class="btn btn-dark">Надіслати код</button>
+                        <button id="rememberButton" type="submit" class="btn btn-dark"><span id="rememberButtonSpinner" style="width: 20px; height: 20px;"></span>Надіслати код</button>
                     </div>
                 </div>
             </form>
@@ -320,7 +320,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button type="submit" class="btn btn-dark">Підтвердити</button>
+                        <button id="resetPasswordButton" type="submit" class="btn btn-dark"><span id="resetPasswordButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
                     </div>
                 </div>
             </form>

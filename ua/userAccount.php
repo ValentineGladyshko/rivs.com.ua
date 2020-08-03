@@ -168,14 +168,14 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                             </div>
                                         </div>
                                         <div class="row align-items-center" style="min-height: 40px;">
-                                            <div class="col-lg-8 col-md-6 col-sm-6">
+                                            <div class="pr-0 col-xl-8 col-lg-7 col-sm-6">
                                                 <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
                                                 <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%4$s ₴</div>
                                             </div>
-                                            <div class="col-lg-2 col-md-3 col-sm-2">
-                                                <div class="h5 mb-0 float-left" style="padding: 8 14 8 0;">%5$s шт.</div>
+                                            <div class="px-0 col-lg-2 col-sm-2">
+                                                <div class="h5 mb-0 float-left" style="padding: 8 0 8 0;">%5$s шт.</div>
                                             </div>
-                                            <div class="col-lg-2 pl-0 col-md-3 col-sm-4">
+                                            <div class="pl-0 col-xl-2 col-lg-3 col-sm-4">
                                                 <div class="rounded-xl h5 mb-0 float-sm-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">%6$s ₴</div>
                                             </div>
                                         </div>
@@ -186,9 +186,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     $item->priceListID,
                     $item->image,
                     $item->productName,
-                    $item->price,
+                    penny_price_to_normal_price($item->price),
                     $item->count,
-                    $item->totalPrice
+                    penny_price_to_normal_price($item->totalPrice)
                 );
             };
 
@@ -288,7 +288,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 sprintf("%06d", $order->orderId),
                 $order->date,
                 $order_header,
-                $order->totalPrice,
+                penny_price_to_normal_price($order->totalPrice),
                 text_status_color($order->status->statusId),
                 $order->status->statusName,
                 $order_statuses,
@@ -370,7 +370,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                            <button type="submit" class="btn btn-primary">Підтвердити</button>
+                            <button id="changePasswordButton" type="submit" class="btn btn-dark">
+                                <span id="changePasswordButtonSpinner" style="width: 20px; height: 20px;"></span>
+                                Підтвердити
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -391,7 +394,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:75px">Ні</button>
-                        <button id="deleteAccountButton" type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#deleteConfirmationModal">Так, я хочу видалити аккаунт</button>
+                        <button id="deleteAccountButton" type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#deleteConfirmationModal">
+                            Так, я хочу видалити аккаунт
+                        </button>
                     </div>
                 </div>
             </div>
@@ -425,7 +430,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                            <button type="submit" class="btn btn-danger">Видалити аккаунт</button>
+                            <button id="deleteConfirmationButton" type="submit" class="btn btn-danger">
+                                <span id="deleteConfirmationButtonSpinner" style="width: 20px; height: 20px;"></span>
+                                Видалити аккаунт
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -500,7 +508,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_phone_feedback" class="invalid-feedback"></div>
                     </div>
                     <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
-                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-dark m-1">Змінити особисті дані</button>
+                    <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-dark m-1">
+                        <span id="changeUserDataSubmitButtonSpinner" style="width: 20px; height: 20px;"></span>
+                        Змінити особисті дані
+                    </button>
                 </form>
 
                 <hr>
@@ -572,6 +583,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             var deleteAccountForm = $('#deleteAccountForm');
             deleteAccountForm.submit(function(e) {
 
+                document.getElementById("deleteConfirmationButtonSpinner").classList.add("spinner-border");
+                document.getElementById("deleteConfirmationButton").disabled = true;
                 // give data from form
                 formData = {
                     'verification_token': document.getElementById("delete_account_verification_token").value,
@@ -587,6 +600,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     success: function(response) {
                         if (response != null) {
 
+                            document.getElementById("deleteConfirmationButtonSpinner").classList.remove("spinner-border");
+                            document.getElementById("deleteConfirmationButton").disabled = false;
                             // parse response from server
                             var jsonData = JSON.parse(response);
 
@@ -612,6 +627,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             var changePasswordForm = $('#changePasswordForm');
             changePasswordForm.submit(function(e) {
 
+                document.getElementById("changePasswordButtonSpinner").classList.add("spinner-border");
+                document.getElementById("changePasswordButton").disabled = true;
                 // give data from form
                 formData = {
                     'verification_token': document.getElementById("change_password_verification_token").value,
@@ -629,6 +646,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     success: function(response) {
                         if (response != null) {
 
+                            document.getElementById("changePasswordButtonSpinner").classList.remove("spinner-border");
+                            document.getElementById("changePasswordButton").disabled = false;
                             // parse response from server
                             var jsonData = JSON.parse(response);
 
@@ -664,6 +683,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
             var changeUserDataForm = $('#changeUserDataForm');
             changeUserDataForm.submit(function(e) {
+
+                document.getElementById("changeUserDataSubmitButtonSpinner").classList.add("spinner-border");
+                document.getElementById("changeUserDataSubmitButton").disabled = true;
                 // give data from form
                 formData = {
                     'verification_token': document.getElementById("change_user_data_verification_token").value,
@@ -688,6 +710,8 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     success: function(response) {
                         if (response != null) {
 
+                            document.getElementById("changeUserDataSubmitButtonSpinner").classList.remove("spinner-border");
+                            document.getElementById("changeUserDataSubmitButton").disabled = false;
                             // parse response from server
                             var jsonData = JSON.parse(response);
 
