@@ -1,5 +1,6 @@
 <?php
 require_once("../LDLRIVS.php");
+require_once("functions/mainFunctions.php");
 
 my_session_start();
 

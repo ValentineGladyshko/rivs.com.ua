@@ -282,7 +282,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Продовжити покупки</button>
                     <button type="button" class="btn btn-dark" data-dismiss="modal" onclick="checkoutCart('${verificationToken}', true)">Оформити замовлення</button>
                   </div>
                   </div>

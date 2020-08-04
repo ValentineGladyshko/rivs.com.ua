@@ -1,5 +1,6 @@
 <?php
 require_once("../LDLRIVS.php");
+require_once("functions/mainFunctions.php");
 
 my_session_start();
 // give security and verification tokens from session, post and cookies
@@ -344,6 +345,13 @@ $cart_modal_html .= sprintf(
 
     <!-- Script for submitting form -->
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#checkoutDismissButton").click(
+                function(e) {
+                    window.history.back();
+                }
+            );
+        });
         var checkoutForm = $('#checkoutForm');
         checkoutForm.submit(function(e) {
             var isAuthorized = <?php if ($is_authorized) { ?>1<?php } else { ?>0<?php } ?>;
