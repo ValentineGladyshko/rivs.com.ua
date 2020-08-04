@@ -158,28 +158,28 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 $order_items .= sprintf(
                     '<div class="card mb-sm-3 mb-3">
                             <div class="card-body row">
-                                <div class="col-sm-1 pr-0">
+                                <div class="col-lg-1 col-sm-2 px-0">
                                     <a href="product.php?id=%1$s">
                                         <img src="/%2$s" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
                                     </a>
                                 </div>
-                                <div class="col-sm-11">
-                                    <div class="container pr-0 pl-1" style="min-height:60px">
-                                        <div class="row" style="min-height:25%%">
+                                <div class="col-lg-11 col-sm-10 pl-sm-0 pl-lg-2">
+                                    <div class="container px-0" style="min-height:60px">
+                                        <div class="row product-name-sm">
                                             <div class="col-sm-12">
                                                 <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
                                             </div>
                                         </div>
-                                        <div class="row align-items-center" style="min-height: 40px;">
-                                            <div class="pr-0 col-xl-8 col-lg-7 col-sm-6">
-                                                <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
-                                                <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%4$s ₴</div>
+                                        <div class="row align-items-center order-sm mt-sm-2 mt-xl-0" style="min-height: 40px;">
+                                            <div class="pr-0 col-xl-8 col-lg-7 col-md-6 col-sm-5">
+                                                <div class="h5 mb-0 py-2 pl-0 pr-3 float-left">Ціна:</div>
+                                                <div class="rounded-xl h5 mb-0 px-3 py-2 float-left bg-grey-alt">%4$s ₴</div>
                                             </div>
-                                            <div class="px-0 col-lg-2 col-sm-2">
-                                                <div class="h5 mb-0 float-left" style="padding: 8 0 8 0;">%5$s шт.</div>
+                                            <div class="px-sm-0 col-lg-2 col-sm-2">
+                                                <div class="h5 mb-0 float-left py-2 pl-1 pr-0">%5$s шт.</div>
                                             </div>
-                                            <div class="pl-0 col-xl-2 col-lg-3 col-sm-4">
-                                                <div class="rounded-xl h5 mb-0 float-sm-right float-left" style="background: #D3D3D3; padding: 8 14 8 14;">%6$s ₴</div>
+                                            <div class="pl-sm-0 col-xl-2 col-lg-3 col-md-4 col-sm-5">
+                                                <div class="rounded-xl h5 mb-0 float-sm-right float-left px-3 py-2 bg-grey-alt">%6$s ₴</div>
                                             </div>
                                         </div>
                                     </div>
@@ -281,7 +281,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 %8$s
                                 <div class="row">
                                     <div class="col-md-12" style="padding: 8 36 8 8;">
-                                        <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%4$s ₴</div>
+                                        <div class="rounded-xl h5 mb-0 px-3 py-2 float-right bg-grey-alt">%4$s ₴</div>
                                         <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
                                     </div>
                                 </div>
