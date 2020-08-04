@@ -16,7 +16,7 @@ function get_cart_button_html($email, $is_authorized)
     </li>';
   $cart_button_html = '';
   if ($is_authorized == true) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       return $empty_cart_button_html;
     }
@@ -137,7 +137,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
     </div>';
   $cart_modal_html = '';
   if ($is_authorized == true) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
       return $empty_cart_modal_html;
     }
@@ -279,7 +279,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
     if ($cart != null) {
       $cart = json_decode($cart, true);
 
-      $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+      $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
       if ($mysqli->connect_errno) {
         return $empty_cart_modal_html;
       }
@@ -409,7 +409,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
 function store($query)
 {
   $html = '';
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     exit();
   }
@@ -454,7 +454,7 @@ function empty_or_html($var)
 
 function product($query, $id, $verification_token)
 {
-  $mysqli = mysqli_connect("localhost", "RegisterUser", "E9aZc4DgpWEaRlY2", "rivs");
+  $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
   if ($mysqli->connect_errno) {
     exit();
   }
