@@ -81,70 +81,129 @@ $_SESSION['verification_token'] = $verification_token;
           <p>
             Приклад дії порошку, змішаного з фарбою, нанесеною на метал у розчині з негативними для людини бактеріями:
           </p>
-          <div class="row">
+          <div class="row justify-content-md-center justify-content-sm-center justify-content-center">
 
-            <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal1">
-              <img src="/Images/WithPaintExample/1.jpg" alt="1 example" class="img-fluid">
+            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal1">
+              <img src="/Documents/CertificateGuanpolisept.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal2">
-              <img src="/Images/WithPaintExample/2.jpg" alt="2 example" class="img-fluid" />
+            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal2">
+              <img src="/Documents/Certificate.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal3">
-              <img src="/Images/WithPaintExample/3.jpg" alt="3 example" class="img-fluid" />
-
+            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal3">
+              <img src="/Documents/CertificateGuanpoliseptSkin.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-3" data-toggle="modal" data-target="#ExamplesModal4">
-              <img src="/Images/WithPaintExample/4.jpg" alt="4 example" class="img-fluid" />
+            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#Conclusion1">
+              <img src="/Documents/GuanpoliseptConclusion.png" class="img-fluid">
+            </figure>
+
+            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#Conclusion2">
+              <img src="/Documents/GuanpoliseptSkinConclusion.png" class="img-fluid">
             </figure>
           </div>
-      </div>
-      </div>
+
       </div>
     </blockquote>
     <!--Main container-->
     <!-- Modal -->
-    <div class="modal fade" id="ExamplesModal1" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
+    <div class="modal fade" id="CertificateModal1" tabindex="-1" role="dialog" aria-labelledby="CertificateModalLabel1" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-sm">
         <div class="modal-content">
-          <div class="modal-body">
-            <img src="/Images/WithPaintExample/1.jpg" class="img-fluid rounded mx-auto d-block">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CertificateModalLabel1">Свідоцтво про державну реєстрацію дезінфекційного засобу <p>Засіб дезінфекційний "Гуанполісепт"</p>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="PDFmodal1">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Закрити документ</button>
           </div>
         </div>
       </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="ExamplesModal2" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade" id="CertificateModal2" tabindex="-1" role="dialog" aria-labelledby="CertificateModalLabel2" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-sm">
         <div class="modal-content">
-          <div class="modal-body">
-            <img src="/Images/WithPaintExample/2.jpg" class="img-fluid rounded mx-auto d-block">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CertificateModalLabel2">Сертифікат відповідності для <p>Засобу "Гуанполісепт" для дезінфекції поверхні шкіри</p>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="PDFmodal2">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Закрити документ</button>
           </div>
         </div>
       </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="ExamplesModal3" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade" id="CertificateModal3" tabindex="-1" role="dialog" aria-labelledby="CertificateModalLabel3" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-sm">
         <div class="modal-content">
-          <div class="modal-body">
-            <img src="/Images/WithPaintExample/3.jpg" class="img-fluid rounded mx-auto d-block">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CertificateModalLabel3">Свідоцтво про державну реєстрацію дезінфекційного засобу <p>Засіб "Гуанполісепт" для дезінфекції поверхні шкіри</p>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="PDFmodal3">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Закрити документ</button>
           </div>
         </div>
       </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="ExamplesModal4" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade" id="Conclusion1" tabindex="-1" role="dialog" aria-labelledby="CertificateModalLabel4" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-sm">
         <div class="modal-content">
-          <div class="modal-body">
-            <img src="/Images/WithPaintExample/4.jpg" class="img-fluid rounded mx-auto d-block">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CertificateModalLabel4">Висновок державної санітарно-епідеміологічної експертизи <p>Засіб дезінфекційний "Гуанполісепт"</p>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="PDFmodal4">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Закрити документ</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="Conclusion2" tabindex="-1" role="dialog" aria-labelledby="CertificateModalLabel5" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CertificateModalLabel5">Висновок державної санітарно-епідеміологічної експертизи <p>Засіб "Гуанполісепт" для дезінфекції поверхні шкіри</p>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="PDFmodal5">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Закрити документ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+
   </main>
   <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
@@ -157,10 +216,13 @@ $_SESSION['verification_token'] = $verification_token;
 </body>
 
 <? include("../myScripts.php"); ?>
+<? include("../indexdocfunctions.php"); ?>
 
 <script type="text/javascript">
   var elem = document.getElementById("main");
   elem.classList.add('active');
+
+
 </script>
 
 </html>
