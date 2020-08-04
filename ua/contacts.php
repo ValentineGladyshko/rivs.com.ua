@@ -181,59 +181,61 @@ $_SESSION['verification_token'] = $verification_token;
 
   <!-- Script for submitting form -->
   <script type="text/javascript">
-    var form = $('#contact-form');
+    $(document).ready(function() {
+      var form = $('#contact-form');
 
-    form.submit(function(e) {
+      form.submit(function(e) {
 
-      document.getElementById("sendButtonSpinner").classList.add("spinner-border");
-      document.getElementById("sendButton").disabled = true;
-      // data for request
-      formData = {
-        'name': $document.getElementById("name").value,
-        'email': $document.getElementById("email").value,
-        'message': $document.getElementById("message").value
-      };
+        document.getElementById("sendButtonSpinner").classList.add("spinner-border");
+        document.getElementById("sendButton").disabled = true;
+        // data for request
+        formData = {
+          'name': document.getElementById("name").value,
+          'email': document.getElementById("email").value,
+          'message': document.getElementById("message").value
+        };
 
-      e.preventDefault();
+        e.preventDefault();
 
-      // ajax post request
-      $.ajax({
-        url: "functions/contactFormSubmit.php",
-        data: formData,
-        type: "POST",
-        success: function(response) {
-          if (response != null) {
+        // ajax post request
+        $.ajax({
+          url: "functions/contactFormSubmit.php",
+          data: formData,
+          type: "POST",
+          success: function(response) {
+            if (response != null) {
 
-            document.getElementById("sendButtonSpinner").classList.add("spinner-border");
-            document.getElementById("sendButton").disabled = true;
+              document.getElementById("sendButtonSpinner").classList.remove("spinner-border");
+              document.getElementById("sendButton").disabled = false;
 
-            // parsing response from back-end
-            var jsonData = JSON.parse(response);
+              // parsing response from back-end
+              var jsonData = JSON.parse(response);
 
-            // checking status of operation 
-            if (jsonData.success == true) {
+              // checking status of operation 
+              if (jsonData.success == true) {
 
-              // clearing values of fields in form and show success status
-              document.getElementById("status").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
-                '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-              $('#contact-form').closest('form').find("input[type=email], input[type=text], textarea").val("");
-            } else {
-              changeInputStatus(document.getElementById("email"), document.getElementById("email_feedback"), jsonData, "email");
-              changeInputStatus(document.getElementById("name"), document.getElementById("name_feedback"), jsonData, "name");
-              changeInputStatus(document.getElementById("message"), document.getElementById("message_feedback"), jsonData, "message")
-
-              // change status field
-              if (jsonData.hasOwnProperty("send")) {
-                document.getElementById("status").innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
+                // clearing values of fields in form and show success status
+                document.getElementById("status").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
                   '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                $('#contact-form').closest('form').find("input[type=email], input[type=text], textarea").val("");
+              } else {
+                changeInputStatus(document.getElementById("email"), document.getElementById("email_feedback"), jsonData, "email");
+                changeInputStatus(document.getElementById("name"), document.getElementById("name_feedback"), jsonData, "name");
+                changeInputStatus(document.getElementById("message"), document.getElementById("message_feedback"), jsonData, "message")
+
+                // change status field
+                if (jsonData.hasOwnProperty("send")) {
+                  document.getElementById("status").innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>' + jsonData.send +
+                    '</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                }
               }
             }
-          }
-        },
-        error: function(data) {
-          console.log('An error occurred.');
-          console.log(data);
-        },
+          },
+          error: function(data) {
+            console.log('An error occurred.');
+            console.log(data);
+          },
+        });
       });
     });
   </script>
