@@ -91,6 +91,10 @@
 	background-color: #212529;
 }
 
+.bg-grey-alt {
+	background-color: #D3D3D3;
+}
+
 .sidebar {
 	width: 225px;
 }
@@ -133,13 +137,30 @@
 	.border-lg-right {
 		border-right: 0px!important;
 	}
-
 	.border-lg-top {
 		border-top: 2px solid #606060!important;
 	}
 }
 
-
 .border-lg-top {
 	border-top: 0px;
+}
+
+.product-name-sm {
+	min-height: 25%;
+}
+
+.order-sm {
+	margin-left: -15px;
+}
+
+@media (max-width: 767px) {
+	@media (min-width: 576px) {
+		.order-sm {
+			margin-left: -75px !important;
+		}
+		.product-name-sm {
+			min-height: 60px;
+		}
+	}
 }

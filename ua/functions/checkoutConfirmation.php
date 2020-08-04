@@ -1,5 +1,6 @@
 <?php
 require_once("../../LDLRIVS.php");
+require_once("mainFunctions.php");
 require_once("../../PHPMailer/Exception.php");
 require_once("../../PHPMailer/OAuth.php");
 require_once("../../PHPMailer/PHPMailer.php");
