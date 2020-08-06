@@ -83,23 +83,23 @@ $_SESSION['verification_token'] = $verification_token;
           </p>
           <div class="row justify-content-md-center justify-content-sm-center justify-content-center">
 
-            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal1">
+            <figure class="col-md-2 col-sm-4 col-4" data-toggle="modal" data-target="#CertificateModal1">
               <img src="/Documents/CertificateGuanpolisept.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal2">
+            <figure class="col-md-2 col-sm-4 col-4" data-toggle="modal" data-target="#CertificateModal2">
               <img src="/Documents/Certificate.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#CertificateModal3">
+            <figure class="col-md-2 col-sm-4 col-4" data-toggle="modal" data-target="#CertificateModal3">
               <img src="/Documents/CertificateGuanpoliseptSkin.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#Conclusion1">
+            <figure class="col-md-2 col-sm-4 col-4" data-toggle="modal" data-target="#Conclusion1">
               <img src="/Documents/GuanpoliseptConclusion.png" class="img-fluid">
             </figure>
 
-            <figure class="col-md-2 col-sm-2 col-4" data-toggle="modal" data-target="#Conclusion2">
+            <figure class="col-md-2 col-sm-4 col-4" data-toggle="modal" data-target="#Conclusion2">
               <img src="/Documents/GuanpoliseptSkinConclusion.png" class="img-fluid">
             </figure>
           </div>
