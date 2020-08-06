@@ -206,10 +206,10 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                       <div class="row align-items-lg-center minHeight90">
                         <div class="col-lg-4 col-sm-6">
                             <div class="h5 mb-0 pl-0 pr-3 py-2 float-left">Ціна:</div>
-                          <div class="rounded-xl h5 mb-0 px-3 py-2 float-left bg-grey-alt" id="item_price_%1$s">%4$s ₴</div>
+                          <div class="rounded-xl h5 mb-0 py-2 float-left" id="item_price_%1$s">%4$s ₴</div>
                         </div>
                         <div class="col-lg-4 col-sm-6 pr-lg-0 m-sm-0 my-2">
-                          <div class="input-group float-sm-right" style="max-width:160px;">
+                          <div class="input-group float-sm-right" style="max-width:170px;">
                             <div class="input-group-prepend">
                               <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
                               document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
@@ -218,7 +218,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                                 </svg>
                               </button>
                             </div>
-                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="999"
+                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="9999"
                               oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
@@ -233,7 +233,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                         </div>
 
                         <div class="col-lg-4 pl-sm-0">
-                          <div class="rounded-xl h5 mb-0 px-3 py-2 float-sm-right float-left bg-grey-alt" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
+                          <div class="rounded-xl h5 mb-0 py-2 float-sm-right float-left" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
                         </div>
                       </div>                        
                     </div>
@@ -255,7 +255,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
       $cart_modal_html .= sprintf(
         '</div>
         <div class="row">
-          <div class="col-md-12" style="padding: 0 36 0 0;">          
+          <div class="col-md-12 pr-3">          
             <div id="cart_total_price" class="rounded-xl h5 mb-0 px-3 py-2 float-right bg-grey-alt">%1$s ₴</div>
             <div class="h5 mb-0 px-3 py-2 float-right">Разом:</div>
           </div>
@@ -333,10 +333,10 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                       <div class="row align-items-lg-center minHeight90">
                         <div class="col-lg-4 col-sm-6">
                           <div class="h5 mb-0 pl-0 pr-3 py-2 float-left">Ціна:</div>
-                          <div class="rounded-xl h5 mb-0 px-3 py-2 float-left bg-grey-alt" id="item_price_%1$s">%4$s ₴</div>
+                          <div class="rounded-xl h5 mb-0 py-2 float-left" id="item_price_%1$s">%4$s ₴</div>
                         </div>
                         <div class="col-lg-4 col-sm-6 pr-lg-0 m-sm-0 my-2">
-                          <div class="input-group float-sm-right" style="max-width:160px;">
+                          <div class="input-group float-sm-right" style="max-width:170px;">
                             <div class="input-group-prepend">
                               <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(`%1$s`, `%4$s`, 
                               document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
@@ -345,7 +345,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                                 </svg>
                               </button>
                             </div>
-                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="999"
+                            <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_%1$s" value="%5$s" min="1" max="9999"
                               oninput="cartCountInputChange(`%1$s`, `%4$s`, document.getElementById(`item_count_%1$s`), document.getElementById(`item_total_price_%1$s`), `%7$s`)">
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(`%1$s`, `%4$s`, 
@@ -360,7 +360,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
                         </div>
 
                         <div class="col-lg-4 pl-sm-0">
-                          <div class="rounded-xl h5 mb-0 px-3 py-2 float-sm-right float-left bg-grey-alt" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
+                          <div class="rounded-xl h5 mb-0 py-2 float-sm-right float-left" name="item_total_price" id="item_total_price_%1$s">%6$s ₴</div>
                         </div>
                       </div>                        
                     </div>
@@ -382,7 +382,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
       $cart_modal_html .= sprintf(
         '</div>
                 <div class="row">
-                  <div class="col-md-12" style="padding: 0 36 0 0;">          
+                  <div class="col-md-12 pr-3">          
                     <div id="cart_total_price" class="rounded-xl h5 mb-0 px-3 py-2 float-right bg-grey-alt">%1$s ₴</div>
                     <div class="h5 mb-0 px-3 py-2 float-right">Разом:</div>
                   </div>

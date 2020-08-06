@@ -64,7 +64,7 @@
         itemMinusButton.disabled = false;
       }
 
-      if (item.value >= 999) {
+      if (item.value >= 9999) {
         itemPlusButton.disabled = true;
       } else {
         itemPlusButton.disabled = false;
@@ -225,10 +225,10 @@
                         <div class="row align-items-lg-center minHeight90">
                           <div class="col-lg-4 col-sm-6">
                             <div class="h5 mb-0 pl-0 pr-3 py-2 float-left">Ціна:</div>
-                            <div class="rounded-xl h5 mb-0 px-3 py-2 float-left bg-grey-alt" id="item_price_${itemId}">${itemPrice} ₴</div>
+                            <div class="rounded-xl h5 mb-0 py-2 float-left" id="item_price_${itemId}">${itemPrice} ₴</div>
                           </div>
                           <div class="col-lg-4 col-sm-6 pr-lg-0 m-sm-0 my-2">
-                            <div class="input-group float-sm-right" style="max-width:160px;">
+                            <div class="input-group float-sm-right" style="max-width:170px;">
                               <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemMinus(${itemId}, '${itemPrice}', 
                                 document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
@@ -237,7 +237,7 @@
                                   </svg>
                                 </button>
                               </div>
-                              <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" min="1" max="999"
+                              <input type="number" name="item_count" class="form-control" style="font-size: 1.25rem; font-weight: 500; height:40px;" id="item_count_${itemId}" value="${itemCount}" min="1" max="9999"
                                 oninput="cartCountInputChange(${itemId}, '${itemPrice}', document.getElementById('item_count_${itemId}'), document.getElementById('item_total_price_${itemId}'), '${verificationToken}')">
                               <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" style="padding: 6px;" type="button" onclick="cartItemPlus(${itemId}, '${itemPrice}', 
@@ -252,7 +252,7 @@
                           </div>
 
                           <div class="col-lg-4 pl-sm-0">
-                            <div class="rounded-xl h5 mb-0 px-3 py-2 float-sm-right float-left bg-grey-alt" name="item_total_price" id="item_total_price_${itemId}">${cartTotalPrice} ₴</div>
+                            <div class="rounded-xl h5 mb-0 py-2 float-sm-right float-left" name="item_total_price" id="item_total_price_${itemId}">${cartTotalPrice} ₴</div>
                           </div>
                         </div>                        
                       </div>
@@ -275,7 +275,7 @@
                 const cartEndHTML =
                   `</div>
                     <div class="row">
-                      <div class="col-md-12" style="padding: 0 36 0 0;">          
+                      <div class="col-md-12 pr-3">          
                         <div id="cart_total_price" class="rounded-xl h5 mb-0 px-3 py-2 float-right bg-grey-alt">${cartTotalPrice} ₴</div>
                         <div class="h5 mb-0 px-3 py-2 float-right">Разом:</div>
                       </div>
