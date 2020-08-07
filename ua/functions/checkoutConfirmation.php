@@ -1,5 +1,6 @@
 <?php
 require_once("../../LDLRIVS.php");
+require_once("mainFunctions.php");
 require_once("../../PHPMailer/Exception.php");
 require_once("../../PHPMailer/OAuth.php");
 require_once("../../PHPMailer/PHPMailer.php");
@@ -382,9 +383,9 @@ if ($is_authorized) {
                     </div>',
                     $db_image,
                     $db_product_name,
-                    $db_price,
+                    penny_price_to_normal_price($db_price),
                     $db_count,
-                    $total_item_price
+                    penny_price_to_normal_price($total_item_price)
                 );
                 $item = new stdClass();
 
@@ -398,7 +399,7 @@ if ($is_authorized) {
         }
         foreach ($cart_items as $value) {
             if ($stmt = $mysqli->prepare("INSERT INTO `orders_items` (`OrderId`, `PriceListId`, `Count`, `Price`) VALUES (?, ?, ?, ?)")) {
-                $stmt->bind_param("iiii", $orderID, $value->pricelistID, $value->count, $value->price);
+                $stmt->bind_param("iiid", $orderID, $value->pricelistID, $value->count, $value->price);
                 if ($stmt->execute() == false) {
                 };
                 $stmt->close();
@@ -483,7 +484,7 @@ if ($is_authorized) {
                     </table>
                 </body>
             </html>',
-            $total_cart_price
+            penny_price_to_normal_price($total_cart_price)
         );
 
         if ($stmt = $mysqli->prepare("DELETE FROM `cart_items` WHERE UserID=?")) {
@@ -940,9 +941,9 @@ if ($is_authorized) {
                         </div>',
                         $image,
                         $product_name,
-                        $price,
+                        penny_price_to_normal_price($price),
                         $count,
-                        $total_item_price
+                        penny_price_to_normal_price($total_item_price)
                     );
                     $item = new stdClass();
 
@@ -1043,7 +1044,7 @@ if ($is_authorized) {
                     </table>
                 </body>
             </html>',
-            $total_cart_price
+            penny_price_to_normal_price($total_cart_price)
         );
 
         setcookie('cart', null, time() - 60 * 60, '/', 'rivs.com.ua', false, true);

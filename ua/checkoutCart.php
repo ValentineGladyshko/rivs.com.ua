@@ -1,5 +1,6 @@
 <?php
 require_once("../LDLRIVS.php");
+require_once("functions/mainFunctions.php");
 
 my_session_start();
 // give security and verification tokens from session, post and cookies
@@ -227,53 +228,53 @@ if ($is_authorized) {
 
 foreach ($cart_items as $item) {
     $cart_modal_html .= sprintf(
-        '<div class="card mb-md-3 mb-3">
+        '<div class="card mb-sm-3 mb-3">
             <div class="card-body row">
-                <div class="col-md-1 pr-0">
+                <div class="col-lg-1 col-sm-2 px-0">
                     <a href="product.php?id=%1$s">
                         <img src="/%2$s" class="m-auto" style="display: block; max-height: 60px; max-width: 50px;" alt="">
                     </a>
                 </div>
-                <div class="col-md-11">
-                    <div class="container pr-0 pl-1" style="height:60px">           
-                        <div class="row" style="min-height:25%%">
-                            <div class="col-md-12">
+                <div class="col-lg-11 col-sm-10 pl-sm-0 pl-lg-2">
+                    <div class="container px-0" style="min-height:60px">
+                        <div class="row product-name-sm">
+                            <div class="col-sm-12">
                                 <a style="font-size:20px;" href="product.php?id=%1$s">%3$s</a>
-                            </div>                                
-                        </div> 
-                        <div class="row align-items-center divfillHeight">
-                            <div class="col-md-8">
-                                <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">Ціна:</div>
-                                <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:left;">%4$s ₴</div>
                             </div>
-                            <div class="col-md-2">                              
-                                <div class="h5 mb-0" style="float:left; padding: 8 14 8 0;">%5$s шт.</div>
+                        </div>
+                        <div class="row align-items-center order-sm mt-sm-2 mt-xl-0" style="min-height: 40px;">
+                            <div class="pr-0 col-xl-8 col-lg-7 col-md-6 col-sm-5">
+                                <div class="h5 mb-0 py-2 pl-0 pr-3 float-left">Ціна:</div>
+                                <div class="rounded-xl h5 mb-0 py-2 float-left">%4$s ₴</div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="rounded-xl h5 mb-0" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%6$s ₴</div>
+                            <div class="px-sm-0 col-lg-2 col-sm-2">
+                                <div class="h5 mb-0 float-left py-2 pl-1 pr-0">%5$s шт.</div>
                             </div>
-                        </div>                        
+                            <div class="pl-sm-0 col-xl-2 col-lg-3 col-md-4 col-sm-5">
+                                <div class="rounded-xl h5 mb-0 float-sm-right float-left py-2">%6$s ₴</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>',
         $item["pricelistID"],
         $item["image"],
         $item["product_name"],
-        $item["price"],
+        penny_price_to_normal_price($item["price"]),
         $item["count"],
-        $item["total_count"]
+        penny_price_to_normal_price($item["total_count"])
     );
 }
 
 $cart_modal_html .= sprintf(
     '<div class="row">
-        <div class="col-md-12" style="padding: 8 36 8 8;">          
-            <div class="rounded-xl h2 mb-0 font-weight-normal" style="background: #D3D3D3; padding: 8 14 8 14; float:right;">%1$s ₴</div>
-            <div class="h2 mb-0 font-weight-normal" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+        <div class="col-md-12 pr-3 py-2 pl-2">          
+            <div class="rounded-xl h2 mb-0 font-weight-normal px-3 py-2 float-right bg-grey-alt">%1$s ₴</div>
+            <div class="h2 mb-0 font-weight-normal px-3 py-2 float-right">Разом:</div>
         </div>
     </div>',
-    $cart_price
+    penny_price_to_normal_price($cart_price)
 );
 
 
@@ -320,7 +321,8 @@ $cart_modal_html .= sprintf(
 
                 <? echo $cart_modal_html ?>
                 <button id="checkoutDismissButton" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
-                <button id="checkoutSubmitButton" type="submit" class="btn btn-dark m-1">Підтвердити замовлення</button>
+                <button id="checkoutSubmitButton" type="submit" class="btn btn-dark m-1"><span id="checkoutSubmitButtonSpinner" style="width: 20px; height: 20px;"></span>
+                    Підтвердити замовлення</button>
             </div>
         </form>
 
@@ -343,6 +345,13 @@ $cart_modal_html .= sprintf(
 
     <!-- Script for submitting form -->
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#checkoutDismissButton").click(
+                function(e) {
+                    window.history.back();
+                }
+            );
+        });
         var checkoutForm = $('#checkoutForm');
         checkoutForm.submit(function(e) {
             var isAuthorized = <?php if ($is_authorized) { ?>1<?php } else { ?>0<?php } ?>;
@@ -358,6 +367,8 @@ $cart_modal_html .= sprintf(
             };
             e.preventDefault();
 
+            document.getElementById("checkoutSubmitButtonSpinner").classList.add("spinner-border");
+            document.getElementById("checkoutSubmitButton").disabled = true;
             // ajax request
             $.ajax({
                 type: "POST",
@@ -365,6 +376,9 @@ $cart_modal_html .= sprintf(
                 data: formData,
                 success: function(response) {
                     if (response != null) {
+
+                        document.getElementById("checkoutSubmitButtonSpinner").classList.remove("spinner-border");
+                        document.getElementById("checkoutSubmitButton").disabled = false;
 
                         // parse response from server
                         var jsonData = JSON.parse(response);
