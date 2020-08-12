@@ -96,7 +96,7 @@
 }
 
 .sidebar {
-	width: 225px;
+	width: 240px;
 }
 
 .feather {
@@ -113,6 +113,7 @@
 	color: #7f7f7f;
 	padding-top: 12px;
 	padding-bottom: 12px;
+	font-size: 16px;
 }
 
 .sidebar .nav-link .feather {
