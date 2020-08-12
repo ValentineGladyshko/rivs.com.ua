@@ -124,7 +124,7 @@ $_SESSION['verification_token'] = $verification_token;
 
                     // if success code is true login and reload
                     if (jsonData.success == true) {
-                        $.redirect('admin.php');
+                        $.redirect('index.php');
 
                         // else give html fields and show error messages
                     } else {
