@@ -4,6 +4,8 @@
 <link href="/css/mdb.css" rel="stylesheet">
 <!-- Your custom styles (optional) -->
 <link href="/css/style.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+<link href="/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <!-- SCRIPTS -->
 <!-- JQuery -->
@@ -15,3 +17,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="/js/mdb.js"></script>
 <script type="text/javascript" src="/js/jquery.redirect.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script data-search-pseudo-elements defer src="/js/all.min.js"></script>
+<script src="/js/feather.min.js"></script>
