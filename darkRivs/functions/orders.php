@@ -8,24 +8,47 @@ if ($mysqli->connect_errno) {
 }
 
 $orders = array();
-if ($stmt = $mysqli->prepare("SELECT `OrderId`, `Email`, `Date` 
+if (false) {
+    if ($stmt = $mysqli->prepare("SELECT `OrderId`, `Email`, `Date` 
         FROM `orders_in_process` ORDER BY `Date` DESC")) {
-    $stmt->execute();
-    $stmt->bind_result(
-        $orderId,
-        $email,
-        $date
-    );
-    while ($stmt->fetch()) {
-        $order = new stdClass();
-        $order->orderId = $orderId;
-        $date = new DateTime($date);
-        $order->date = $date->format('d/m/Y H:i');
-        $order->email = $email;
-        $order->totalPrice = 0;
-        $orders[] = $order;
+        $stmt->execute();
+        $stmt->bind_result(
+            $orderId,
+            $email,
+            $date
+        );
+        while ($stmt->fetch()) {
+            $order = new stdClass();
+            $order->orderId = $orderId;
+            $date = new DateTime($date);
+            $order->date = $date->format('d/m/Y H:i');
+            $order->email = $email;
+            $order->totalPrice = 0;
+            $orders[] = $order;
+        }
+        $stmt->close();
     }
-    $stmt->close();
+} else {
+    if ($stmt = $mysqli->prepare("SELECT * FROM `orders_in_process` WHERE `OrderId` NOT IN 
+    (SELECT DISTINCT `o`.`OrderId` FROM `orders_in_process` AS `o` 
+    JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6)")) {
+        $stmt->execute();
+        $stmt->bind_result(
+            $orderId,
+            $email,
+            $date
+        );
+        while ($stmt->fetch()) {
+            $order = new stdClass();
+            $order->orderId = $orderId;
+            $date = new DateTime($date);
+            $order->date = $date->format('d/m/Y H:i');
+            $order->email = $email;
+            $order->totalPrice = 0;
+            $orders[] = $order;
+        }
+        $stmt->close();
+    }
 }
 if ($stmt = $mysqli->prepare("SELECT `orders_items`.`PriceListID`, `Count`, `orders_items`.`Price`, `ProductName`, `Image`
                 FROM `orders_items` JOIN `pricelist` ON `orders_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE `OrderId` = ?")) {
@@ -86,8 +109,8 @@ if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`S
             $statuses[$date->format('d/m/Y')][] = $item;
 
             if ($order->status == null) {
-                $order->status = sprintf('<div class="badge %1$s badge-pill">%2$s</div>', badge_status_color($statusId), $statusName);
-                //sprintf('<div class=%3$sh6 %1$s font-weight-normal%3$s>%2$s</div>', text_status_color($statusId), $statusName, "'");
+                $order->status = //sprintf('<div class="badge %1$s badge-pill">%2$s</div>', badge_status_color($statusId), $statusName);
+                    sprintf('<div class=%3$s %1$s %3$s>%2$s</div>', text_status_color($statusId), $statusName, "'");
             }
         }
         $order->buttons =
@@ -110,9 +133,9 @@ if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`S
         foreach ($statuses as $statusDate => $statusValue) {
             $order_statuses .= sprintf(
                 '<div class=%2$scol-12%2$s>
-                            <hr class=%2$ssolid mt-2 mb-2%2$s>
-                            <div class=%2$sh6%2$s>%1$s</div>
-                            <hr class=%2$ssolid mt-0 mb-2%2$s>
+                            <hr class=%2$ssolid mt-1 mb-1%2$s>
+                            <div>%1$s</div>
+                            <hr class=%2$ssolid mt-1 mb-1%2$s>
                         </div>',
                 $statusDate,
                 "'"
@@ -121,10 +144,10 @@ if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`S
             foreach ($statusValue as $status) {
                 $order_statuses .= sprintf(
                     '<div class=%4$scol-3%4$s>
-                                <div class=%4$sh6 font-weight-normal%4$s>%1$s</div>
+                                <div>%1$s</div>
                             </div>
                             <div class=%4$scol-9%4$s>
-                                <div class=%4$sh6 %2$s font-weight-normal%4$s>%3$s</div>
+                                <div class=%4$s%2$s%4$s>%3$s</div>
                             </div>',
                     $status->time,
                     text_status_color($status->statusId),
@@ -135,11 +158,11 @@ if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`S
         };
         $order->statuses = sprintf(
             '<button id="status_button_%1$s" onclick="chevronToggle(document.getElementById(`status_img_%1$s`), 
-                document.getElementById(`status_button_%1$s`))" class="btn btn-link pl-0 chevron-down float-sm-right" 
-                style="font-weight: 500;" type="button" data-toggle="popover" title="Історія замовлення" data-html="true" 
+                document.getElementById(`status_button_%1$s`))" class="btn btn-link p-0 chevron-down float-sm-right" 
+                style="font-size:14px" type="button" data-toggle="popover" title="Історія замовлення" data-html="true" 
                 data-placement="bottom" data-content="<div class=%2$srow%2$s>%3$s</div>">
                 Історія
-                <img id="status_img_%1$s" height="16" src="/icons/chevron-down.svg">
+                <img id="status_img_%1$s" height="14" src="/icons/chevron-down.svg">
             </button>',
             sprintf("%06d", $order->orderId),
             "'",

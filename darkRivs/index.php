@@ -277,6 +277,7 @@ if (true) {
                                         <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr role="row">
+                                                    <th></th>
                                                     <th>Номер</th>
                                                     <th>Email</th>
                                                     <th>Дата прийняття</th>
@@ -288,6 +289,7 @@ if (true) {
                                             </thead>
                                             <tfoot>
                                                 <tr>
+                                                    <th></th>
                                                     <th>Номер</th>
                                                     <th>Email</th>
                                                     <th>Дата прийняття</th>
@@ -622,6 +624,21 @@ if (true) {
             }
         });
 
+        function format(data) {
+            var HTML = '';
+            data.items.forEach(element => {
+                HTML += 
+                `<div class="row my-2">
+                    <div class="col-1"><img src="/${element.image}" class="m-auto" style="display: block; max-height: 40px; max-width: 40px;" alt=""></div>
+                    <div class="col-5 h6 font-weight-normal">${element.productName}</div>
+                    <div class="col-2 h6 font-weight-normal">${element.price}</div>
+                    <div class="col-2 h6 font-weight-normal">${element.count}</div>
+                    <div class="col-2 h6 font-weight-normal">${element.totalPrice}</div>
+                </div>`;
+            });
+            return HTML;
+        }
+
         function chevronToggle(img, button) {
             if (button.classList.contains("chevron-down")) {
                 button.classList.add("chevron-up");
@@ -635,42 +652,69 @@ if (true) {
         };
         // Call the dataTables jQuery plugin
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            var table = $('#dataTable').DataTable({
                 language: {
                     url: '/css/Ukrainian.lang.json'
                 },
-                "drawCallback": function(settings) {
+                drawCallback: function(settings) {
                     $('[data-toggle="popover"]').popover();
                 },
-                "ajax": {
-                    "url": "functions/orders.php",
-                    "type": "POST",
-                    "dataSrc": ""
+                ajax: {
+                    url: "functions/orders.php",
+                    type: "POST",
+                    dataSrc: ""
                 },
-                "columns": [{
-                        "data": "orderId"
+                columns: [{
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
                     },
                     {
-                        "data": "email"
+                        data: "orderId"
                     },
                     {
-                        "data": "date"
+                        data: "email"
                     },
                     {
-                        "data": "totalPrice"
+                        data: "date"
                     },
                     {
-                        "data": "status"
+                        data: "totalPrice"
                     },
                     {
-                        "data": "statuses"
+                        data: "status"
                     },
                     {
-                        "data": "buttons"
+                        data: "statuses",
+                        orderable: false
+                    },
+                    {
+                        data: "buttons",
+                        orderable: false
                     }
+                ],
+                order: [
+                    [1, 'desc']
                 ]
             });
+            $('#dataTable tbody').on('click', 'td.details-control', function() {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
 
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+            $('#dataTable').on('page.dt', function() {
+                $('.chevron-up').trigger('click');
+            });
         });
     </script>
 <?php } else {

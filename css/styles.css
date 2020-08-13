@@ -18378,7 +18378,7 @@ i-feather svg {
   font-size: 0.85rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .datatable {
     overflow: visible;
   }
