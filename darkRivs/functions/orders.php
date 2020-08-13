@@ -2,15 +2,42 @@
 require_once("../../LDLRIVS.php");
 require_once("mainFunctions.php");
 
+$type = $_POST['type'];
+$verification_token = $_POST['verification_token'];
+$verification_token1 = $_SESSION['verification_token'];
+$security_token = $_SESSION["security_admin_token"];
+$security_token1 = $_COOKIE["security_admin_token"];
+
 $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
 if ($mysqli->connect_errno) {
     exit();
 }
 
 $orders = array();
-if (false) {
-    if ($stmt = $mysqli->prepare("SELECT `OrderId`, `Email`, `Date` 
-        FROM `orders_in_process` ORDER BY `Date` DESC")) {
+if ($type == 'finished') {
+    if ($stmt = $mysqli->prepare("SELECT DISTINCT `o`.`OrderId`, `o`.`Email`, `o`.`Date` FROM `orders_in_process` AS `o` 
+        JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6 ORDER BY `Date` DESC")) {
+        $stmt->execute();
+        $stmt->bind_result(
+            $orderId,
+            $email,
+            $date
+        );
+        while ($stmt->fetch()) {
+            $order = new stdClass();
+            $order->orderId = $orderId;
+            $date = new DateTime($date);
+            $order->date = $date->format('d/m/Y H:i');
+            $order->email = $email;
+            $order->totalPrice = 0;
+            $orders[] = $order;
+        }
+        $stmt->close();
+    }
+} else if ($type == 'active') {
+    if ($stmt = $mysqli->prepare("SELECT * FROM `orders_in_process` WHERE `OrderId` NOT IN 
+        (SELECT DISTINCT `o`.`OrderId` FROM `orders_in_process` AS `o` 
+        JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6) ORDER BY `Date` DESC")) {
         $stmt->execute();
         $stmt->bind_result(
             $orderId,
@@ -29,9 +56,7 @@ if (false) {
         $stmt->close();
     }
 } else {
-    if ($stmt = $mysqli->prepare("SELECT * FROM `orders_in_process` WHERE `OrderId` NOT IN 
-    (SELECT DISTINCT `o`.`OrderId` FROM `orders_in_process` AS `o` 
-    JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6)")) {
+    if ($stmt = $mysqli->prepare("SELECT `OrderId`, `Email`, `Date` FROM `orders_in_process` ORDER BY `Date` DESC")) {
         $stmt->execute();
         $stmt->bind_result(
             $orderId,
