@@ -458,7 +458,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_email" value=<?= $email ?>>
                         </div>
                     </div>
-                    <div class="form-group row" id="">
+                    <div class="form-group row">
                         <label for="change_user_data_last_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Прізвище</label>
                         <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>

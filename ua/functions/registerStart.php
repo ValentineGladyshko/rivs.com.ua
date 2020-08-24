@@ -43,7 +43,7 @@ if (hash_equals($verification_token, $verification_token1)) {
     exit();
   }
 
-  //validating email adress
+  //validating email address
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $response->success = false;
     array_push($response->email, "Недійсна електронна адреса");
