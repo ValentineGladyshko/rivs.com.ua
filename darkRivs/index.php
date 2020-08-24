@@ -8,14 +8,13 @@ $_SESSION['verification_token'] = $verification_token;
 $security_token = $_SESSION["security_admin_token"];
 $security_token1 = $_COOKIE["security_admin_token"];
 
-//if ($security_token == null || $security_token1 == null) {
-//    include("../scripts.php");
-//   echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
-//   exit();
-//}
+if ($security_token == null || $security_token1 == null) {
+    include("../scripts.php");
+   echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
+   exit();
+}
 
-//if (hash_equals($security_token, $security_token1)) {
-if (true) {
+if (hash_equals($security_token, $security_token1)) {
 ?>
     <? include("functions/header.php"); ?>
     <div class="row">
@@ -24,11 +23,13 @@ if (true) {
                 <div class="card-header">
                     Recent Activity
                     <div class="dropdown no-caret">
-                        <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical text-gray-500">
+                        <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical text-gray-500">
                                 <circle cx="12" cy="12" r="1"></circle>
                                 <circle cx="12" cy="5" r="1"></circle>
                                 <circle cx="12" cy="19" r="1"></circle>
-                            </svg></button>
+                            </svg>
+                        </button>
                         <div class="dropdown-menu dropdown-menu-right animated--fade-in-up" aria-labelledby="dropdownMenuButton" style="position: absolute; transform: translate3d(-118px, 42px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
                             <h6 class="dropdown-header">Filter Activity:</h6>
                             <a class="dropdown-item" href="#!"><span class="badge badge-green-soft text-green my-1">Commerce</span></a>
@@ -134,6 +135,6 @@ if (true) {
     </script>
 <?php } else {
     include("../scripts.php");
-    echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
+    echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
     exit();
 } ?>

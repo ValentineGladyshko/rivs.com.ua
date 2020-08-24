@@ -36,7 +36,7 @@
 </head>
 
 <body class="nav-fixed" style="overflow-x: overlay;">
-    <nav class="topnav navbar py-0 pl-3 navbar-dark bg-dark" style="z-index:2">
+    <nav class="topnav navbar py-0 pl-3 navbar-dark bg-dark" style="z-index:4">
         <a class="navbar-brand px-2" href="#" style="width:50px;">
             <img src="/Images/logo.png" width="30" height="40" alt="logo" style="width:30px; height:40px">
         </a>

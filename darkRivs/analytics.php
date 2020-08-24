@@ -8,14 +8,13 @@ $_SESSION['verification_token'] = $verification_token;
 $security_token = $_SESSION["security_admin_token"];
 $security_token1 = $_COOKIE["security_admin_token"];
 
-//if ($security_token == null || $security_token1 == null) {
-//    include("../scripts.php");
-//   echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
-//   exit();
-//}
+if ($security_token == null || $security_token1 == null) {
+    include("../scripts.php");
+   echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
+   exit();
+}
 
-//if (hash_equals($security_token, $security_token1)) {
-if (true) {
+if (hash_equals($security_token, $security_token1)) {
 ?>
     <? include("functions/header.php"); ?>
     <div class="row">
@@ -335,6 +334,6 @@ if (true) {
     </script>
 <?php } else {
     include("../scripts.php");
-    echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
+    echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
     exit();
 } ?>
