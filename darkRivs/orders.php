@@ -8,14 +8,13 @@ $_SESSION['verification_token'] = $verification_token;
 $security_token = $_SESSION["security_admin_token"];
 $security_token1 = $_COOKIE["security_admin_token"];
 
-//if ($security_token == null || $security_token1 == null) {
-//    include("../scripts.php");
-//   echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
-//   exit();
-//}
+if ($security_token == null || $security_token1 == null) {
+    include("../scripts.php");
+    echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
+    exit();
+}
 
-//if (hash_equals($security_token, $security_token1)) {
-if (true) {
+if (hash_equals($security_token, $security_token1)) {
 ?>
     <? include("functions/header.php"); ?>
     <div class="card mb-4">
@@ -161,7 +160,7 @@ if (true) {
                 'verification_token': `<?= $verification_token ?>`,
                 'type': 'finished'
             };
-            $('#allOrders').DataTable({
+            var allOrdersTable = $('#allOrders').DataTable({
                 language: {
                     url: '/css/Ukrainian.lang.json'
                 },
@@ -208,9 +207,38 @@ if (true) {
                 $('.chevron-up').trigger('click');
             });
         });
+        function changeOrderStatus(orderId, statusId, verificationToken) {
+                formData = {
+                    'verification_token': verificationToken,
+                    'orderId': orderId,
+                    'statusId': statusId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "functions/changeOrderStatus.php",
+                    data: formData,
+                    success: function(response) {
+                        if (response != null) {
+                            
+                            // parse response from server
+                            var jsonData = JSON.parse(response);
+                            if (jsonData.success == true) {
+                                var ordersInProcessTable = $('#ordersInProcess').DataTable();
+                                ordersInProcessTable.ajax.reload();
+                                var allOrdersTable = $('#allOrders').DataTable();
+                                allOrdersTable.ajax.reload();
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        console.log('An error occurred.');
+                        console.log(data);
+                    },
+                });
+            }
     </script>
 <?php } else {
     include("../scripts.php");
-    echo "<script>$(document).ready(function() { $.redirect('/index.php'); });</script>";
+    echo "<script>$(document).ready(function() { $.redirect('login.php'); });</script>";
     exit();
 } ?>
