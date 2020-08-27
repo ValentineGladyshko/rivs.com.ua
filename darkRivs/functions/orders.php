@@ -13,7 +13,7 @@ if ($verification_token == null || $verification_token1 == null || $security_tok
     exit();
 }
 if (hash_equals($verification_token, $verification_token1) && hash_equals($security_token, $security_token1) && isset($_SESSION["email"])) {
-    $mysqli = mysqli_connect("localhost", "AuthorizedUser", "pWNqyljrhML90CHc", "rivs");
+    $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
     if ($mysqli->connect_errno) {
         exit();
     }

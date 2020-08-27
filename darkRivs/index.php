@@ -17,7 +17,7 @@ if ($security_token == null || $security_token1 == null) {
 if (hash_equals($security_token, $security_token1)) {
 ?>
     <? include("functions/header.php"); ?>
-    <div class="row">
+    <!--<div class="row">
         <div class="col-xl-6">
             <div class="card mb-4 card-header-actions">
                 <div class="card-header">
@@ -41,7 +41,7 @@ if (hash_equals($security_token, $security_token1)) {
                 </div>
                 <div class="card-body">
                     <div class="timeline timeline-xs">
-                        <!-- Timeline Item 1-->
+                  
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">27 min</div>
@@ -53,7 +53,7 @@ if (hash_equals($security_token, $security_token1)) {
                                 has been successfully placed.
                             </div>
                         </div>
-                        <!-- Timeline Item 2-->
+                  
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">58 min</div>
@@ -65,7 +65,7 @@ if (hash_equals($security_token, $security_token1)) {
                                 has been generated and is ready to view.
                             </div>
                         </div>
-                        <!-- Timeline Item 3-->
+                
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">2 hrs</div>
@@ -77,7 +77,7 @@ if (hash_equals($security_token, $security_token1)) {
                                 has registered
                             </div>
                         </div>
-                        <!-- Timeline Item 4-->
+                 
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">1 day</div>
@@ -85,7 +85,7 @@ if (hash_equals($security_token, $security_token1)) {
                             </div>
                             <div class="timeline-item-content">Server activity monitor alert</div>
                         </div>
-                        <!-- Timeline Item 5-->
+           
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">1 day</div>
@@ -97,7 +97,7 @@ if (hash_equals($security_token, $security_token1)) {
                                 has been successfully placed.
                             </div>
                         </div>
-                        <!-- Timeline Item 6-->
+                    
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">1 day</div>
@@ -109,7 +109,7 @@ if (hash_equals($security_token, $security_token1)) {
                                 have been updated.
                             </div>
                         </div>
-                        <!-- Timeline Item 7-->
+              
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">2 days</div>
@@ -125,7 +125,7 @@ if (hash_equals($security_token, $security_token1)) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <? include("functions/footer.php"); ?>
     <? include("functions/myScripts.php"); ?>

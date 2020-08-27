@@ -37,9 +37,9 @@
 
 <body class="nav-fixed" style="overflow-x: overlay;">
     <nav class="topnav navbar py-0 pl-3 navbar-dark bg-dark" style="z-index:4">
-        <a class="navbar-brand px-2" href="#" style="width:50px;">
+        <div class="navbar-brand px-2" href="" style="width:50px;">
             <img src="/Images/logo.png" width="30" height="40" alt="logo" style="width:30px; height:40px">
-        </a>
+        </div>
         <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 448 512">
             <g>
                 <path fill="currentColor" class="golden" d="M352 96H96V0l64 32 64-32 64 32 64-32z"></path>
@@ -67,7 +67,7 @@
                             Замовлення
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a id="products-nav" class="nav-link" href="products.php">
                             <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path fill="currentColor" d="M446.7 160c.4-.5.5-.7.9-1.2L391.3 53.9C386.9 40.8 374.7 32 360.9 32H256l32 128h158.7zM160 160l32-128H87.1c-13.8 0-26 8.8-30.4 21.9L.4 158.8c.4.5.5.7.9 1.2H160zm128 32v80c0 8.8-7.2 16-16 16h-96c-8.8 0-16-7.2-16-16v-80H0v256c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V192H288z" class=""></path>
@@ -82,7 +82,7 @@
                             </svg>
                             Користувачі
                         </a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <a id="admins-nav" class="nav-link" href="admins.php">
                             <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
@@ -91,14 +91,14 @@
                             Адміністратори
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a id="analytics-nav" class="nav-link" href="analytics.php">
                             <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <path fill="currentColor" d="M396.8 352h22.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-192 0h22.4c6.4 0 12.8-6.4 12.8-12.8V140.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h22.4c6.4 0 12.8-6.4 12.8-12.8V204.8c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zM496 400H48V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16zm-387.2-48h22.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-22.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8z" class=""></path>
                             </svg>
                             Аналітика
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
             </nav>
         </div>

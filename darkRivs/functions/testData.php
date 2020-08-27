@@ -2,12 +2,12 @@
 require_once("../../LDLRIVS.php");
 require_once("mainFunctions.php");
 
-$mysqli = mysqli_connect("localhost", "root", "", "rivs");
+$mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
 if ($mysqli->connect_errno) {
     exit();
 }
 
-$emails = array("55valentine99@gmail.com", "leonid.drapei@gmail.com", "55coursework99@gmail.com", "example@gmail.com", "JohnSmith@gmail.com", "SteveJobs@aplle.com");
+$emails = array("55valentine99@gmail.com", "leonid.drapei@gmail.com", "55coursework99@gmail.com", "example@gmail.com", "JohnSmith@gmail.com", "SteveJobs@apple.com");
 $statuses = array(1, 2, 3, 4, 5);
 
 $result = $mysqli->query('SELECT `PriceListID`, `Price` FROM `pricelist` WHERE `Price` != 0');
