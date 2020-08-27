@@ -243,13 +243,13 @@ foreach ($cart_items as $item) {
                         <div class="row align-items-center order-sm mt-sm-2 mt-xl-0" style="min-height: 40px;">
                             <div class="pr-0 col-xl-8 col-lg-7 col-md-6 col-sm-5">
                                 <div class="h5 mb-0 py-2 pl-0 pr-3 float-left">Ціна:</div>
-                                <div class="rounded-xl h5 mb-0 px-3 py-2 float-left bg-grey-alt">%4$s ₴</div>
+                                <div class="rounded-xl h5 mb-0 py-2 float-left">%4$s ₴</div>
                             </div>
                             <div class="px-sm-0 col-lg-2 col-sm-2">
                                 <div class="h5 mb-0 float-left py-2 pl-1 pr-0">%5$s шт.</div>
                             </div>
                             <div class="pl-sm-0 col-xl-2 col-lg-3 col-md-4 col-sm-5">
-                                <div class="rounded-xl h5 mb-0 float-sm-right float-left px-3 py-2 bg-grey-alt">%6$s ₴</div>
+                                <div class="rounded-xl h5 mb-0 float-sm-right float-left py-2">%6$s ₴</div>
                             </div>
                         </div>
                     </div>
@@ -267,7 +267,7 @@ foreach ($cart_items as $item) {
 
 $cart_modal_html .= sprintf(
     '<div class="row">
-        <div class="col-md-12" style="padding: 8 36 8 8;">          
+        <div class="col-md-12 pr-3 py-2 pl-2">          
             <div class="rounded-xl h2 mb-0 font-weight-normal px-3 py-2 float-right bg-grey-alt">%1$s ₴</div>
             <div class="h2 mb-0 font-weight-normal px-3 py-2 float-right">Разом:</div>
         </div>
