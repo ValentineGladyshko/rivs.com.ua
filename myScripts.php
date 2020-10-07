@@ -679,7 +679,7 @@
     resetPasswordForm.submit(function(e) {
 
       document.getElementById("resetPasswordButtonSpinner").classList.add("spinner-border");
-      document.getElementById("resetPasswordButtonButton").disabled = true;
+      document.getElementById("resetPasswordButton").disabled = true;
       // give data from form
       formData = {
         'verification_token': document.getElementById("reset_password_verification_token").value,
@@ -699,7 +699,7 @@
           if (response != null) {
 
             document.getElementById("resetPasswordButtonSpinner").classList.remove("spinner-border");
-            document.getElementById("resetPasswordButtonButton").disabled = false;
+            document.getElementById("resetPasswordButton").disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
 
