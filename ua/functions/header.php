@@ -345,7 +345,6 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     <p><a class="phone-ph" href="tel:+380674061192"><strong>+38(067)406-11-92</strong></a></p>
                     <p class="text-justify">Графік прийому замовлень:</p>
                     <p class="text-justify">Будні: з 10:00 до 20:00</p>
-                    <p class="text-justify">Вихідні: з 11:00 до 19:00</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
