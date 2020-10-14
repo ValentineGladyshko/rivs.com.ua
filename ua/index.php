@@ -182,7 +182,7 @@ $_SESSION['verification_token'] = $verification_token;
 
 </body>
 
-<? include("../myScripts.php"); ?>
+<? include("myScripts.php"); ?>
 <? include("../indexdocfunctions.php"); ?>
 
 <script type="text/javascript">

@@ -153,7 +153,7 @@ $_SESSION['verification_token'] = $verification_token;
 
         </div>
         <div id="map-container" class="z-depth-1-half map-container">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d543.5598323529164!2d30.506472261855496!3d50.528346787935796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4d248ea28a11d%3A0x33034c222f15706a!2z0LLRg9C70LjRhtGPINCf0ZbQstC90ZbRh9C90LAsIDUsINCa0LjRl9CyLCAwMjAwMA!5e0!3m2!1suk!2sua!4v1558130679616!5m2!1suk!2sua" style="border:0" frameborder="0" style="border:0" allowfullscreen>></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2536.309058138244!2d30.506504215734235!3d50.52842167948615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xff7779bee948f98!2z0KLQntCSICLQotCe0KDQk9Ce0JLQni3QktCY0KDQntCR0J3QmNCn0JjQmSDQlNCG0JwgItCg0IbQktChIg!5e0!3m2!1suk!2sua!4v1602688440250!5m2!1suk!2sua" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
       </section>
 
@@ -173,7 +173,7 @@ $_SESSION['verification_token'] = $verification_token;
   </footer>
   <!-- Footer -->
 
-  <? include("../myScripts.php"); ?>
+  <? include("myScripts.php"); ?>
 
   <script type="text/javascript">
     var elem = document.getElementById("contacts");

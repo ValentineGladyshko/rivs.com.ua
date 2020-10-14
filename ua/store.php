@@ -38,7 +38,7 @@ $_SESSION['verification_token'] = $verification_token;
 
       <!--Grid row-->
       <div class="row">
-        <? echo store('SELECT * FROM pricelist ORDER BY ProductAvailability DESC'); ?>
+        <? echo store('SELECT * FROM pricelist ORDER BY ProductAvailability DESC', $verification_token); ?>
       </div>
       <!--Main container-->
 
@@ -58,7 +58,7 @@ $_SESSION['verification_token'] = $verification_token;
 
 </body>
 
-<? include("../myScripts.php"); ?>
+<? include("myScripts.php"); ?>
 
 <script type="text/javascript">
   var elem = document.getElementById("store");

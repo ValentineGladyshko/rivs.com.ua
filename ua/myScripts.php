@@ -178,8 +178,8 @@
     };
 
     function productBuyButton(itemId, itemPrice, itemCount, itemImage, verificationToken) {
-      document.getElementById("productBuyButtonSpinner").classList.add("spinner-border");
-      document.getElementById("productBuyButton").disabled = true;
+      document.getElementById(("productBuyButtonSpinner" + itemId)).classList.add("spinner-border");
+      document.getElementById(("productBuyButton"+ itemId)).disabled = true;
 
       formData = {
         'verification_token': verificationToken,
@@ -193,8 +193,8 @@
         success: function(response) {
           if (response != null) {
 
-            document.getElementById("productBuyButtonSpinner").classList.remove("spinner-border");
-            document.getElementById("productBuyButton").disabled = false;
+            document.getElementById(("productBuyButtonSpinner" + itemId)).classList.remove("spinner-border");
+            document.getElementById(("productBuyButton" + itemId)).disabled = false;
             // parse response from server
             var jsonData = JSON.parse(response);
             if (jsonData.success == true) {

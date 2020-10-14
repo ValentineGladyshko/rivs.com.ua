@@ -406,7 +406,7 @@ function get_cart_modal_html($email, $is_authorized, $verification_token)
 }
 
 // function for making db query
-function store($query)
+function store($query, $verification_token)
 {
   $html = '';
   $mysqli = mysqli_connect("localhost", "chba7f54c7_LDLRIVS", "8e5cktmvx6", "chba7f54c7_LDLRIVS");
@@ -424,19 +424,39 @@ function store($query)
                   <img class="img-fluid mx-auto" src="/%2$s" style="max-height: 400px; padding:20px" alt="">
                 </a>
               </div>
-              <div class="card-body text-center">
-                <h5 class="card-title">%3$s</h5>%4$s
+              <div class="card-body text-center" style="padding-top:0; padding-bottom:0;">
+                <h5 class="card-title" style="margin-bottom:0;">%3$s</h5>
+              </div>%4$s
+              <div class="container text-center">
+                <div class="row">
+                  %6$s
+                  <div class="col">
+                    <a href="product.php?id=%1$s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem; height:42px;">Детальніше</a>
+                  </div>
+                </div>
               </div>
-              <a href="product.php?id=%1$s" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;">Детальніше</a>%5$s
+              %5$s
             </div>
           </div>',
         $row['PriceListID'],
-        $row['Image'],       
+        $row['Image'],
         $row['ProductName'],
         (($row['Price'] != 0) ?
-          ('<b class="text-center" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
+          ('<b class="text-center" style="margin: auto; margin-top:1rem; margin-bottom:1rem;">Ціна – ' . penny_price_to_normal_price($row['Price']) . ' ₴</b>') : ''),
         (($row['ProductAvailability'] == 0) ?
-          ('<a href="product.php?id=' . $row['PriceListID'] . '" class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem; width: 8rem;">Немає в наявності</a>') : '')
+          ('<p class="text-center bd-highlight" style="margin: auto; margin-bottom:1.5rem;">Немає в наявності</p>') : ''),
+        (($row['ProductAvailability'] != 0) ?
+          '<div class="col">
+            <button id="productBuyButton'.$row['PriceListID'].'" type="button" class="btn btn-dark" style="margin: auto; margin-bottom:1.5rem;" onclick="productBuyButton(`' . $row['PriceListID'] . '`, `' . penny_price_to_normal_price($row['Price']) . '`, 1, `' . $row['Image'] . '`, `' . $verification_token . '`)">
+              <span id="productBuyButtonSpinner'.$row['PriceListID'].'" style="width: 28px; height: 28px;"></span>
+              <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
+                <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>
+                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+              </svg>
+            </button>
+          </div>'
+          : '')
       );
     }
     $result->close();
@@ -476,7 +496,8 @@ function product($query, $id, $verification_token)
       $expiration_date,
       $manufacturer,
       $info,
-      $product_availability
+      $product_availability,
+      $imageHighQuality
     );
     if ($stmt->fetch()) {
 
@@ -486,17 +507,18 @@ function product($query, $id, $verification_token)
               <img src="/%1$s" class="img-fluid center mx-auto" style="max-height: 500px;" alt="">
             </div>
             <div class="text-center" style="margin: auto; margin-bottom:1.5rem;">
-              <p>Замовити можна по телефону</p>
+              %3$s
               <p>%2$s</p>
             </div>',
         $image,
-        (($price != 0) ? ('<b>Ціна – ' . penny_price_to_normal_price($price) . ' ₴</b>') : '')
+        (($price != 0) ? ('<b>Ціна – ' . penny_price_to_normal_price($price) . ' ₴</b>') : ''),
+        (($imageHighQuality != null) ? ('<a href="/'. $imageHighQuality .'" target="_blank">Відкрити велике зображення</a>') : '')        
       );
       if ($product_availability == 1) {
         $html .= sprintf(
           '<div class="text-center">
-              <button id="productBuyButton" type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%1$s`, `%2$s`, 1, `%3$s`, `%4$s`)" style="width:200px">
-                <span id="productBuyButtonSpinner" style="width: 28px; height: 28px;"></span>
+              <button id="productBuyButton%1$s" type="button" class="btn btn-dark rounded-xl btn-lg" onclick="productBuyButton(`%1$s`, `%2$s`, 1, `%3$s`, `%4$s`)" style="width:200px">
+                <span id="productBuyButtonSpinner%1$s" style="width: 28px; height: 28px;"></span>
                 <svg width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
                   <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0v-2z"/>

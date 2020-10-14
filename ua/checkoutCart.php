@@ -339,7 +339,7 @@ $cart_modal_html .= sprintf(
 
     <!-- SCRIPTS -->
     <!-- JQuery -->
-    <? include("../myScripts.php"); ?>
+    <? include("myScripts.php"); ?>
 
     <!-- Script for submitting form -->
     <script type="text/javascript">

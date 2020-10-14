@@ -536,7 +536,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <!-- SCRIPTS -->
         <!-- JQuery -->
-        <? include("../myScripts.php"); ?>
+        <? include("myScripts.php"); ?>
 
         <script type="text/javascript">
             var elem = document.getElementById("user");
