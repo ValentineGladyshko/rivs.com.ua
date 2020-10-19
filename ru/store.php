@@ -11,14 +11,15 @@ $_SESSION['verification_token'] = $verification_token;
 <html lang="en">
 
 <head>
-
+  <link rel="alternate" hreflang="uk" href="/store.php" />
   <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
   <title>
-    ТОВ ТВД "РІВС" | Продукція
+    ООО ТПП "РИВС" | Магазин
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link href="/css/storebuttons.css" rel="stylesheet">
   <!-- Font Awesome -->
   <? include("../scripts.php"); ?>
 
@@ -30,18 +31,16 @@ $_SESSION['verification_token'] = $verification_token;
   <!--Main Navigation-->
 
   <!--Main layout-->
-  <main class="mt-5 mb-3">
+  <main class="mt-5 mb-5">
 
     <!--Main container-->
     <div class="container">
-      <div class="row">
-        <? echo product('SELECT `Image`, `Price`, `ProductName`, `Appointment`, `Properties`, `Structure`, `ApplicationMethod`
-        , `Contraindications`, `Warnings`, `StorageConditions`, `ExpirationDate`, `Manufacturer`, `Info`, `ProductAvailability`, `ImageHQ` FROM `pricelist` 
-        LEFT JOIN `productdescription` ON `pricelist`.`ProductDescriptionID` = `productdescription`.`ProductDescriptionID` WHERE PriceListID = ?', $_GET['id'], $verification_token); ?>
-      </div>
 
-    </div>
-    <!--Main container-->
+      <!--Grid row-->
+      <div class="row">
+        <? echo store('SELECT * FROM pricelistru ORDER BY ProductAvailability DESC', $verification_token); ?>
+      </div>
+      <!--Main container-->
 
   </main>
   <!--Main layout-->
@@ -50,7 +49,7 @@ $_SESSION['verification_token'] = $verification_token;
   <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
+    <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
     </div>
     <!-- Copyright -->
 

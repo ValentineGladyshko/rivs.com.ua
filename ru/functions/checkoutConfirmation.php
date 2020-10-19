@@ -149,7 +149,7 @@ if ($is_authorized) {
                                         <td style="box-sizing: border-box;">
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 24px; color: #313131; text-align: center;">
-                                                Дякуємо за замовлення в інтернет-магазині</div>
+                                                Спасибо за заказ в интернет-магазине</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -186,10 +186,10 @@ if ($is_authorized) {
                                                         style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
                                                         <div 
                                                             style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
-                                                            Вітаємо, %2$s,<br style="box-sizing: border-box;">
+                                                            Здравствуйте, %2$s,<br style="box-sizing: border-box;">
                                                             <br style="box-sizing: border-box;">
-                                                            Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами
-                                                            зв%1$sяжеться співробітник компанії для підтвердження замовлення.</div>
+                                                            Ваш заказ получен и обрабатывается. В ближайшее время с Вами свяжется сотрудник компании для подтверждения заказа.
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr height="20" style="box-sizing: border-box;">
@@ -208,7 +208,7 @@ if ($is_authorized) {
                                                                 padding-bottom: 1.5rem; margin: 0px; padding-right: 0px; padding-left: 0px;">
                                                                 <div 
                                                                     style="box-sizing: border-box; font-weight: 500; line-height: 1.2; font-size: 1.25rem; padding: 8px 14px 8px 0px; margin-bottom: 0px;">
-                                                                    Номер замовлення:
+                                                                    Номер заказа:
                                                                 </div>
                                                             </div>
                                                             <div 
@@ -229,8 +229,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 0px; -ms-flex: 0 0 50%%; 
                                                                 flex: 0 0 50%%; max-width: 50%%;">
                                                                 <label for="checkout_email"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Електронна
-                                                                    адреса</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Электронный адрес
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_email" value="%4$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -242,8 +242,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 0px; padding-left: 15px; -ms-flex: 0 0 50%%; 
                                                                 flex: 0 0 50%%; max-width: 50%%;">
                                                                 <label for="checkout_phone"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Номер
-                                                                    телефону</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Номер телефона
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_phone" value="%5$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; 
@@ -259,7 +259,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 0px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_last_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Прізвище</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Фамилия
+                                                                </label>
                                                                 <input type="text" readonly="true"
                                                                     id="checkout_last_name" value="%6$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -271,7 +272,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 15px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_first_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Ім%1$sя</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Имя
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_first_name" value="%2$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -283,8 +285,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 0px; padding-left: 15px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_middle_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Ім%1$sя
-                                                                    по-батькові</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Имя отчество
+                                                                </label>
                                                                 <input type="text" readonly="true"
                                                                     id="checkout_middle_name" value="%7$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -317,8 +319,8 @@ if ($is_authorized) {
         $total_cart_price = 0;
         $cart_items = array();
 
-        if ($stmt = $mysqli->prepare("SELECT `cart_items`.`PriceListID`, `Count`, `Price`, `ProductName`, `Image` FROM `cart_items` JOIN `pricelist` 
-        ON `cart_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE UserID=?")) {
+        if ($stmt = $mysqli->prepare("SELECT `cart_items`.`PriceListID`, `Count`, `Price`, `ProductName`, `Image` FROM `cart_items` JOIN `pricelistru` 
+        ON `cart_items`.`PriceListID` = `pricelistru`.`PriceListID` WHERE UserID=?")) {
             $stmt->bind_param("i", $userID);
             $stmt->execute();
             $stmt->bind_result($db_pricelistID, $db_count, $db_price, $db_product_name, $db_image);
@@ -417,7 +419,7 @@ if ($is_authorized) {
                                                                     <div
                                                                         style="box-sizing: border-box; font-weight: 500; line-height: 1.2; font-size: 1.25rem; float: right; 
                                                                         padding: 8px 14px 8px 14px; margin-bottom: 0px;">
-                                                                        Разом:
+                                                                        Итого:
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -429,7 +431,7 @@ if ($is_authorized) {
                                                         style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
                                                         <div
                                                             style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
-                                                            <br style="box-sizing: border-box;">З повагою,<br
+                                                            <br style="box-sizing: border-box;">С уважением,<br
                                                                 style="box-sizing: border-box;">
                                                             Команда Rivs.com.ua</div>
                                                     </td>
@@ -462,8 +464,8 @@ if ($is_authorized) {
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 12px; color: #858585; text-align: center; line-height: 20px;">
                                                 <p style="box-sizing: border-box;">
-                                                    © 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ
-                                                    "РІВС"</p>
+                                                    © 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -596,26 +598,26 @@ if ($is_authorized) {
 
     if (!filter_var($email2, FILTER_VALIDATE_EMAIL)) {
         $response->success = false;
-        array_push($response->email, "Недійсна електронна адреса");
+        array_push($response->email, "Неправильный адрес электронной почты");
     }
 
     if (strlen($first_name) > 32) {
         $response->success = false;
-        $response->first_name = "ім'я повинно бути довжиною меншою за 32 символи";
+        $response->first_name = "Имя должно быть длиной менее 32 символов";
     }
 
     if (strlen($last_name) > 64) {
         $response->success = false;
-        $response->last_name = "Прізвище повинно бути довжиною меншою за 64 символи";
+        $response->last_name = "Фамилия должна быть длиной менее 64 символов";
     }
 
     if (strlen($middle_name) > 32) {
         $response->success = false;
-        $response->middle_name = "ім'я по-батькові повинно бути довжиною меншою за 32 символи";
+        $response->middle_name = "Имя отчество должно быть длиной менее 32 символов";
     }
     if (preg_match('/^(\+\d{3}\(\d{2}\)\d{3}[ -]\d{2}[ -]\d{2})|(\+\d{12})|(\+\d{3}\ \d{2}\ \d{3}\ \d{2}\ \d{2})$/m', $phone) != 1 && !is_null($phone)) {
         $response->success = false;
-        $response->phone = 'Телефон повинен відповідати формату "+380123456789"';
+        $response->phone = 'Телефон должен соответствовать формату "+380123456789"';
     }
 
     if ($response->success == false) {
@@ -699,7 +701,7 @@ if ($is_authorized) {
                                         <td style="box-sizing: border-box;">
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 24px; color: #313131; text-align: center;">
-                                                Дякуємо за замовлення в інтернет-магазині</div>
+                                                Спасибо за заказ в интернет-магазине</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -736,10 +738,10 @@ if ($is_authorized) {
                                                         style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
                                                         <div 
                                                             style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
-                                                            Вітаємо %2$s,<br style="box-sizing: border-box;">
+                                                            Здравствуйте, %2$s,<br style="box-sizing: border-box;">
                                                             <br style="box-sizing: border-box;">
-                                                            Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами
-                                                            зв%1$sяжеться співробітник компанії для підтвердження замовлення.</div>
+                                                            Ваш заказ получен и обрабатывается. В ближайшее время с Вами свяжется сотрудник компании для подтверждения заказа.
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr height="20" style="box-sizing: border-box;">
@@ -758,7 +760,7 @@ if ($is_authorized) {
                                                                 padding-bottom: 1.5rem; margin: 0px; padding-right: 0px; padding-left: 0px;">
                                                                 <div 
                                                                     style="box-sizing: border-box; font-weight: 500; line-height: 1.2; font-size: 1.25rem; padding: 8px 14px 8px 0px; margin-bottom: 0px;">
-                                                                    Номер замовлення:
+                                                                    Номер заказа:
                                                                 </div>
                                                             </div>
                                                             <div 
@@ -779,8 +781,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 0px; -ms-flex: 0 0 50%%; 
                                                                 flex: 0 0 50%%; max-width: 50%%;">
                                                                 <label for="checkout_email"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Електронна
-                                                                    адреса</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Электронный адрес
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_email" value="%4$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -792,8 +794,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 0px; padding-left: 15px; -ms-flex: 0 0 50%%; 
                                                                 flex: 0 0 50%%; max-width: 50%%;">
                                                                 <label for="checkout_phone"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Номер
-                                                                    телефону</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Номер телефона
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_phone" value="%5$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; 
@@ -809,7 +811,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 0px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_last_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Прізвище</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Фамилия
+                                                                </label>
                                                                 <input type="text" readonly="true"
                                                                     id="checkout_last_name" value="%6$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -821,7 +824,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 15px; padding-left: 15px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_first_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Ім%1$sя</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Имя
+                                                                </label>
                                                                 <input type="text" readonly="true" 
                                                                     id="checkout_first_name" value="%2$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -833,8 +837,8 @@ if ($is_authorized) {
                                                                 style="box-sizing: border-box; position: relative; width: 100%%; padding-right: 0px; padding-left: 15px; -ms-flex: 0 0 33.333333%%; 
                                                                 flex: 0 0 33.333333%%; max-width: 33.333333%%;">
                                                                 <label for="checkout_middle_name"
-                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Ім%1$sя
-                                                                    по-батькові</label>
+                                                                    style="box-sizing: border-box; display: inline-block; margin-bottom: .5rem;">Имя отчество
+                                                                </label>
                                                                 <input type="text" readonly="true"
                                                                     id="checkout_middle_name" value="%7$s"
                                                                     style="box-sizing: border-box; margin: 0px; font-family:inherit; overflow: visible; display: block; width: 100%%; 
@@ -874,7 +878,7 @@ if ($is_authorized) {
             $my_pricelistID = $value["priceListID"];
             $count = (int) ($value["count"]);
 
-            if ($stmt = $mysqli->prepare("SELECT `PriceListID`, ProductName, Price, `Image` FROM `pricelist` WHERE `PriceListID`=?")) {
+            if ($stmt = $mysqli->prepare("SELECT `PriceListID`, ProductName, Price, `Image` FROM `pricelistru` WHERE `PriceListID`=?")) {
                 $stmt->bind_param("i", $my_pricelistID);
                 $stmt->execute();
                 $stmt->bind_result($pricelistID, $product_name, $price, $image);
@@ -976,7 +980,7 @@ if ($is_authorized) {
                                                                     <div
                                                                         style="box-sizing: border-box; font-weight: 500; line-height: 1.2; font-size: 1.25rem; float: right; 
                                                                         padding: 8px 14px 8px 14px; margin-bottom: 0px;">
-                                                                        Разом:
+                                                                        Итого:
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -988,7 +992,7 @@ if ($is_authorized) {
                                                         style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
                                                         <div
                                                             style="box-sizing: border-box; font-family:%1$sSegoe UI%1$s, sans-serif; font-size: 16px; color: #313131; line-height: 24px;">
-                                                            <br style="box-sizing: border-box;">З повагою,<br
+                                                            <br style="box-sizing: border-box;">С уважением,<br
                                                                 style="box-sizing: border-box;">
                                                             Команда Rivs.com.ua</div>
                                                     </td>
@@ -1021,8 +1025,8 @@ if ($is_authorized) {
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 12px; color: #858585; text-align: center; line-height: 20px;">
                                                 <p style="box-sizing: border-box;">
-                                                    © 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ
-                                                    "РІВС"</p>
+                                                    © 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>

@@ -72,7 +72,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         $orders = array();
         if ($stmt = $mysqli->prepare("SELECT `orders_in_process`.`OrderId`, `orders_items`.`PriceListID`, `Count`, `orders_items`.`Price`, `ProductName`, `Image`, `Date` 
             FROM `orders_in_process` JOIN `orders_items` ON `orders_in_process`.`OrderId` = `orders_items`.`OrderId` 
-            JOIN `pricelist` ON `orders_items`.`PriceListID` = `pricelist`.`PriceListID` WHERE Email = ? ORDER BY `Date` DESC")) {
+            JOIN `pricelistru` ON `orders_items`.`PriceListID` = `pricelistru`.`PriceListID` WHERE Email = ? ORDER BY `Date` DESC")) {
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $stmt->bind_result(
@@ -110,9 +110,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             $stmt->close();
         }
 
-        if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statuses`.`StatusName`, `orders_statuses`.`Date` 
+        if ($stmt = $mysqli->prepare("SELECT `orders_statuses`.`StatusId`, `statusesru`.`StatusName`, `orders_statuses`.`Date` 
             FROM `orders_in_process` JOIN `orders_statuses` ON `orders_in_process`.`OrderId` = `orders_statuses`.`OrderId` 
-            JOIN `statuses` ON `orders_statuses`.`StatusId` = `statuses`.`StatusId` WHERE `orders_in_process`.`OrderId` = ? ORDER BY `orders_statuses`.`Date` DESC")) {
+            JOIN `statusesru` ON `orders_statuses`.`StatusId` = `statusesru`.`StatusId` WHERE `orders_in_process`.`OrderId` = ? ORDER BY `orders_statuses`.`Date` DESC")) {
             foreach ($orders as $key => $value) {
                 $stmt->bind_param("i", $key);
                 $stmt->execute();
@@ -170,7 +170,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                         </div>
                                         <div class="row align-items-center order-sm mt-sm-2 mt-xl-0" style="min-height: 40px;">
                                             <div class="pr-0 col-xl-8 col-lg-7 col-md-6 col-sm-5">
-                                                <div class="h5 mb-0 py-2 pl-0 pr-3 float-left">Ціна:</div>
+                                                <div class="h5 mb-0 py-2 pl-0 pr-3 float-left">Цена:</div>
                                                 <div class="rounded-xl h5 mb-0 py-2 float-left">%4$s ₴</div>
                                             </div>
                                             <div class="px-sm-0 col-lg-2 col-sm-2">
@@ -263,9 +263,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                         <div class="col-lg-5 col-md-2 col-sm-3 col-5 p-0">
                                             <button id="status_button_%1$s" onclick="chevronToggle(document.getElementById(`status_img_%1$s`), 
                                                 document.getElementById(`status_button_%1$s`))" class="btn btn-link pl-0 chevron-down float-sm-right" 
-                                                style="font-weight: 500;" type="button" data-toggle="popover" title="Історія замовлення" data-html="true" 
+                                                style="font-weight: 500;" type="button" data-toggle="popover" title="История заказа" data-html="true" 
                                                 data-placement="bottom" data-content="<div class=%9$srow%9$s>%7$s</div>">
-                                                Історія
+                                                История
                                                 <img id="status_img_%1$s" height="16" src="/icons/chevron-down.svg">
                                             </button>
                                         </div>
@@ -280,7 +280,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <div class="row">
                                     <div class="col-md-12 pr-3 py-2 pl-2">
                                         <div class="rounded-xl h5 mb-0 px-3 py-2 float-right bg-grey-alt">%4$s ₴</div>
-                                        <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Разом:</div>
+                                        <div class="h5 mb-0" style=" padding: 8 14 8 14; float:right;">Итого:</div>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +306,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
 
         <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
         <title>
-            ТОВ ТВД "РІВС" | Особистий кабінет
+            ООО ТПП "РИВС" | Личный кабинет
         </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -325,7 +325,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h5 class="modal-title" id="changePasswordModalLabel">Змінення паролю</h5>
+                            <h5 class="modal-title" id="changePasswordModalLabel">Изменение пароля</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -333,9 +333,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div class="modal-body">
                             <input id="change_password_verification_token" type="hidden" value=<?= $verification_token ?>>
                             <div class="form-group">
-                                <label class="control-label" for="change_password_password">Поточний пароль</label>
+                                <label class="control-label" for="change_password_password">Текущий пароль</label>
                                 <div class="input-group" id="change_password_password_group">
-                                    <input type="password" class="form-control" id="change_password_password" placeholder="Введіть поточний пароль" required>
+                                    <input type="password" class="form-control" id="change_password_password" placeholder="Введите текущий пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_password_img'), document.getElementById('change_password_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_password_img" height="20" src="/icons/eye-fill.svg">
@@ -345,9 +345,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <div id="change_password_password_feedback" class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="change_password_new_password">Новий пароль</label>
+                                <label class="control-label" for="change_password_new_password">Новый пароль</label>
                                 <div class="input-group" id="change_password_new_password_group">
-                                    <input type="password" class="form-control" id="change_password_new_password" placeholder="Введіть новий пароль" required>
+                                    <input type="password" class="form-control" id="change_password_new_password" placeholder="Введите новый пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_new_password_img'), document.getElementById('change_password_new_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_new_password_img" height="20" src="/icons/eye-fill.svg">
@@ -357,9 +357,9 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                                 <div id="change_password_new_password_feedback" class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="change_password_repeat_password">Повторіть введення нового пароля</label>
+                                <label class="control-label" for="change_password_repeat_password">Повторите ввод нового пароля</label>
                                 <div class="input-group" id="change_password_repeat_password_group">
-                                    <input type="password" class="form-control" id="change_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                    <input type="password" class="form-control" id="change_password_repeat_password" placeholder="Введите новый пароль повторно" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('change_password_repeat_password_img'), document.getElementById('change_password_repeat_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="change_password_repeat_password_img" height="20" src="/icons/eye-fill.svg">
@@ -370,10 +370,10 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                             <button id="changePasswordButton" type="submit" class="btn btn-dark">
                                 <span id="changePasswordButtonSpinner" style="width: 20px; height: 20px;"></span>
-                                Підтвердити
+                                Подтвердить
                             </button>
                         </div>
                     </div>
@@ -385,18 +385,18 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">УВАГА! Небезпечна дія!</h5>
+                        <h5 class="modal-title">ВНИМАНИЕ! Опасное действие!</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Ви впевнені що хочете видалити акаунт?</p>
+                        <p>Вы уверены, что хотите удалить аккаунт?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:75px">Ні</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:75px">Нет</button>
                         <button id="deleteAccountButton" type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#deleteConfirmationModal">
-                            Так, я хочу видалити акаунт
+                            Да, я хочу удалить аккаунт
                         </button>
                     </div>
                 </div>
@@ -408,7 +408,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 <form id="deleteAccountForm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteConfirmationModalLabel">Видалення акаунту</h5>
+                            <h5 class="modal-title" id="deleteConfirmationModalLabel">Удаление аккаунта</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -419,7 +419,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <div class="form-group">
                                 <label class="control-label" for="delete_account_password">Пароль</label>
                                 <div class="input-group" id="delete_account_password_group">
-                                    <input type="password" class="form-control" id="delete_account_password" placeholder="Введіть пароль" required>
+                                    <input type="password" class="form-control" id="delete_account_password" placeholder="Введите пароль" required>
                                     <div class="input-group-append">
                                         <div onclick="passwordToggle(document.getElementById('delete_account_password_img'), document.getElementById('delete_account_password'))" class="input-group-text" style="cursor: pointer;">
                                             <img id="delete_account_password_img" height="20" src="/icons/eye-fill.svg">
@@ -433,7 +433,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
                             <button id="deleteConfirmationButton" type="submit" class="btn btn-danger">
                                 <span id="deleteConfirmationButtonSpinner" style="width: 20px; height: 20px;"></span>
-                                Видалити акаунт
+                                Видалити аккаунт
                             </button>
                         </div>
                     </div>
@@ -451,17 +451,17 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                 <form id="changeUserDataForm" method="post">
                     <input id="change_user_data_verification_token" type="hidden" value=<?= $verification_token ?>>
                     <div class="form-group row">
-                        <label for="change_user_data_email" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Електронна адреса</label>
+                        <label for="change_user_data_email" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Электронный адрес</label>
                         <div class="col-lg-10 col-md-9 col-sm-8 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_email" value=<?= $email ?>>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_last_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Прізвище</label>
+                        <label for="change_user_data_last_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Фамилия</label>
                         <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_last_name" value=<?= $last_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_last_name'))" id="change_user_data_last_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити прізвище">
+                        <div onclick="activateInput(getElementById('change_user_data_last_name'))" id="change_user_data_last_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Изменить фамилию">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -470,11 +470,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_last_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_first_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Ім'я</label>
+                        <label for="change_user_data_first_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Имя</label>
                         <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_first_name" value=<?= $first_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_first_name'))" id="change_user_data_first_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я">
+                        <div onclick="activateInput(getElementById('change_user_data_first_name'))" id="change_user_data_first_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Изменить имя">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -483,11 +483,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_first_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_middle_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Ім'я по-батькові</label>
+                        <label for="change_user_data_middle_name" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Имя отчество</label>
                         <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_middle_name" value=<?= $middle_name ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_middle_name'))" id="change_user_data_middle_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити ім'я по-батькові">
+                        <div onclick="activateInput(getElementById('change_user_data_middle_name'))" id="change_user_data_middle_name_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Изменить имя отчество">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -496,11 +496,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         <div id="change_user_data_middle_name_feedback" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group row">
-                        <label for="change_user_data_phone" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Номер телефону</label>
+                        <label for="change_user_data_phone" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Номер телефона</label>
                         <div class="col-lg-3 col-md-4 col-sm-5 col-10 my-vertical-centered">
                             <input type="text" readonly="true" class="form-control-plaintext my-padding" id="change_user_data_phone" value=<?= $phone ?> required>
                         </div>
-                        <div onclick="activateInput(getElementById('change_user_data_phone'))" id="change_user_data_phone_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Змінити номер телефону">
+                        <div onclick="activateInput(getElementById('change_user_data_phone'))" id="change_user_data_phone_button" class="col-auto my-vertical-centered" data-toggle="tooltip" data-placement="right" title="Изменить номер телефона">
                             <svg class="my-svg-button" width="24px" height="24px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -508,17 +508,17 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                         </div>
                         <div id="change_user_data_phone_feedback" class="invalid-feedback"></div>
                     </div>
-                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-secondary my-1 mr-1">Відмінити</button>
+                    <button id="changeUserDataDismissButton" hidden="true" type="button" class="btn btn-secondary my-1 mr-1">Отменить</button>
                     <button id="changeUserDataSubmitButton" hidden="true" type="submit" class="btn btn-dark m-1">
                         <span id="changeUserDataSubmitButtonSpinner" style="width: 20px; height: 20px;"></span>
-                        Змінити особисті дані
+                        Изменить личные данные
                     </button>
                 </form>
 
                 <hr>
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#changePasswordModal">Змінити пароль</button>
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#changePasswordModal">Изменить пароль</button>
                 <hr>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Видалити акаунт</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Удалить аккаунт</button>
                 <hr>
                 <?php echo $order_html; ?>
         </main>
@@ -528,7 +528,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
+            <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
             </div>
 
         </footer>

@@ -14,7 +14,7 @@ $_SESSION['verification_token'] = $verification_token;
 
   <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
   <title>
-    ТОВ ТВД "РІВС" | Продукція
+    ООО ТПП "РИВС" | Продукция
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,8 +36,8 @@ $_SESSION['verification_token'] = $verification_token;
     <div class="container">
       <div class="row">
         <? echo product('SELECT `Image`, `Price`, `ProductName`, `Appointment`, `Properties`, `Structure`, `ApplicationMethod`
-        , `Contraindications`, `Warnings`, `StorageConditions`, `ExpirationDate`, `Manufacturer`, `Info`, `ProductAvailability`, `ImageHQ` FROM `pricelist` 
-        LEFT JOIN `productdescription` ON `pricelist`.`ProductDescriptionID` = `productdescription`.`ProductDescriptionID` WHERE PriceListID = ?', $_GET['id'], $verification_token); ?>
+        , `Contraindications`, `Warnings`, `StorageConditions`, `ExpirationDate`, `Manufacturer`, `Info`, `ProductAvailability`, `ImageHQ` FROM `pricelistru` 
+        LEFT JOIN `productdescriptionru` ON `pricelistru`.`ProductDescriptionID` = `productdescriptionru`.`ProductDescriptionID` WHERE PriceListID = ?', $_GET['id'], $verification_token); ?>
       </div>
 
     </div>
@@ -50,7 +50,7 @@ $_SESSION['verification_token'] = $verification_token;
   <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
+    <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
     </div>
     <!-- Copyright -->
 

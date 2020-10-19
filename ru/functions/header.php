@@ -22,13 +22,13 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
             <div class="collapse navbar-collapse" id="navbarCollapsedContent">
                 <ul class="navbar-nav mr-auto">
                     <li id="main" class="nav-item">
-                        <a class="rounded-xl nav-link" href="index.php">Головна</a>
+                        <a class="rounded-xl nav-link" href="index.php">Главная</a>
                     </li>
                     <li id="contacts" class="nav-item">
-                        <a class="rounded-xl nav-link" href="contacts.php">Контакти</a>
+                        <a class="rounded-xl nav-link" href="contacts.php">Контакты</a>
                     </li>
                     <li id="store" class="nav-item">
-                        <a class="rounded-xl nav-link" href="store.php">Продукція</a>
+                        <a class="rounded-xl nav-link" href="store.php">Продукция</a>
                     </li>
                 </ul>
 
@@ -41,7 +41,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                                 <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
                             </svg>
                             <div class="align-middle d-inline">
-                                Телефони
+                                Телефоны
                             </div>
                         </a>
                     </li>
@@ -62,12 +62,12 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     <li class="nav-item">
                         <form style="margin:0px" class="nav-item" id="logoutForm">
                             <input id="logout_verification_token" type="hidden" value=<?= $verification_token ?>>
-                            <a id="logoutButton" class="rounded nav-link">Вийти</a>
+                            <a id="logoutButton" class="rounded nav-link">Выйти</a>
                         </form>
                     </li>
                     <? } else { ?>
-                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#registerModal">Реєстрація</a></li>
-                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#loginModal">Увійти</a></li>
+                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#registerModal">Регистрация</a></li>
+                    <li class="nav-item"><a class="rounded-xl nav-link" data-toggle="modal" data-target="#loginModal">Войти</a></li>
                     <? } ?>
                     <li style="min-width:10px">
                     </li>
@@ -87,7 +87,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
             <form id="loginForm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="loginModalLabel">Вхід</h5>
+                        <h5 class="modal-title" id="loginModalLabel">Вход</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -96,14 +96,14 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <!--Grid row-->
                         <input id="login_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
-                            <label class="control-label" for="login_email">Електронна адреса</label>
-                            <input type="email" class="form-control" id="login_email" placeholder="Введіть електронну адресу" required>
+                            <label class="control-label" for="login_email">Электронный адрес</label>
+                            <input type="email" class="form-control" id="login_email" placeholder="Введите адрес электронной почты" required>
                             <div id="login_email_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="login_password">Пароль</label>
                             <div class="input-group" id="login_password_group">
-                                <input type="password" class="form-control" id="login_password" placeholder="Введіть пароль" required>
+                                <input type="password" class="form-control" id="login_password" placeholder="Введите пароль" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('login_password_img'), document.getElementById('login_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="login_password_img" height="20" src="/icons/eye-fill.svg">
@@ -112,11 +112,11 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                             </div>
                             <div id="login_password_feedback" class="invalid-feedback"></div>
                         </div>
-                        <button style="margin:0; padding:0;" class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#rememberModal">Забули пароль?</button>
+                        <button style="margin:0; padding:0;" class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#rememberModal">Забыли пароль?</button>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="loginButton" type="submit" class="btn btn-dark"><span id="loginButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button id="loginButton" type="submit" class="btn btn-dark"><span id="loginButtonSpinner" style="width: 20px; height: 20px;"></span>Подтвердить</button>
                     </div>
                 </div>
             </form>
@@ -129,7 +129,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="registerModalLabel">Реєстрація</h5>
+                        <h5 class="modal-title" id="registerModalLabel">Регистрация</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -137,14 +137,14 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     <div class="modal-body">
                         <input id="register_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
-                            <label class="control-label" for="register_email">Електронна адреса</label>
-                            <input type="email" class="form-control" id="register_email" placeholder="Введіть електронну адресу" required>
+                            <label class="control-label" for="register_email">Электронный адрес</label>
+                            <input type="email" class="form-control" id="register_email" placeholder="Введите адрес электронной почты" required>
                             <div id="register_email_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="register_password">Пароль</label>
                             <div class="input-group" id="register_password_group">
-                                <input type="password" class="form-control" id="register_password" placeholder="Введіть пароль" required>
+                                <input type="password" class="form-control" id="register_password" placeholder="Введите пароль" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('register_password_img'), document.getElementById('register_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="register_password_img" height="20" src="/icons/eye-fill.svg">
@@ -154,9 +154,9 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                             <div id="register_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="register_repeat_password">Повторіть введення нового пароля</label>
+                            <label class="control-label" for="register_repeat_password">Повторите ввод нового пароля</label>
                             <div class="input-group" id="register_repeat_password_group">
-                                <input type="password" class="form-control" id="register_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                <input type="password" class="form-control" id="register_repeat_password" placeholder="Введите новый пароль повторно" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('register_repeat_password_img'), document.getElementById('register_repeat_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="register_repeat_password_img" height="20" src="/icons/eye-fill.svg">
@@ -167,8 +167,8 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="registerButton" type="submit" class="btn btn-dark"><span id="registerButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button id="registerButton" type="submit" class="btn btn-dark"><span id="registerButtonSpinner" style="width: 20px; height: 20px;"></span>Подтвердить</button>
                     </div>
                 </div>
             </form>
@@ -178,16 +178,16 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalLabel">Замовлення</h5>
+                    <h5 class="modal-title" id="orderModalLabel">Заказ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Ваше замовлення отримано і потрапило на обробку. Найближчим часом з Вами зв'яжеться співробітник компанії для підтвердження замовлення.
+                    Ваш заказ получен и обрабатывается. В ближайшее время с Вами свяжется сотрудник компании для подтверждения заказа.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="registerConfirmationModalLabel">Завершення реєстрації</h5>
+                        <h5 class="modal-title" id="registerConfirmationModalLabel">Завершение регистрации</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -208,38 +208,38 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <input id="register_confirmation_email" type="hidden">
                         <input id="register_confirmation_password" type="hidden">
                         <div class="form-group">
-                            <label class="control-label" for="register_confirmation_email_code">Код для підтвердження електронної адреси</label>
+                            <label class="control-label" for="register_confirmation_email_code">Код для подтверждения электронного адреса</label>
                             <input type="text" class="form-control" id="register_confirmation_email_code" placeholder="Введіть код" required>
                             <div id="register_confirmation_email_code_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-4">
-                                <label class="control-label" for="register_confirmation_last_name">Прізвище</label>
-                                <input type="text" class="form-control" id="register_confirmation_last_name" placeholder="Введіть прізвище" required>
+                                <label class="control-label" for="register_confirmation_last_name">Фамилия</label>
+                                <input type="text" class="form-control" id="register_confirmation_last_name" placeholder="Введите фамилию" required>
                                 <div id="register_confirmation_last_name_feedback" class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-lg-4">
-                                <label class="control-label" for="register_confirmation_first_name">Ім'я</label>
-                                <input type="text" class="form-control" id="register_confirmation_first_name" placeholder="Введіть ім'я" required>
+                                <label class="control-label" for="register_confirmation_first_name">Имя</label>
+                                <input type="text" class="form-control" id="register_confirmation_first_name" placeholder="Введите имя" required>
                                 <div id="register_confirmation_first_name_feedback" class="invalid-feedback"></div>
                             </div>
 
                             <div class="form-group col-lg-4">
-                                <label class="control-label" for="register_confirmation_middle_name">Ім'я по-батькові</label>
-                                <input type="text" class="form-control" id="register_confirmation_middle_name" placeholder="Введіть ім'я по-батькові" required>
+                                <label class="control-label" for="register_confirmation_middle_name">Имя отчество</label>
+                                <input type="text" class="form-control" id="register_confirmation_middle_name" placeholder="Введите имя отчество" required>
                                 <div id="register_confirmation_middle_name_feedback" class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="register_confirmation_phone">Номер телефону</label>
+                            <label class="control-label" for="register_confirmation_phone">Номер телефона</label>
                             <input type="tel" class="form-control" id="register_confirmation_phone" pattern="^([+]\d{3}[(]\d{2}[)]\d{3}[ -]\d{2}[ -]\d{2})|([+]\d{12})|([+]\d{3} \d{2} \d{3} \d{2} \d{2})$/m" value="+380" required>
                             <div id="register_confirmation_phone_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="registerConfirmationSendCodeButton" hidden="true" class="btn btn-dark"><span id="registerConfirmationSendCodeButtonSpinner" style="width: 20px; height: 20px;"></span>Відправити код повторно</button>
-                        <button id="registerConfirmationButton" type="submit" class="btn btn-dark"><span id="registerConfirmationButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button id="registerConfirmationSendCodeButton" hidden="true" class="btn btn-dark"><span id="registerConfirmationSendCodeButtonSpinner" style="width: 20px; height: 20px;"></span>Отправить код повторно</button>
+                        <button id="registerConfirmationButton" type="submit" class="btn btn-dark"><span id="registerConfirmationButtonSpinner" style="width: 20px; height: 20px;"></span>Подтвердить</button>
                     </div>
                 </div>
             </form>
@@ -251,7 +251,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
             <form id="rememberForm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="rememberModalLabel">Відновлення паролю</h5>
+                        <h5 class="modal-title" id="rememberModalLabel">Восстановление пароля</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -260,14 +260,14 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <!--Grid row-->
                         <input id="remember_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <div class="form-group">
-                            <label class="control-label" for="remember_email">Електронна адреса</label>
-                            <input type="email" class="form-control" id="remember_email" placeholder="Введіть електронну адресу" required>
+                            <label class="control-label" for="remember_email">Электронный адрес</label>
+                            <input type="email" class="form-control" id="remember_email" placeholder="Введите адрес электронной почты" required>
                             <div id="remember_email_feedback" class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="rememberButton" type="submit" class="btn btn-dark"><span id="rememberButtonSpinner" style="width: 20px; height: 20px;"></span>Надіслати код</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button id="rememberButton" type="submit" class="btn btn-dark"><span id="rememberButtonSpinner" style="width: 20px; height: 20px;"></span>Отправить код</button>
                     </div>
                 </div>
             </form>
@@ -280,7 +280,7 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="resetPasswordModalLabel">Скидання паролю</h5>
+                        <h5 class="modal-title" id="resetPasswordModalLabel">Сброс пароля</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -289,14 +289,14 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         <input id="reset_password_verification_token" type="hidden" value=<?= $verification_token ?>>
                         <input id="reset_password_email" type="hidden">
                         <div class="form-group">
-                            <label class="control-label" for="reset_password_email_code">Код для скидання паролю</label>
+                            <label class="control-label" for="reset_password_email_code">Код для сброса пароля</label>
                             <input type="text" class="form-control" id="reset_password_email_code" placeholder="Введіть код" required>
                             <div id="reset_password_email_code_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="reset_password_password">Новий пароль</label>
+                            <label class="control-label" for="reset_password_password">Новый пароль</label>
                             <div class="input-group" id="reset_password_password_group">
-                                <input type="password" class="form-control" id="reset_password_password" placeholder="Введіть новий пароль" required>
+                                <input type="password" class="form-control" id="reset_password_password" placeholder="Введите новый пароль" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('reset_password_password_img'), document.getElementById('reset_password_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="reset_password_password_img" height="20" src="/icons/eye-fill.svg">
@@ -306,9 +306,9 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                             <div id="reset_password_password_feedback" class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="reset_password_repeat_password">Повторіть введення нового пароля</label>
+                            <label class="control-label" for="reset_password_repeat_password">Повторите ввод нового пароля</label>
                             <div class="input-group" id="reset_password_repeat_password_group">
-                                <input type="password" class="form-control" id="reset_password_repeat_password" placeholder="Введіть новий пароль повторно" required>
+                                <input type="password" class="form-control" id="reset_password_repeat_password" placeholder="Введите новый пароль повторно" required>
                                 <div class="input-group-append">
                                     <div onclick="passwordToggle(document.getElementById('reset_password_repeat_password_img'), document.getElementById('reset_password_repeat_password'))" class="input-group-text" style="cursor: pointer;">
                                         <img id="reset_password_repeat_password_img" height="20" src="/icons/eye-fill.svg">
@@ -319,8 +319,8 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                        <button id="resetPasswordButton" type="submit" class="btn btn-dark"><span id="resetPasswordButtonSpinner" style="width: 20px; height: 20px;"></span>Підтвердити</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button id="resetPasswordButton" type="submit" class="btn btn-dark"><span id="resetPasswordButtonSpinner" style="width: 20px; height: 20px;"></span>Подтвердить</button>
                     </div>
                 </div>
             </form>
@@ -331,22 +331,22 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mobileModalLabel">Наші телефони</h5>
+                    <h5 class="modal-title" id="mobileModalLabel">Наши телефоны</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-justify">Консультації та замовлення за телефонами:</p>
+                    <p class="text-justify">Консультации и заказ по телефонам:</p>
                     <p><a class="phone-ph" href="tel:+380443324517"><strong>+38(044)332-45-17</strong></a></p>
                     <p><a class="phone-ph" href="tel:+380660125020"><strong>+38(066)012-50-20</strong></a></p>
                     <p><a class="phone-ph" href="tel:+380636491060"><strong>+38(063)649-10-60</strong></a></p>
                     <p><a class="phone-ph" href="tel:+380674061192"><strong>+38(067)406-11-92</strong></a></p>
-                    <p class="text-justify">Графік прийому замовлень:</p>
-                    <p class="text-justify">Будні: з 10:00 до 20:00</p>
+                    <p class="text-justify">График приема заказов:</p>
+                    <p class="text-justify">Будни: с 10:00 до 20:00</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>

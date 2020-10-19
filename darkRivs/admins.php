@@ -94,10 +94,10 @@ if (hash_equals($security_token, $security_token1)) {
         </div>
 
         <div class="form-group row">
-          <label for="register_admin_repeat_password" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Повторний пароль</label>
+          <label for="register_admin_repeat_password" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Повторіть введення нового пароля</label>
           <div class="col-lg-10 col-md-9 col-sm-8 my-vertical-centered">
             <div class="input-group" id="register_admin_repeat_password_group">
-              <input type="password" class="form-control" id="register_admin_repeat_password" placeholder="Введіть пароль повторно" required>
+              <input type="password" class="form-control" id="register_admin_repeat_password" placeholder="Введіть новий пароль повторно" required>
               <div class="input-group-append">
                 <div onclick="passwordToggle(document.getElementById('register_admin_repeat_password_img'), document.getElementById('register_admin_repeat_password'))" class="input-group-text" style="cursor: pointer;">
                   <img id="register_admin_repeat_password_img" height="20" src="/icons/eye-fill.svg">

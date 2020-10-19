@@ -15,7 +15,7 @@ $_SESSION['verification_token'] = $verification_token;
 
   <link rel="shortcut icon" href="/Images/webicon.png" type="image/x-icon">
   <title>
-    ТОВ ТВД "РІВС" | Контакти
+    ООО ТПП "РИВС" | Контакты
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,9 +56,9 @@ $_SESSION['verification_token'] = $verification_token;
       <section class="mb-4">
 
         <!--Section heading-->
-        <h2 class="h1-responsive font-weight-bold text-center my-4">Зв'язок із нами</h2>
+        <h2 class="h1-responsive font-weight-bold text-center my-4">Связь с нами</h2>
         <!--Section description-->
-        <p class="text-center w-responsive mx-auto mb-5">У вас є які-небудь питання? Будь ласка, не соромтеся звертатися до нас безпосередньо. Ми відповімо вам впродовж 24 годин.</p>
+        <p class="text-center w-responsive mx-auto mb-5">У вас есть какие-либо вопросы? Пожалуйста, не стесняйтесь обращаться к нам напрямую. Мы ответим вам в течение 24 часов.</p>
 
         <div class="row">
 
@@ -72,7 +72,7 @@ $_SESSION['verification_token'] = $verification_token;
                 <!--Grid column-->
                 <div class="col-md-6">
                   <div class="md-form">
-                    <label for="name">Ваше ім'я</label>
+                    <label for="name">Ваше имя</label>
                     <input type="text" id="name" class="form-control" required>
                     <div id="name_feedback" class="invalid-feedback"></div>
                   </div>
@@ -96,7 +96,7 @@ $_SESSION['verification_token'] = $verification_token;
                 <!--Grid column-->
                 <div class="col-md-12">
                   <div class="md-form">
-                    <label for="message">Введіть повідомлення</label>
+                    <label for="message">Введите сообщение</label>
                     <textarea type="text" id="message" rows="2" class="form-control md-textarea" required></textarea>
                     <div id="message_feedback" class="invalid-feedback"></div>
                   </div>
@@ -105,7 +105,7 @@ $_SESSION['verification_token'] = $verification_token;
               <!--Grid row-->
 
               <div class="center-on-small-only">
-                <button id="sendButton" style="margin-top:10px" type="submit" class="btn btn-dark btn-lg"><span id="sendButtonSpinner" style="width: 20px; height: 20px;"></span>Надіслати</a>
+                <button id="sendButton" style="margin-top:10px" type="submit" class="btn btn-dark btn-lg"><span id="sendButtonSpinner" style="width: 20px; height: 20px;"></span>Отправить</a>
               </div>
               <div style="margin-top:10px" id="status"></div>
             </form>
@@ -119,7 +119,7 @@ $_SESSION['verification_token'] = $verification_token;
                     <path fill="currentColor" d="M288 0a126 126 0 0 0-126 126c0 56.26 82.35 158.8 113.9 196a15.77 15.77 0 0 0 24.2 0C331.65 284.8 414 182.26 414 126A126 126 0 0 0 288 0zm0 168a42 42 0 1 1 42-42 42 42 0 0 1-42 42z" class="fa-primary"></path>
                   </g>
                 </svg>
-                <p>Місто Київ, вулиця Північна 3</p>
+                <p>Город Киев, улица Северная 3</p>
               </li>
 
               <li>
@@ -165,7 +165,7 @@ $_SESSION['verification_token'] = $verification_token;
   <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
+    <div class="footer-copyright text-center py-3">© 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
     </div>
     <!-- Copyright -->
 
