@@ -95,58 +95,51 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
   $new_key = $key . md5($email, true);
   $ivlen = openssl_cipher_iv_length($cipher);
 
-  if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($userID);
-    $stmt->fetch();
-    $stmt->close();
-  }
-  if ($userID != null) {
-    if (!is_null($first_name)) {
-      $first_name_iv = openssl_random_pseudo_bytes($ivlen);
-      $first_name_encrypted = openssl_encrypt($first_name, $cipher, $new_key, $options = 0, $first_name_iv, $first_name_tag);
-      if ($stmt = $mysqli->prepare("UPDATE `customers` SET `FirstName`=?, `FirstNameNonce`=?, `FirstNameTag`=? WHERE `UserID`=?")) {
-        $stmt->bind_param("sssi", $first_name_encrypted, base64_encode($first_name_iv), base64_encode($first_name_tag), $userID);
-        if ($stmt->execute() == false) {
-        };
-        $stmt->close();
-      }
-    }
 
-    if (!is_null($middle_name)) {
-      $middle_name_iv = openssl_random_pseudo_bytes($ivlen);
-      $middle_name_encrypted = openssl_encrypt($middle_name, $cipher, $new_key, $options = 0, $middle_name_iv, $middle_name_tag);
-      if ($stmt = $mysqli->prepare("UPDATE `customers` SET `MiddleName`=?, `MiddleNameNonce`=?, `MiddleNameTag`=? WHERE `UserID`=?")) {
-        $stmt->bind_param("sssi", $middle_name_encrypted, base64_encode($middle_name_iv), base64_encode($middle_name_tag), $userID);
-        if ($stmt->execute() == false) {
-        };
-        $stmt->close();
-      }
-    }
-
-    if (!is_null($last_name)) {
-      $last_name_iv = openssl_random_pseudo_bytes($ivlen);
-      $last_name_encrypted = openssl_encrypt($last_name, $cipher, $new_key, $options = 0, $last_name_iv, $last_name_tag);
-      if ($stmt = $mysqli->prepare("UPDATE `customers` SET `LastName`=?, `LastNameNonce`=?, `LastNameTag`=? WHERE `UserID`=?")) {
-        $stmt->bind_param("sssi", $last_name_encrypted, base64_encode($last_name_iv), base64_encode($last_name_tag), $userID);
-        if ($stmt->execute() == false) {
-        };
-        $stmt->close();
-      }
-    }
-
-    if (!is_null($phone)) {
-      $phone_iv = openssl_random_pseudo_bytes($ivlen);
-      $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
-      if ($stmt = $mysqli->prepare("UPDATE `customers` SET `Phone`=?, `PhoneNonce`=?, `PhoneTag`=? WHERE `UserID`=?")) {
-        $stmt->bind_param("sssi", $phone_encrypted, base64_encode($phone_iv), base64_encode($phone_tag), $userID);
-        if ($stmt->execute() == false) {
-        };
-        $stmt->close();
-      }
+  if (!is_null($first_name)) {
+    $first_name_iv = openssl_random_pseudo_bytes($ivlen);
+    $first_name_encrypted = openssl_encrypt($first_name, $cipher, $new_key, $options = 0, $first_name_iv, $first_name_tag);
+    if ($stmt = $mysqli->prepare("UPDATE `customers` SET `FirstName`=?, `FirstNameNonce`=?, `FirstNameTag`=? WHERE `Email`=?")) {
+      $stmt->bind_param("ssss", $first_name_encrypted, base64_encode($first_name_iv), base64_encode($first_name_tag), $email);
+      if ($stmt->execute() == false) {
+      };
+      $stmt->close();
     }
   }
+
+  if (!is_null($middle_name)) {
+    $middle_name_iv = openssl_random_pseudo_bytes($ivlen);
+    $middle_name_encrypted = openssl_encrypt($middle_name, $cipher, $new_key, $options = 0, $middle_name_iv, $middle_name_tag);
+    if ($stmt = $mysqli->prepare("UPDATE `customers` SET `MiddleName`=?, `MiddleNameNonce`=?, `MiddleNameTag`=? WHERE `Email`=?")) {
+      $stmt->bind_param("ssss", $middle_name_encrypted, base64_encode($middle_name_iv), base64_encode($middle_name_tag), $email);
+      if ($stmt->execute() == false) {
+      };
+      $stmt->close();
+    }
+  }
+
+  if (!is_null($last_name)) {
+    $last_name_iv = openssl_random_pseudo_bytes($ivlen);
+    $last_name_encrypted = openssl_encrypt($last_name, $cipher, $new_key, $options = 0, $last_name_iv, $last_name_tag);
+    if ($stmt = $mysqli->prepare("UPDATE `customers` SET `LastName`=?, `LastNameNonce`=?, `LastNameTag`=? WHERE `Email`=?")) {
+      $stmt->bind_param("ssss", $last_name_encrypted, base64_encode($last_name_iv), base64_encode($last_name_tag), $email);
+      if ($stmt->execute() == false) {
+      };
+      $stmt->close();
+    }
+  }
+
+  if (!is_null($phone)) {
+    $phone_iv = openssl_random_pseudo_bytes($ivlen);
+    $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
+    if ($stmt = $mysqli->prepare("UPDATE `customers` SET `Phone`=?, `PhoneNonce`=?, `PhoneTag`=? WHERE `Email`=?")) {
+      $stmt->bind_param("ssss", $phone_encrypted, base64_encode($phone_iv), base64_encode($phone_tag), $email);
+      if ($stmt->execute() == false) {
+      };
+      $stmt->close();
+    }
+  }
+
 
   $mysqli->close();
 

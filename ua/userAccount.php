@@ -25,19 +25,11 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         exit();
     }
 
-    if ($stmt = $mysqli->prepare("SELECT UserID FROM passwords WHERE UserLogin=?")) {
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->bind_result($userID);
-        $stmt->fetch();
-        $stmt->close();
-    }
-
-    if ($userID != null) {
+    if ($email != null) {
         if ($stmt = $mysqli->prepare("SELECT `FirstName`, `FirstNameNonce`, `FirstNameTag`,
          `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
-          `Phone`, `PhoneNonce`, `PhoneTag` FROM `customers` WHERE UserID=?")) {
-            $stmt->bind_param("i", $userID);
+          `Phone`, `PhoneNonce`, `PhoneTag` FROM `customers` WHERE Email=?")) {
+            $stmt->bind_param("s", $email);
             $stmt->execute();
             $stmt->bind_result(
                 $first_name_encrypted,

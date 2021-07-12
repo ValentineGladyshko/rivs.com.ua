@@ -117,12 +117,12 @@ if (hash_equals($verification_token, $verification_token1)) {
   $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
 
   if ($userID != null) {
-    if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`UserID`, `FirstName`, `FirstNameNonce`,
+    if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`Email`, `FirstName`, `FirstNameNonce`,
      `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
       `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
       $stmt->bind_param(
-        "issssssssssss",
-        $userID,
+        "sssssssssssss",
+        $email,
         $first_name_encrypted,
         base64_encode($first_name_iv),
         base64_encode($first_name_tag),

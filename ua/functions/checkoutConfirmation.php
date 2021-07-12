@@ -78,8 +78,8 @@ if ($is_authorized) {
 
         if ($stmt = $mysqli->prepare("SELECT `FirstName`, `FirstNameNonce`, `FirstNameTag`,
             `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
-            `Phone`, `PhoneNonce`, `PhoneTag` FROM `customers` WHERE UserID=?")) {
-            $stmt->bind_param("i", $userID);
+            `Phone`, `PhoneNonce`, `PhoneTag` FROM `customers` WHERE Email=?")) {
+            $stmt->bind_param("i", $email);
             $stmt->execute();
             $stmt->bind_result(
                 $first_name_encrypted,
@@ -641,6 +641,21 @@ if ($is_authorized) {
             exit();
         }
 
+        if ($stmt = $mysqli->prepare("SELECT UserLogin FROM passwords WHERE UserLogin=?")) {
+            $stmt->bind_param("s", $email2);
+            $stmt->execute();
+            $stmt->bind_result($email3);
+            $stmt->fetch();
+            $stmt->close();
+        }
+    
+        if ($email3 != null) {
+            $response->success = false;
+            array_push($response->email, "Зареєстрована електронна адреса, увійдіть в акаунт");
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
         $orderID = 1;
 
         if ($stmt = $mysqli->prepare("INSERT INTO `orders_in_process` (`Email`, `Date`) VALUES (?, ?)")) {
@@ -654,6 +669,60 @@ if ($is_authorized) {
         $status = 1;
         if ($stmt = $mysqli->prepare("INSERT INTO `orders_statuses` (`OrderId`, `StatusId`, `Date`) VALUES (?, ?, ?)")) {
             $stmt->bind_param("iis", $orderID, $status, date('Y-m-d H:i:s', time()));
+            if ($stmt->execute() == false) {
+            };
+            $stmt->close();
+        }
+
+        $cipher = "aes-256-gcm";
+        $key = base64_decode(file_get_contents('../../../../key.txt'));
+
+        $new_key = $key . md5($email2, true);
+        $ivlen = openssl_cipher_iv_length($cipher);
+
+        $first_name_iv = openssl_random_pseudo_bytes($ivlen);
+        $middle_name_iv = openssl_random_pseudo_bytes($ivlen);
+        $last_name_iv = openssl_random_pseudo_bytes($ivlen);
+        $phone_iv = openssl_random_pseudo_bytes($ivlen);
+
+        $first_name_encrypted = openssl_encrypt($first_name, $cipher, $new_key, $options = 0, $first_name_iv, $first_name_tag);
+        $middle_name_encrypted = openssl_encrypt($middle_name, $cipher, $new_key, $options = 0, $middle_name_iv, $middle_name_tag);
+        $last_name_encrypted = openssl_encrypt($last_name, $cipher, $new_key, $options = 0, $last_name_iv, $last_name_tag);
+        $phone_encrypted = openssl_encrypt($phone, $cipher, $new_key, $options = 0, $phone_iv, $phone_tag);
+
+        if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`Email`, `FirstName`, `FirstNameNonce`,
+            `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
+            `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE  
+            `FirstName` = ?, `FirstNameNonce` = ?, `FirstNameTag` = ?, `MiddleName` = ?, `MiddleNameNonce` = ?, `MiddleNameTag` = ?,
+            `LastName` = ?, `LastNameNonce` = ?, `LastNameTag` = ?, `Phone` = ?, `PhoneNonce` = ?, `PhoneTag` = ?;")) {
+            $stmt->bind_param(
+                "sssssssssssssssssssssssss",
+                $email2,
+                $first_name_encrypted,
+                base64_encode($first_name_iv),
+                base64_encode($first_name_tag),
+                $middle_name_encrypted,
+                base64_encode($middle_name_iv),
+                base64_encode($middle_name_tag),
+                $last_name_encrypted,
+                base64_encode($last_name_iv),
+                base64_encode($last_name_tag),
+                $phone_encrypted,
+                base64_encode($phone_iv),
+                base64_encode($phone_tag),
+                $first_name_encrypted,
+                base64_encode($first_name_iv),
+                base64_encode($first_name_tag),
+                $middle_name_encrypted,
+                base64_encode($middle_name_iv),
+                base64_encode($middle_name_tag),
+                $last_name_encrypted,
+                base64_encode($last_name_iv),
+                base64_encode($last_name_tag),
+                $phone_encrypted,
+                base64_encode($phone_iv),
+                base64_encode($phone_tag),
+            );
             if ($stmt->execute() == false) {
             };
             $stmt->close();
@@ -864,13 +933,6 @@ if ($is_authorized) {
             $last_name,
             $middle_name
         );
-
-        if ($stmt = $mysqli->prepare("INSERT INTO `customersnoreg` (`UserID`, `FirstName`, `MiddleName`, `LastName`,
-         `Phone`, `Email`) VALUES (?, ?, ?, ?, ?)")) {
-         $stmt->bind_param("issss", $userID, $first_name, $middle_name, $last_name, $phone, $email2);
-         if ($stmt->execute()) {};
-         $stmt->close();
-       }
 
         $total_cart_price = 0;
         $cart_items = array();

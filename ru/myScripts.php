@@ -663,7 +663,7 @@
               $('#resetPasswordModal').modal();
               // else give html fields and show error messages
             } else {
-              changeInputStatusArray(document.getElementById("remember_email"),
+              changeInputStatus(document.getElementById("remember_email"),
                 document.getElementById("remember_email_feedback"), jsonData, "email")
             }
           }
