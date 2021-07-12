@@ -80,8 +80,8 @@ if (hash_equals($security_token, $security_token1)) {
     <? include("functions/footer.php"); ?>
     <? include("functions/myScripts.php"); ?>
     <script>
-        var elem = document.getElementById("analytics-nav");
-        elem.classList.add('active');
+        //var elem = document.getElementById("analytics-nav");
+        //elem.classList.add('active');
         // Set new default font family and font color to mimic Bootstrap's default styling
         (Chart.defaults.global.defaultFontFamily = "Segoe UI"),
         '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';

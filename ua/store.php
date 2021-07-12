@@ -49,7 +49,7 @@ $_SESSION['verification_token'] = $verification_token;
   <footer class="page-footer font-small bottom bg-dark accent-4 mt-4">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2015 - 2020 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
+    <div class="footer-copyright text-center py-3">© 2015 ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ — ТОРГОВО-ВИРОБНИЧИЙ ДІМ "РІВС"
     </div>
     <!-- Copyright -->
 
@@ -63,6 +63,10 @@ $_SESSION['verification_token'] = $verification_token;
 <script type="text/javascript">
   var elem = document.getElementById("store");
   elem.classList.add('active');
+  var ru_link = document.getElementById("ru_link");
+  ru_link.href = "/ru/store.php";
+  var ua_link = document.getElementById("ua_link");
+  ua_link.href = "/ua/store.php";
 </script>
 
 </html>

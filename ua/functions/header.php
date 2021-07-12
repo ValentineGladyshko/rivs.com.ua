@@ -32,6 +32,18 @@ if ($security_token == null || $security_token1 == null || !isset($_SESSION["ema
                     </li>
                 </ul>
 
+                <ul class="navbar-nav border border-white rounded-xl">
+                    <li class="nav-item">
+                        <a id="ru_link" class="nav-link" href="/">RU
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a id="ua_link" class="nav-link disabled" href="/">UA
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+
                 <ul class="navbar-nav navbar-right">
 
                     <li class="nav-item">

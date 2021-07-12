@@ -54,9 +54,9 @@ $cipher = "aes-256-gcm";
 $key = base64_decode(file_get_contents('../../../../key.txt'));
 
 //variables to decrypt
-$hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
-$tag = "OQBmpCsN+7ocXYzIrSPGPg==";
-$iv = "RucZWE5OFpqG0UlE";
+$hashedpassword = "cFfcdgW4MT5vYyeiieg01AG9FiwyxtHsbYcztJO+rj8F";
+$tag = "7BI92KFxt2uNzjjzXseKvw==";
+$iv = "2hB/dnRnfqhQdvFK";
 
 // decode variables
 $iv = base64_decode($iv);

@@ -464,7 +464,7 @@ if ($is_authorized) {
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 12px; color: #858585; text-align: center; line-height: 20px;">
                                                 <p style="box-sizing: border-box;">
-                                                    © 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
+                                                    © 2015 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
                                                 </p>
                                             </div>
                                         </td>
@@ -495,9 +495,9 @@ if ($is_authorized) {
         }
 
         //variables to decrypt
-        $hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
-        $tag = "OQBmpCsN+7ocXYzIrSPGPg==";
-        $iv = "RucZWE5OFpqG0UlE";
+        $hashedpassword = "cFfcdgW4MT5vYyeiieg01AG9FiwyxtHsbYcztJO+rj8F";
+        $tag = "7BI92KFxt2uNzjjzXseKvw==";
+        $iv = "2hB/dnRnfqhQdvFK";
 
         // decode variables
         $iv = base64_decode($iv);
@@ -1025,7 +1025,7 @@ if ($is_authorized) {
                                             <div
                                                 style="box-sizing: border-box; font-family:arial,helvetica,sans-serif; font-size: 12px; color: #858585; text-align: center; line-height: 20px;">
                                                 <p style="box-sizing: border-box;">
-                                                    © 2015 - 2020 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
+                                                    © 2015 ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ — ТОРГОВО-ПРОИЗВОДСТВЕННОЕ ПРЕДПРИЯТИЕ "РИВС"
                                                 </p>
                                             </div>
                                         </td>
@@ -1051,9 +1051,9 @@ if ($is_authorized) {
         setcookie('cart', null, time() - 60 * 60, '/', 'rivs.com.ua', true, true);
         $cipher = "aes-256-gcm";
         $key = base64_decode(file_get_contents('../../../../key.txt'));
-        $hashedpassword = "z6C2lnZkGGpXnnNMzaw=";
-        $tag = "OQBmpCsN+7ocXYzIrSPGPg==";
-        $iv = "RucZWE5OFpqG0UlE";
+        $hashedpassword = "cFfcdgW4MT5vYyeiieg01AG9FiwyxtHsbYcztJO+rj8F";
+        $tag = "7BI92KFxt2uNzjjzXseKvw==";
+        $iv = "2hB/dnRnfqhQdvFK";
 
         // decode variables
         $iv = base64_decode($iv);
