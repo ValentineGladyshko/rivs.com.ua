@@ -276,5 +276,5 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         $stmt->close();
     }
     echo json_encode($orders, JSON_UNESCAPED_UNICODE);
-    file_put_contents("data.json", json_encode($orders, JSON_UNESCAPED_UNICODE));
+    //file_put_contents("data.json", json_encode($orders, JSON_UNESCAPED_UNICODE));
 }
