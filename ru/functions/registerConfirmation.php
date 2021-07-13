@@ -118,28 +118,42 @@ if (hash_equals($verification_token, $verification_token1)) {
 
   if ($userID != null) {
     if ($stmt = $mysqli->prepare("INSERT INTO `customers` (`Email`, `FirstName`, `FirstNameNonce`,
-     `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
-      `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-      $stmt->bind_param(
-        "sssssssssssss",
-        $email,
-        $first_name_encrypted,
-        base64_encode($first_name_iv),
-        base64_encode($first_name_tag),
-        $middle_name_encrypted,
-        base64_encode($middle_name_iv),
-        base64_encode($middle_name_tag),
-        $last_name_encrypted,
-        base64_encode($last_name_iv),
-        base64_encode($last_name_tag),
-        $phone_encrypted,
-        base64_encode($phone_iv),
-        base64_encode($phone_tag),
-      );
-      if ($stmt->execute() == false) {
-      };
-      $stmt->close();
-    }
+            `FirstNameTag`, `MiddleName`, `MiddleNameNonce`, `MiddleNameTag`, `LastName`, `LastNameNonce`, `LastNameTag`,
+            `Phone`, `PhoneNonce`, `PhoneTag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE  
+            `FirstName` = ?, `FirstNameNonce` = ?, `FirstNameTag` = ?, `MiddleName` = ?, `MiddleNameNonce` = ?, `MiddleNameTag` = ?,
+            `LastName` = ?, `LastNameNonce` = ?, `LastNameTag` = ?, `Phone` = ?, `PhoneNonce` = ?, `PhoneTag` = ?;")) {
+            $stmt->bind_param(
+                "sssssssssssssssssssssssss",
+                $email,
+                $first_name_encrypted,
+                base64_encode($first_name_iv),
+                base64_encode($first_name_tag),
+                $middle_name_encrypted,
+                base64_encode($middle_name_iv),
+                base64_encode($middle_name_tag),
+                $last_name_encrypted,
+                base64_encode($last_name_iv),
+                base64_encode($last_name_tag),
+                $phone_encrypted,
+                base64_encode($phone_iv),
+                base64_encode($phone_tag),
+                $first_name_encrypted,
+                base64_encode($first_name_iv),
+                base64_encode($first_name_tag),
+                $middle_name_encrypted,
+                base64_encode($middle_name_iv),
+                base64_encode($middle_name_tag),
+                $last_name_encrypted,
+                base64_encode($last_name_iv),
+                base64_encode($last_name_tag),
+                $phone_encrypted,
+                base64_encode($phone_iv),
+                base64_encode($phone_tag),
+            );
+            if ($stmt->execute() == false) {
+            };
+            $stmt->close();
+        }
   }
 
   //delete email_code
