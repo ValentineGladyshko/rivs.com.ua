@@ -18,43 +18,114 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         exit();
     }
 
+    $key = base64_decode(file_get_contents('../../../../key.txt'));
+    $cipher = "aes-256-gcm";
+
     $orders = array();
     if ($type == 'finished') {
-        if ($stmt = $mysqli->prepare("SELECT DISTINCT `o`.`OrderId`, `o`.`Email`, `o`.`Date` FROM `orders_in_process` AS `o` 
-        JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6 ORDER BY `Date` DESC")) {
+        if ($stmt = $mysqli->prepare("SELECT DISTINCT `o`.`OrderId`, `o`.`Email`, `o`.`Date`, `c`.`FirstName`, `c`.`FirstNameNonce`, `c`.`FirstNameTag`,
+        `c`.`MiddleName`, `c`.`MiddleNameNonce`, `c`.`MiddleNameTag`, `c`.`LastName`, `c`.`LastNameNonce`, `c`.`LastNameTag`,
+        `c`.`Phone`, `c`.`PhoneNonce`, `c`.`PhoneTag` FROM `orders_in_process` AS `o` 
+        JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` JOIN `customers` AS `c` ON `o`.`Email` = `c`.`Email` WHERE `os`.`StatusId` BETWEEN 5 AND 6 ORDER BY `Date` DESC")) {
             $stmt->execute();
             $stmt->bind_result(
                 $orderId,
                 $email,
-                $date
+                $date,
+                $first_name_encrypted,
+                $first_name_iv,
+                $first_name_tag,
+                $middle_name_encrypted,
+                $middle_name_iv,
+                $middle_name_tag,
+                $last_name_encrypted,
+                $last_name_iv,
+                $last_name_tag,
+                $phone_encrypted,
+                $phone_iv,
+                $phone_tag,
             );
             while ($stmt->fetch()) {
                 $order = new stdClass();
+                $order->orderLink = sprintf('<a href="order.php?id=%1$s">%1$06d</a>', $orderId);
                 $order->orderId = $orderId;
                 $date = new DateTime($date);
                 $order->date = $date->format('d/m/Y H:i');
                 $order->email = $email;
+
+                $iv = base64_decode($first_name_iv);
+                $tag = base64_decode($first_name_tag);
+                $first_name = openssl_decrypt($first_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+                
+                $iv = base64_decode($middle_name_iv);
+                $tag = base64_decode($middle_name_tag);
+                $middle_name = openssl_decrypt($middle_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+
+                $iv = base64_decode($last_name_iv);
+                $tag = base64_decode($last_name_tag);
+                $last_name = openssl_decrypt($last_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+
+                $order->name = $last_name . " " . $first_name . " " . $middle_name;
+
+                $iv = base64_decode($phone_iv);
+                $tag = base64_decode($phone_tag);
+                $order->phone = openssl_decrypt($phone_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+
                 $order->totalPrice = 0;
                 $orders[] = $order;
             }
             $stmt->close();
         }
     } else if ($type == 'active') {
-        if ($stmt = $mysqli->prepare("SELECT * FROM `orders_in_process` WHERE `OrderId` NOT IN 
+        if ($stmt = $mysqli->prepare("SELECT `o`.`OrderId`, `o`.`Email`, `o`.`Date`, `c`.`FirstName`, `c`.`FirstNameNonce`, `c`.`FirstNameTag`,
+        `c`.`MiddleName`, `c`.`MiddleNameNonce`, `c`.`MiddleNameTag`, `c`.`LastName`, `c`.`LastNameNonce`, `c`.`LastNameTag`,
+        `c`.`Phone`, `c`.`PhoneNonce`, `c`.`PhoneTag` FROM `orders_in_process` AS `o` JOIN `customers` AS `c` ON `o`.`Email` = `c`.`Email` WHERE `OrderId` NOT IN 
         (SELECT DISTINCT `o`.`OrderId` FROM `orders_in_process` AS `o` 
         JOIN `orders_statuses` AS `os` ON `o`.`OrderId` = `os`.`OrderId` WHERE `os`.`StatusId` BETWEEN 5 AND 6) ORDER BY `Date` DESC")) {
             $stmt->execute();
             $stmt->bind_result(
                 $orderId,
                 $email,
-                $date
+                $date,
+                $first_name_encrypted,
+                $first_name_iv,
+                $first_name_tag,
+                $middle_name_encrypted,
+                $middle_name_iv,
+                $middle_name_tag,
+                $last_name_encrypted,
+                $last_name_iv,
+                $last_name_tag,
+                $phone_encrypted,
+                $phone_iv,
+                $phone_tag,
             );
             while ($stmt->fetch()) {
                 $order = new stdClass();
+                $order->orderLink = sprintf('<a href="order.php?id=%1$s">%1$06d</a>', $orderId);
                 $order->orderId = $orderId;
                 $date = new DateTime($date);
                 $order->date = $date->format('d/m/Y H:i');
                 $order->email = $email;
+
+                $iv = base64_decode($first_name_iv);
+                $tag = base64_decode($first_name_tag);
+                $first_name = openssl_decrypt($first_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+                
+                $iv = base64_decode($middle_name_iv);
+                $tag = base64_decode($middle_name_tag);
+                $middle_name = openssl_decrypt($middle_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+
+                $iv = base64_decode($last_name_iv);
+                $tag = base64_decode($last_name_tag);
+                $last_name = openssl_decrypt($last_name_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+
+                $order->name = $last_name . " " . $first_name . " " . $middle_name;
+
+                $iv = base64_decode($phone_iv);
+                $tag = base64_decode($phone_tag);
+                $order->phone = openssl_decrypt($phone_encrypted, $cipher, $key, $options = 0, $iv, $tag);
+                
                 $order->totalPrice = 0;
                 $orders[] = $order;
             }
@@ -162,7 +233,7 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
                     );
                 }
             }
-            $order_statuses  = "";
+            $order_statuses = "";
             foreach ($statuses as $statusDate => $statusValue) {
                 $order_statuses .= sprintf(
                     '<div class=%2$scol-12%2$s>
@@ -205,5 +276,5 @@ if (hash_equals($verification_token, $verification_token1) && hash_equals($secur
         $stmt->close();
     }
     echo json_encode($orders, JSON_UNESCAPED_UNICODE);
-    //file_put_contents("data.json", json_encode($orders, JSON_UNESCAPED_UNICODE));
+    file_put_contents("data.json", json_encode($orders, JSON_UNESCAPED_UNICODE));
 }

@@ -27,6 +27,8 @@ if (hash_equals($security_token, $security_token1)) {
                             <th></th>
                             <th>Номер</th>
                             <th>Email</th>
+                            <th>ПІБ</th>
+                            <th>Телефон</th>
                             <th>Дата прийняття</th>
                             <th>Загальна сума</th>
                             <th>Поточний статус</th>
@@ -39,6 +41,8 @@ if (hash_equals($security_token, $security_token1)) {
                             <th></th>
                             <th>Номер</th>
                             <th>Email</th>
+                            <th>ПІБ</th>
+                            <th>Телефон</th>
                             <th>Дата прийняття</th>
                             <th>Загальна сума</th>
                             <th>Поточний статус</th>
@@ -60,6 +64,8 @@ if (hash_equals($security_token, $security_token1)) {
                             <th></th>
                             <th>Номер</th>
                             <th>Email</th>
+                            <th>ПІБ</th>
+                            <th>Телефон</th>
                             <th>Дата прийняття</th>
                             <th>Загальна сума</th>
                             <th>Поточний статус</th>
@@ -71,6 +77,8 @@ if (hash_equals($security_token, $security_token1)) {
                             <th></th>
                             <th>Номер</th>
                             <th>Email</th>
+                            <th>ПІБ</th>
+                            <th>Телефон</th>
                             <th>Дата прийняття</th>
                             <th>Загальна сума</th>
                             <th>Поточний статус</th>
@@ -112,10 +120,16 @@ if (hash_equals($security_token, $security_token1)) {
                         defaultContent: ''
                     },
                     {
-                        data: "orderId"
+                        data: "orderLink"
                     },
                     {
                         data: "email"
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "phone"
                     },
                     {
                         data: "date"
@@ -136,7 +150,7 @@ if (hash_equals($security_token, $security_token1)) {
                     }
                 ],
                 order: [
-                    [1, 'desc']
+                    [2, 'desc']
                 ]
             });
             $('#ordersInProcess tbody').on('click', 'td.details-control', function() {
@@ -180,10 +194,16 @@ if (hash_equals($security_token, $security_token1)) {
                         defaultContent: ''
                     },
                     {
-                        data: "orderId"
+                        data: "orderLink"
                     },
                     {
                         data: "email"
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "phone"
                     },
                     {
                         data: "date"
@@ -200,7 +220,7 @@ if (hash_equals($security_token, $security_token1)) {
                     }
                 ],
                 order: [
-                    [1, 'desc']
+                    [2, 'desc']
                 ]
             });
             $('#allOrders tbody').on('click', 'td.details-control', function() {
