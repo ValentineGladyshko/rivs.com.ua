@@ -150,7 +150,7 @@ if (hash_equals($security_token, $security_token1)) {
                     }
                 ],
                 order: [
-                    [2, 'desc']
+                    [1, 'desc']
                 ]
             });
             $('#ordersInProcess tbody').on('click', 'td.details-control', function() {
@@ -220,7 +220,7 @@ if (hash_equals($security_token, $security_token1)) {
                     }
                 ],
                 order: [
-                    [2, 'desc']
+                    [1, 'desc']
                 ]
             });
             $('#allOrders tbody').on('click', 'td.details-control', function() {
